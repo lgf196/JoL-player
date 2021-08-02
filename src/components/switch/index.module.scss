@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+.label {
+  padding-right: 20px;
+  cursor: pointer;
+}
+.switch {
+  position: relative;
+  width: 30px;
+  height: 15px;
+  background-color: #dadada;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+// 按钮
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+// checked状态时，背景颜色改变
+.switch:checked {
+  background-color: red;
+}
+
+// checked状态时，按钮位置改变
+.switch:checked::after {
+  left: 50%;
+}

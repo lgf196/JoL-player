@@ -1,0 +1,31 @@
+@import 'src/assets/css/mixin.scss';
+.tooltip {
+  position: relative;
+  cursor: pointer;
+  z-index: 1;
+  &:hover {
+    .title {
+      transition: all 0.6s;
+      opacity: 1;
+      display: block;
+      animation: show 0.3s ease;
+    }
+  }
+  .title {
+    display: none;
+    opacity: 0;
+    z-index: -1;
+    position: absolute;
+    color: #fff;
+    left: 50%;
+    // display: flex;
+    bottom: 49px;
+    font-size: 13px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 3px;
+    transform: translateX(-50%);
+    line-height: 20px;
+    padding: 5px 7px;
+    white-space: nowrap;
+  }
+}
