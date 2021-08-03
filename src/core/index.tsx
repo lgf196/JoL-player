@@ -92,12 +92,16 @@ const Index = memo(function Index({
   }, [videoSrc]);
 
   const contextProps = useMemo(() => {
-    return Object.assign({}, videoFlow, {
-      videoRef: videoRef.current,
-      videoContainerRef: videoContainerRef.current,
-      lightOffMaskRef: lightOffMaskRef.current,
-      dispatch,
-    });
+    return Object.assign(
+      {},
+      {
+        videoRef: videoRef.current,
+        videoContainerRef: videoContainerRef.current,
+        lightOffMaskRef: lightOffMaskRef.current,
+        dispatch,
+        videoFlow,
+      },
+    );
   }, [videoRef.current, videoFlow]);
 
   return (

@@ -6,7 +6,7 @@ const AppComponent = memo(function AppComponent(props) {
   return (
     <>
       <JoLPlayer />
-      {/* <JoLPlayer /> */}
+      <JoLPlayer />
     </>
   );
 });

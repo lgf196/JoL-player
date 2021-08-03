@@ -30,9 +30,7 @@ const Index = memo(function Index(props) {
 
   const revicePropsData = useRef<any>();
 
-  const { isPlay, handleChangePlayState, currentTime, duration, isPictureinpicture } = useVideo(
-    reviceProps.videoRef,
-  );
+  const { isPlay, handleChangePlayState, currentTime, duration, isPictureinpicture } = useVideo({});
 
   const { controlsState, dispatch } = useControls();
 
@@ -193,7 +191,10 @@ const Index = memo(function Index(props) {
     }
   };
   return (
-    <div className="controls-container" style={{ opacity: reviceProps.isControl ? '1' : '0' }}>
+    <div
+      className="controls-container"
+      style={{ opacity: reviceProps.videoFlow!.isControl ? '1' : '0' }}
+    >
       <MonitorComponent
         isPlay={isPlay}
         handleChangePlayState={handleChangePlayState}

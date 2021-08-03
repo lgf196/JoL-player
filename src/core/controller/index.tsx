@@ -15,7 +15,20 @@ const Index = memo(function Index(props) {
 
   const { dispatch } = reviceProps;
 
-  const { isPlay, handleChangePlayState } = useVideo(reviceProps.videoRef);
+  const { isPlay, handleChangePlayState, currentTime } = useVideo({
+    onPause: (val: any) => {
+      console.log(val);
+    },
+    onPlay: (val: any) => {
+      console.log(val);
+    },
+    onTimeChange: (val: any) => {
+      // console.log(val);
+    },
+    onEndEd: (val: any) => {
+      console.log('结束', val);
+    },
+  });
 
   const timer = useRef<NodeJS.Timeout | null>(null!);
 
@@ -39,7 +52,6 @@ const Index = memo(function Index(props) {
    */
   const showControl = (e: any, status: string) => {
     dispatch!({ type: 'isControl', data: status === 'enter' ? true : false });
-    return false;
   };
   /**
    * @description 隐藏鼠标
@@ -48,6 +60,7 @@ const Index = memo(function Index(props) {
     if (timer.current) {
       clearInterval(timer.current);
     }
+
     timer.current = setInterval(() => {
       setPre(viewClientX.current);
       /**
@@ -68,6 +81,7 @@ const Index = memo(function Index(props) {
       clearInterval(timer.current);
     }
   };
+
   return (
     <div
       className="controller-container"

@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import usePrevious from './usePrevious';
 export interface useWindowSizeType {
   clientX: number;
   clientY: number;

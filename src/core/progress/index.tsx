@@ -29,7 +29,7 @@ const Index = memo(function Index(props) {
 
   const reviceProps = useContext(FlowContext);
 
-  const { currentTime, duration, bufferedTime } = useVideo(reviceProps.videoRef);
+  const { currentTime, duration, bufferedTime } = useVideo({});
 
   const { progressState, dispatch } = useProgress();
 
@@ -163,7 +163,10 @@ const Index = memo(function Index(props) {
   };
 
   return (
-    <div className="progress-container" style={{ opacity: reviceProps.isControl ? '1' : '0' }}>
+    <div
+      className="progress-container"
+      style={{ opacity: reviceProps.videoFlow!.isControl ? '1' : '0' }}
+    >
       <div className="progress-bg" ref={progressBgRef}>
         <div className="progress-buffered" style={{ width: `${calculateBufferedPercent}%` }}></div>
         <div
