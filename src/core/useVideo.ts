@@ -2,7 +2,10 @@ import { useRef, useMemo, useEffect, useState, useReducer, useContext, useCallba
 import useMandatoryUpdate from '@/utils/useMandatoryUpdate';
 import { FlowContext } from '@/core/context';
 
-export const useVideo = ({ onPause, onPlay, onTimeChange, onEndEd }: any) => {
+export const useVideo = (
+  { videoElement, onPause, onPlay, onTimeChange, onEndEd }: any,
+  dep?: any,
+) => {
   const forceUpdate = useMandatoryUpdate();
 
   const reviceProps = useContext(FlowContext);
@@ -15,53 +18,44 @@ export const useVideo = ({ onPause, onPlay, onTimeChange, onEndEd }: any) => {
     duration: 0,
     bufferedTime: 0,
     isPictureinpicture: false,
+    volume: 0,
+    multiple: 1.0,
   });
 
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null!);
 
   const interval = useRef<NodeJS.Timeout | null>(null!);
 
-  videoRef.current = videoEle;
+  videoRef.current = videoElement;
 
   useEffect(() => {
+    forceUpdate();
     if (videoRef.current) {
       /**
        * @description 监听总时长
        */
       videoRef.current.addEventListener('canplay', () => {
-        videoParameter.current = {
-          ...videoParameter.current,
-          duration: videoRef.current!.duration,
-        };
+        torture({ duration: videoRef.current.duration });
       });
       /**
        * @description 监听缓冲
        */
       videoRef.current.addEventListener('progress', () => {
-        if (videoRef.current!.buffered.length >= 1) {
-          videoParameter.current = {
-            ...videoParameter.current,
-            bufferedTime: videoRef.current!.buffered.end(0),
-          };
+        if (videoRef.current.buffered.length >= 1) {
+          torture({ bufferedTime: videoRef.current.buffered.end(0) });
         }
       });
       /**
        * @description 已经进入画中画
        */
       videoRef.current.addEventListener('enterpictureinpicture', () => {
-        videoParameter.current = {
-          ...videoParameter.current,
-          isPictureinpicture: true,
-        };
+        torture({ isPictureinpicture: true });
       });
       /**
        * @description 已退出画中画模式
        */
       videoRef.current.addEventListener('leavepictureinpicture', () => {
-        videoParameter.current = {
-          ...videoParameter.current,
-          isPictureinpicture: false,
-        };
+        torture({ isPictureinpicture: false });
       });
       // 定时器用于更新当前视频时间
       interval.current = setInterval(() => {
@@ -69,11 +63,13 @@ export const useVideo = ({ onPause, onPlay, onTimeChange, onEndEd }: any) => {
          * 强制更新
          */
         forceUpdate();
-        videoParameter.current = {
-          ...videoParameter.current,
-          currentTime: videoRef.current!.currentTime,
-          isPlay: videoRef.current!.paused ? false : true,
-        };
+
+        torture({
+          currentTime: videoRef.current.currentTime,
+          isPlay: videoRef.current.paused ? false : true,
+          volume: videoRef.current.volume,
+          multiple: videoRef.current.playbackRate,
+        });
       }, 1);
       videoRef.current.addEventListener('pause', pauseChange);
       videoRef.current.addEventListener('play', playChange);
@@ -83,15 +79,21 @@ export const useVideo = ({ onPause, onPlay, onTimeChange, onEndEd }: any) => {
     return () => {
       interval.current && clearInterval(interval.current);
     };
-  }, [videoEle, videoRef.current]);
+  }, [videoRef.current, dep, videoElement]);
 
+  const torture = (val: any) => {
+    videoParameter.current = { ...videoParameter.current, ...val };
+  };
   const pauseChange = () => {
+    torture({ isPlay: videoRef.current.paused ? false : true });
     onPause && onPause(videoParameter.current);
   };
   const playChange = () => {
+    torture({ isPlay: videoRef.current.paused ? false : true });
     onPlay && onPlay(videoParameter.current);
   };
   const timeupdate = () => {
+    torture({ isPlay: videoRef.current.paused ? false : true });
     onTimeChange && onTimeChange(videoParameter.current);
   };
   const endedChange = () => {
@@ -99,17 +101,16 @@ export const useVideo = ({ onPause, onPlay, onTimeChange, onEndEd }: any) => {
   };
   const handleChangePlayState = () => {
     if (videoParameter.current.isPlay) {
-      videoRef.current!.pause();
+      videoRef.current.pause();
     } else {
-      videoRef.current!.play();
+      videoRef.current.play();
     }
-    videoParameter.current = {
+  };
+  return useMemo(
+    () => ({
+      handleChangePlayState,
       ...videoParameter.current,
-      isPlay: videoRef.current!.paused ? false : true,
-    };
-  };
-  return {
-    handleChangePlayState,
-    ...videoParameter.current,
-  };
+    }),
+    [videoParameter.current],
+  );
 };

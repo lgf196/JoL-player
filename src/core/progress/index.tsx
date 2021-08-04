@@ -29,7 +29,7 @@ const Index = memo(function Index(props) {
 
   const reviceProps = useContext(FlowContext);
 
-  const { currentTime, duration, bufferedTime } = useVideo({});
+  const { currentTime, duration, bufferedTime } = useVideo({ videoElement: reviceProps.videoRef });
 
   const { progressState, dispatch } = useProgress();
 

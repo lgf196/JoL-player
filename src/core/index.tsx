@@ -1,4 +1,11 @@
-import React, { memo, useRef, useState, useEffect, useMemo } from 'react';
+import React, {
+  forwardRef,
+  useRef,
+  useState,
+  useEffect,
+  useMemo,
+  useImperativeHandle,
+} from 'react';
 import Controller from './controller';
 import { videoparameter } from '@/interface';
 import { FlowContext, useVideoFlow } from '@/core/context';
@@ -8,11 +15,14 @@ import Broadcast from '@/components/svgIcon';
 import '@/assets/css/reset.scss';
 import './index.scss';
 
-const Index = memo(function Index({
-  videoSrc = 'https://gs-files.oss-cn-hongkong.aliyuncs.com/okr/test/file/2021/07/01/haiwang.mp4',
-}: {
-  videoSrc?: string;
-}) {
+const JoLPlayer = function JoLPlayer(
+  {
+    videoSrc = 'https://gs-files.oss-cn-hongkong.aliyuncs.com/okr/test/file/2021/07/01/haiwang.mp4',
+  }: {
+    videoSrc?: string;
+  },
+  ref: React.Ref<unknown> | undefined,
+) {
   /**
    * @description 关灯对象
    */
@@ -50,6 +60,10 @@ const Index = memo(function Index({
     setIsBufferring(false);
   };
 
+  useImperativeHandle(ref, () => ({
+    video: videoRef.current,
+  }));
+
   useEffect(() => {
     /**
      * @description 设置用户给的视频播放器长宽
@@ -60,7 +74,6 @@ const Index = memo(function Index({
     timerToCheckVideoUseful.current = setTimeout(() => {
       // 当视频未初始化时（即不可用时）
       if (videoElem.networkState === 0) {
-        console.log('can not find');
         setIsVideoUseful(false);
       } else {
         clearTimeout(timerToCheckVideoUseful.current!);
@@ -79,7 +92,7 @@ const Index = memo(function Index({
       videoElem.removeEventListener('waiting', waitingListener);
       videoElem.removeEventListener('playing', playingListener);
     };
-  }, []);
+  }, [videoRef.current]);
 
   const returnVideoSource = useMemo(() => {
     return (
@@ -119,6 +132,7 @@ const Index = memo(function Index({
       </FlowContext.Provider>
     </figure>
   );
-});
+};
 
-export default Index;
+const JoLPlayerComponent = forwardRef<HTMLVideoElement, any>(JoLPlayer);
+export default JoLPlayerComponent;
