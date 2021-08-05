@@ -17,12 +17,12 @@ const Index = memo(function Index(props) {
 
   const { isPlay, handleChangePlayState, currentTime } = useVideo({
     videoElement: reviceProps.videoRef,
-    onPause: (val: any) => {
-      console.log(val);
-    },
-    onPlay: (val: any) => {
-      console.log(val);
-    },
+    // onPause: (val: any) => {
+    //   console.log(val);
+    // },
+    // onPlay: (val: any) => {
+    //   console.log(val);
+    // },
     // onTimeChange: (val: any) => {
     //   console.log(val);
     // },

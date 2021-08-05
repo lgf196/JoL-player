@@ -1,7 +1,6 @@
 import React, { memo, useRef, useEffect } from 'react';
-import JoLPlayer from '@/core/index';
+import JoLPlayer, { useVideo } from './app';
 import '@/icons/';
-import { useVideo } from '@/core/useVideo';
 
 const AppComponent = memo(function AppComponent(props) {
   const videoRef = useRef<HTMLVideoElement>(null!);
@@ -18,7 +17,7 @@ const AppComponent = memo(function AppComponent(props) {
     //   console.log(val, xx.current);
     // },
     onTimeChange: (val: any) => {
-      // console.log(val);
+      console.log(val);
     },
     // onEndEd: (val: any) => {
     //   console.log('结束', val);
