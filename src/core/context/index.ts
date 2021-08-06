@@ -13,6 +13,10 @@ export interface VideoStateType<K = boolean, T = number> {
    * @description 是否播放
    */
   isPlay: K;
+  /**
+   * @description onProgressSlider事件的变化数据，用来区分是onProgressSlider事件触发的
+   */
+  progressSliderChangeVal: T;
 }
 /**
  * @description 永不变的数据
@@ -31,6 +35,7 @@ export const initialState = {
   isControl: false,
   currentTime: 0,
   isPlay: false,
+  progressSliderChangeVal: 0,
 };
 
 export const defaultValue = {
@@ -53,7 +58,15 @@ export interface isPlayActionType {
   type: 'isPlay';
   data: VideoStateType['isPlay'];
 }
-export type mergeAction = isControlActionType | currentTimeActionType | isPlayActionType;
+export interface progressSliderChangeValActionType {
+  type: 'progressSliderChangeVal';
+  data: VideoStateType['progressSliderChangeVal'];
+}
+export type mergeAction =
+  | isControlActionType
+  | currentTimeActionType
+  | isPlayActionType
+  | progressSliderChangeValActionType;
 
 export const useVideoFlow = () => {
   const reducer = (state: VideoStateType, action: mergeAction) => {
@@ -64,6 +77,8 @@ export const useVideoFlow = () => {
         return { ...state, currentTime: action.data };
       case 'isPlay':
         return { ...state, isPlay: action.data };
+      case 'progressSliderChangeVal':
+        return { ...state, progressSliderChangeVal: action.data };
       default:
         return state;
     }

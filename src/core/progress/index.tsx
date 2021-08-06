@@ -128,6 +128,7 @@ const Index = memo(function Index(props) {
       const seekPositionX =
         clientXdistance.current - progressSeekMaskRef.current.getBoundingClientRect().left + 1;
       updateCurrentTime(seekPositionX, progressSeekMaskRefOffsetWidth);
+      reviceProps.dispatch!({ type: 'progressSliderChangeVal', data: Date.now() });
     }, 1);
   };
   /**

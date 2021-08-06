@@ -3,7 +3,7 @@ import useMandatoryUpdate from '@/utils/useMandatoryUpdate';
 import { FlowContext } from '@/core/context';
 
 export const useVideo = (
-  { videoElement, onPause, onPlay, onTimeChange, onEndEd }: any,
+  { videoElement, onPause, onPlay, onTimeChange, onEndEd, onProgressSlide }: any,
   dep?: any,
 ) => {
   const forceUpdate = useMandatoryUpdate();
@@ -63,7 +63,6 @@ export const useVideo = (
          * 强制更新
          */
         forceUpdate();
-
         torture({
           currentTime: videoRef.current.currentTime,
           isPlay: videoRef.current.paused ? false : true,
@@ -80,6 +79,20 @@ export const useVideo = (
       interval.current && clearInterval(interval.current);
     };
   }, [videoRef.current, dep, videoElement]);
+
+  const ProgressSlideChange = useCallback(
+    (onProgressSlide: any) => {
+      // console.log(`onProgressSlide`, onProgressSlide);
+      onProgressSlide && onProgressSlide(videoParameter.current);
+    },
+    [videoFlow.progressSliderChangeVal],
+  );
+
+  useEffect(() => {
+    if (videoFlow.progressSliderChangeVal) {
+      ProgressSlideChange(onProgressSlide);
+    }
+  }, [ProgressSlideChange]);
 
   const torture = (val: any) => {
     videoParameter.current = { ...videoParameter.current, ...val };
@@ -106,6 +119,7 @@ export const useVideo = (
       videoRef.current.play();
     }
   };
+
   return useMemo(
     () => ({
       handleChangePlayState,

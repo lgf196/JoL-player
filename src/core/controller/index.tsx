@@ -29,6 +29,9 @@ const Index = memo(function Index(props) {
     // onEndEd: (val: any) => {
     //   console.log('结束', val);
     // },
+    // onProgressSlide: (val: any) => {
+    //   console.log(`童东风`, val);
+    // },
   });
   const timer = useRef<NodeJS.Timeout | null>(null!);
 

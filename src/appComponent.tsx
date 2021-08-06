@@ -5,7 +5,6 @@ import '@/icons/';
 const AppComponent = memo(function AppComponent(props) {
   const videoRef = useRef<HTMLVideoElement>(null!);
   const xx = useRef(false);
-  useEffect(() => {}, [videoRef.current]);
   const { isPlay, handleChangePlayState, currentTime } = useVideo({
     videoElement:
       videoRef.current &&
@@ -16,12 +15,15 @@ const AppComponent = memo(function AppComponent(props) {
     // onPlay: (val: any) => {
     //   console.log(val, xx.current);
     // },
-    onTimeChange: (val: any) => {
-      console.log(val);
-    },
+    // onTimeChange: (val: any) => {
+    //   console.log(val);
+    // },
     // onEndEd: (val: any) => {
     //   console.log('结束', val);
     // },
+    onProgressSlide(val: any) {
+      console.log(`童东风`, val);
+    },
   });
 
   return (
