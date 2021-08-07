@@ -32,7 +32,6 @@ const AppComponent = memo(function AppComponent(props) {
     [videoRef.current],
   );
 
-  xx.current = clientX;
   return (
     <>
       {isPlay ? '播放' : '暂停'}
