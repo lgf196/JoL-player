@@ -11,6 +11,7 @@ import { videoparameter } from '@/interface';
 import { FlowContext, useVideoFlow } from '@/core/context';
 import useMandatoryUpdate from '@/utils/useMandatoryUpdate';
 import Broadcast from '@/components/svgIcon';
+import { useVideo } from '@/core/useVideo';
 // import videoUrl from '@/assets/haiwang.mp4';
 import '@/assets/css/reset.scss';
 import './index.scss';
@@ -63,6 +64,19 @@ const JoLPlayer = function JoLPlayer(
   useImperativeHandle(ref, () => ({
     video: videoRef.current,
   }));
+
+  const { isPlay, handleChangePlayState, currentTime, duration, isPictureinpicture } = useVideo(
+    {
+      videoElement: videoRef.current,
+      // onPause: (val: any) => {
+      //   console.log(val);
+      // },
+      // onPlay: (val: any) => {
+      //   console.log(val);
+      // },
+    },
+    [videoRef.current],
+  );
 
   useEffect(() => {
     /**

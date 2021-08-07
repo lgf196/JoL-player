@@ -1,11 +1,13 @@
 import { useRef, useMemo, useEffect, useState, useReducer, useContext, useCallback } from 'react';
 import useMandatoryUpdate from '@/utils/useMandatoryUpdate';
 import { FlowContext } from '@/core/context';
+import useWindowClient from '@/utils/useWindowClient';
 
-export const useVideo = (
-  { videoElement, onPause, onPlay, onTimeChange, onEndEd, onProgressSlide }: any,
-  dep?: any,
-) => {
+export const useVideo = (props: any, dep: any[] = []) => {
+  const { clientX } = useWindowClient();
+
+  const { videoElement, onPause, onPlay, onTimeChange, onEndEd, onProgressSlide } = props;
+
   const forceUpdate = useMandatoryUpdate();
 
   const reviceProps = useContext(FlowContext);
@@ -29,7 +31,10 @@ export const useVideo = (
   videoRef.current = videoElement;
 
   useEffect(() => {
-    forceUpdate();
+    /**
+     * @description 防止在外部组件用，不更新的问题，所以要强制更新
+     */
+    // forceUpdate();
     if (videoRef.current) {
       /**
        * @description 监听总时长
@@ -62,7 +67,7 @@ export const useVideo = (
         /**
          * 强制更新
          */
-        forceUpdate();
+        // forceUpdate();
         torture({
           currentTime: videoRef.current.currentTime,
           isPlay: videoRef.current.paused ? false : true,
@@ -78,11 +83,11 @@ export const useVideo = (
     return () => {
       interval.current && clearInterval(interval.current);
     };
-  }, [videoRef.current, dep, videoElement]);
+  }, dep);
 
   const ProgressSlideChange = useCallback(
     (onProgressSlide: any) => {
-      // console.log(`onProgressSlide`, onProgressSlide);
+      console.log(`onProgressSlide`, onProgressSlide, videoFlow.progressSliderChangeVal);
       onProgressSlide && onProgressSlide(videoParameter.current);
     },
     [videoFlow.progressSliderChangeVal],
@@ -92,7 +97,7 @@ export const useVideo = (
     if (videoFlow.progressSliderChangeVal) {
       ProgressSlideChange(onProgressSlide);
     }
-  }, [ProgressSlideChange]);
+  }, [ProgressSlideChange, onProgressSlide]);
 
   const torture = (val: any) => {
     videoParameter.current = { ...videoParameter.current, ...val };

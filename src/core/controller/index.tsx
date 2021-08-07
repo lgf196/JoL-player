@@ -15,24 +15,28 @@ const Index = memo(function Index(props) {
 
   const { dispatch } = reviceProps;
 
-  const { isPlay, handleChangePlayState, currentTime } = useVideo({
-    videoElement: reviceProps.videoRef,
-    // onPause: (val: any) => {
-    //   console.log(val);
-    // },
-    // onPlay: (val: any) => {
-    //   console.log(val);
-    // },
-    // onTimeChange: (val: any) => {
-    //   console.log(val);
-    // },
-    // onEndEd: (val: any) => {
-    //   console.log('结束', val);
-    // },
-    // onProgressSlide: (val: any) => {
-    //   console.log(`童东风`, val);
-    // },
-  });
+  const { isPlay, handleChangePlayState, currentTime } = useVideo(
+    {
+      videoElement: reviceProps.videoRef,
+      // onPause: (val: any) => {
+      //   console.log(val);
+      // },
+      // onPlay: (val: any) => {
+      //   console.log(val);
+      // },
+      // onTimeChange: (val: any) => {
+      //   console.log(val);
+      // },
+      // onEndEd: (val: any) => {
+      //   console.log('结束', val);
+      // },
+      // onProgressSlide: (val: any) => {
+      //   console.log(`童东风`, val);
+      // },
+    },
+    [reviceProps.videoRef],
+  );
+
   const timer = useRef<NodeJS.Timeout | null>(null!);
 
   const viewClientX = useRef<number>(null!);

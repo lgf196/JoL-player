@@ -30,9 +30,18 @@ const Index = memo(function Index(props) {
 
   const revicePropsData = useRef<any>();
 
-  const { isPlay, handleChangePlayState, currentTime, duration, isPictureinpicture } = useVideo({
-    videoElement: reviceProps.videoRef,
-  });
+  const { isPlay, handleChangePlayState, currentTime, duration, isPictureinpicture } = useVideo(
+    {
+      videoElement: reviceProps.videoRef,
+      // onPause: (val: any) => {
+      //   console.log(val);
+      // },
+      // onPlay: (val: any) => {
+      //   console.log(val);
+      // },
+    },
+    [reviceProps.videoRef],
+  );
 
   const { controlsState, dispatch } = useControls();
 
