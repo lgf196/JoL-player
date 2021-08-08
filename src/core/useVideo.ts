@@ -1,18 +1,10 @@
-import { useRef, useMemo, useEffect, useState, useReducer, useContext, useCallback } from 'react';
+import { useRef, useMemo, useEffect, DependencyList } from 'react';
 import useMandatoryUpdate from '@/utils/useMandatoryUpdate';
-import { FlowContext } from '@/core/context';
-import useWindowClient from '@/utils/useWindowClient';
 
-export const useVideo = (props: any, dep: any[] = []) => {
-  const { clientX } = useWindowClient();
-
-  const { videoElement, onPause, onPlay, onTimeChange, onEndEd, onProgressSlide } = props;
+export const useVideo = (props: any, dep: DependencyList = []) => {
+  const { videoElement } = props;
 
   const forceUpdate = useMandatoryUpdate();
-
-  const reviceProps = useContext(FlowContext);
-
-  const { videoRef: videoEle, dispatch, videoFlow } = reviceProps;
 
   const videoParameter = useRef<any>({
     isPlay: false,
@@ -22,6 +14,7 @@ export const useVideo = (props: any, dep: any[] = []) => {
     isPictureinpicture: false,
     volume: 0,
     multiple: 1.0,
+    isEndEd: false,
   });
 
   const videoRef = useRef<HTMLVideoElement>(null!);
@@ -67,12 +60,13 @@ export const useVideo = (props: any, dep: any[] = []) => {
         /**
          * 强制更新
          */
-        // forceUpdate();
+        forceUpdate();
         torture({
           currentTime: videoRef.current.currentTime,
           isPlay: videoRef.current.paused ? false : true,
           volume: videoRef.current.volume,
           multiple: videoRef.current.playbackRate,
+          isEndEd: videoRef.current.ended ? true : false,
         });
       }, 1);
       videoRef.current.addEventListener('pause', pauseChange);
@@ -85,37 +79,20 @@ export const useVideo = (props: any, dep: any[] = []) => {
     };
   }, dep);
 
-  const ProgressSlideChange = useCallback(
-    (onProgressSlide: any) => {
-      console.log(`onProgressSlide`, onProgressSlide, videoFlow.progressSliderChangeVal);
-      onProgressSlide && onProgressSlide(videoParameter.current);
-    },
-    [videoFlow.progressSliderChangeVal],
-  );
-
-  useEffect(() => {
-    if (videoFlow.progressSliderChangeVal) {
-      ProgressSlideChange(onProgressSlide);
-    }
-  }, [ProgressSlideChange, onProgressSlide]);
-
   const torture = (val: any) => {
     videoParameter.current = { ...videoParameter.current, ...val };
   };
   const pauseChange = () => {
     torture({ isPlay: videoRef.current.paused ? false : true });
-    onPause && onPause(videoParameter.current);
   };
   const playChange = () => {
     torture({ isPlay: videoRef.current.paused ? false : true });
-    onPlay && onPlay(videoParameter.current);
   };
   const timeupdate = () => {
     torture({ isPlay: videoRef.current.paused ? false : true });
-    onTimeChange && onTimeChange(videoParameter.current);
   };
   const endedChange = () => {
-    onEndEd && onEndEd(videoParameter.current);
+    torture({ isEndEd: videoRef.current.ended ? true : false });
   };
   const handleChangePlayState = () => {
     if (videoParameter.current.isPlay) {

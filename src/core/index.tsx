@@ -12,6 +12,7 @@ import { FlowContext, useVideoFlow } from '@/core/context';
 import useMandatoryUpdate from '@/utils/useMandatoryUpdate';
 import Broadcast from '@/components/svgIcon';
 import { useVideo } from '@/core/useVideo';
+import useVideoCallback from '@/core/useVideoCallback';
 // import videoUrl from '@/assets/haiwang.mp4';
 import '@/assets/css/reset.scss';
 import './index.scss';
@@ -19,8 +20,18 @@ import './index.scss';
 const JoLPlayer = function JoLPlayer(
   {
     videoSrc = 'https://gs-files.oss-cn-hongkong.aliyuncs.com/okr/test/file/2021/07/01/haiwang.mp4',
+    onProgressSlide,
+    onPlay,
+    onPause,
+    onTimeChange,
+    onEndEd,
   }: {
     videoSrc?: string;
+    onPause?: Function;
+    onPlay?: Function;
+    onTimeChange?: Function;
+    onEndEd?: Function;
+    onProgressSlide?: Function;
   },
   ref: React.Ref<unknown> | undefined,
 ) {
@@ -65,20 +76,27 @@ const JoLPlayer = function JoLPlayer(
     video: videoRef.current,
   }));
 
-  const { isPlay, handleChangePlayState, currentTime, duration, isPictureinpicture } = useVideo(
-    {
-      videoElement: videoRef.current,
-      // onPause: (val: any) => {
-      //   console.log(val);
-      // },
-      // onPlay: (val: any) => {
-      //   console.log(val);
-      // },
-    },
-    [videoRef.current],
-  );
+  const { isPlay, handleChangePlayState, currentTime, duration, isPictureinpicture, isEndEd } =
+    useVideo(
+      {
+        videoElement: videoRef.current,
+      },
+      [videoRef.current],
+    );
+
+  const callBack = useVideoCallback({ isPlay, currentTime, isEndEd }, videoFlow, {
+    onProgressSlide,
+    onPlay,
+    onPause,
+    onTimeChange,
+    onEndEd,
+  });
 
   useEffect(() => {
+    /**
+     * @description 强制更新dom层
+     */
+    forceUpdate();
     /**
      * @description 设置用户给的视频播放器长宽
      */
@@ -97,10 +115,6 @@ const JoLPlayer = function JoLPlayer(
     videoElem.addEventListener('waiting', waitingListener);
     // 当开始播放时更改waiting状态
     videoElem.addEventListener('playing', playingListener);
-    /**
-     * @description 强制更新dom层
-     */
-    forceUpdate();
     return () => {
       timerToCheckVideoUseful.current && clearTimeout(timerToCheckVideoUseful.current);
       videoElem.removeEventListener('waiting', waitingListener);
@@ -117,6 +131,32 @@ const JoLPlayer = function JoLPlayer(
       </>
     );
   }, [videoSrc]);
+
+  // useEffect(() => {
+  //   if (videoFlow.progressSliderChangeVal) {
+  //     onProgressSlide && onProgressSlide(videoFlow.progressSliderChangeVal);
+  //   }
+  // }, [videoFlow.progressSliderChangeVal]);
+
+  // useEffect(() => {
+  //   if (isPlay) {
+  //     onPlay && onPlay(isPlay);
+  //   } else {
+  //     onPause && onPause(isPlay);
+  //   }
+  // }, [isPlay]);
+
+  // useEffect(() => {
+  //   if (currentTime) {
+  //     onTimeChange && onTimeChange(currentTime);
+  //   }
+  // }, [currentTime]);
+
+  // useEffect(() => {
+  //   if (isEndEd) {
+  //     onEndEd && onEndEd(isEndEd);
+  //   }
+  // }, [isEndEd]);
 
   const contextProps = useMemo(() => {
     return Object.assign(
