@@ -1,22 +1,18 @@
 import React, { useReducer } from 'react';
-
+import { videoOption } from '@/interface';
 export interface VideoStateType<K = boolean, T = number> {
   /**
    * @description 是否显示控件
    */
   isControl: K;
   /**
-   *  @description 视频当前时间
-   */
-  currentTime: T;
-  /**
-   * @description 是否播放
-   */
-  isPlay: K;
-  /**
-   * @description onProgressSlider事件的变化数据，用来区分是onProgressSlider事件触发的
+   * @description onProgressMouseDown事件的变化数据，用来区分是onProgressMouseDown事件触发的
    */
   progressSliderChangeVal: T;
+  /**
+   * @description onProgressMouseUp事件的变化数据，用来区分是onProgressMouseUp事件触发的
+   */
+  progressMouseUpChangeVal: T;
 }
 /**
  * @description 永不变的数据
@@ -27,15 +23,15 @@ export interface contextType {
   lightOffMaskRef: HTMLElement | null;
   dispatch?: React.Dispatch<mergeAction>;
   videoFlow: VideoStateType;
+  propsAttributes?: videoOption;
 }
 /**
  * @description 变化的数据
  */
 export const initialState = {
   isControl: false,
-  currentTime: 0,
-  isPlay: false,
   progressSliderChangeVal: 0,
+  progressMouseUpChangeVal: 0,
 };
 
 export const defaultValue = {
@@ -50,35 +46,28 @@ export interface isControlActionType {
   type: 'isControl';
   data: VideoStateType['isControl'];
 }
-export interface currentTimeActionType {
-  type: 'currentTime';
-  data: VideoStateType['currentTime'];
-}
-export interface isPlayActionType {
-  type: 'isPlay';
-  data: VideoStateType['isPlay'];
-}
 export interface progressSliderChangeValActionType {
   type: 'progressSliderChangeVal';
   data: VideoStateType['progressSliderChangeVal'];
 }
+export interface progressMouseUpChangeValValActionType {
+  type: 'progressMouseUpChangeVal';
+  data: VideoStateType['progressMouseUpChangeVal'];
+}
 export type mergeAction =
   | isControlActionType
-  | currentTimeActionType
-  | isPlayActionType
-  | progressSliderChangeValActionType;
+  | progressSliderChangeValActionType
+  | progressMouseUpChangeValValActionType;
 
 export const useVideoFlow = () => {
   const reducer = (state: VideoStateType, action: mergeAction) => {
     switch (action.type) {
       case 'isControl':
         return { ...state, isControl: action.data };
-      case 'currentTime':
-        return { ...state, currentTime: action.data };
-      case 'isPlay':
-        return { ...state, isPlay: action.data };
       case 'progressSliderChangeVal':
         return { ...state, progressSliderChangeVal: action.data };
+      case 'progressMouseUpChangeVal':
+        return { ...state, progressMouseUpChangeVal: action.data };
       default:
         return state;
     }

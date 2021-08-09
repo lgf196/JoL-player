@@ -1,12 +1,18 @@
 import { useRef, useMemo, useEffect, DependencyList } from 'react';
 import useMandatoryUpdate from '@/utils/useMandatoryUpdate';
+import { videoAttributes } from '@/interface';
+
+export interface useVideoType extends videoAttributes {
+  handleChangePlayState: () => void;
+  videoAttributes: videoAttributes;
+}
 
 export const useVideo = (props: any, dep: DependencyList = []) => {
   const { videoElement } = props;
 
   const forceUpdate = useMandatoryUpdate();
 
-  const videoParameter = useRef<any>({
+  const videoParameter = useRef<videoAttributes>({
     isPlay: false,
     currentTime: 0,
     duration: 0,
@@ -15,6 +21,7 @@ export const useVideo = (props: any, dep: DependencyList = []) => {
     volume: 0,
     multiple: 1.0,
     isEndEd: false,
+    error: null,
   });
 
   const videoRef = useRef<HTMLVideoElement>(null!);
@@ -24,10 +31,6 @@ export const useVideo = (props: any, dep: DependencyList = []) => {
   videoRef.current = videoElement;
 
   useEffect(() => {
-    /**
-     * @description 防止在外部组件用，不更新的问题，所以要强制更新
-     */
-    // forceUpdate();
     if (videoRef.current) {
       /**
        * @description 监听总时长
@@ -73,13 +76,14 @@ export const useVideo = (props: any, dep: DependencyList = []) => {
       videoRef.current.addEventListener('play', playChange);
       videoRef.current.addEventListener('timeupdate', timeupdate);
       videoRef.current.addEventListener('ended', endedChange);
+      videoRef.current.addEventListener('error', errorChange);
     }
     return () => {
       interval.current && clearInterval(interval.current);
     };
   }, dep);
 
-  const torture = (val: any) => {
+  const torture = <T extends Partial<videoAttributes>>(val: T) => {
     videoParameter.current = { ...videoParameter.current, ...val };
   };
   const pauseChange = () => {
@@ -94,6 +98,9 @@ export const useVideo = (props: any, dep: DependencyList = []) => {
   const endedChange = () => {
     torture({ isEndEd: videoRef.current.ended ? true : false });
   };
+  const errorChange = () => {
+    torture({ error: Date.now() });
+  };
   const handleChangePlayState = () => {
     if (videoParameter.current.isPlay) {
       videoRef.current.pause();
@@ -102,10 +109,11 @@ export const useVideo = (props: any, dep: DependencyList = []) => {
     }
   };
 
-  return useMemo(
+  return useMemo<useVideoType>(
     () => ({
       handleChangePlayState,
       ...videoParameter.current,
+      videoAttributes: videoParameter.current,
     }),
     [videoParameter.current],
   );

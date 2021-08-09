@@ -1,5 +1,7 @@
-import React, { useImperativeHandle, useRef, forwardRef, useState } from 'react';
+import React, { useImperativeHandle, useRef, forwardRef, useState, useContext } from 'react';
 import Broadcast from '@/components/svgIcon';
+import { defaultTheme } from '@/core/config';
+import { FlowContext } from '@/core/context';
 import './index.scss';
 
 export interface VolumeType {
@@ -14,6 +16,10 @@ const Volume = function Volume(
   ref: React.Ref<unknown> | undefined,
 ) {
   const volumeSliderMirror = useRef<HTMLDivElement>(null);
+
+  const reviceProps = useContext(FlowContext);
+
+  const { theme } = reviceProps.propsAttributes!;
 
   const [isShow, setIsShow] = useState<boolean>(false);
 
@@ -49,10 +55,13 @@ const Volume = function Volume(
                 className="volume-slider-op"
                 style={{
                   height: `${volume}%`,
-                  backgroundColor: `red`,
+                  backgroundColor: `${theme ? theme : defaultTheme}`,
                 }}
               >
-                <div className="volume-slider-op-circle" style={{ backgroundColor: `red` }}></div>
+                <div
+                  className="volume-slider-op-circle"
+                  style={{ backgroundColor: `${theme ? theme : defaultTheme}` }}
+                ></div>
               </div>
             </div>
           </div>

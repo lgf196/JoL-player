@@ -6,3 +6,5 @@ export const multipleList = [
   { id: 1.5, name: '1.5x' },
   { id: 2, name: '2.0x' },
 ];
+
+export const defaultTheme: string = 'blue';

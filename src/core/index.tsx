@@ -13,28 +13,24 @@ import useMandatoryUpdate from '@/utils/useMandatoryUpdate';
 import Broadcast from '@/components/svgIcon';
 import { useVideo } from '@/core/useVideo';
 import useVideoCallback from '@/core/useVideoCallback';
+import { defaultTheme } from '@/core/config';
 // import videoUrl from '@/assets/haiwang.mp4';
 import '@/assets/css/reset.scss';
 import './index.scss';
 
-const JoLPlayer = function JoLPlayer(
-  {
-    videoSrc = 'https://gs-files.oss-cn-hongkong.aliyuncs.com/okr/test/file/2021/07/01/haiwang.mp4',
-    onProgressSlide,
+const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unknown> | undefined) {
+  const {
+    option,
+    onProgressMouseDown,
     onPlay,
     onPause,
     onTimeChange,
     onEndEd,
-  }: {
-    videoSrc?: string;
-    onPause?: Function;
-    onPlay?: Function;
-    onTimeChange?: Function;
-    onEndEd?: Function;
-    onProgressSlide?: Function;
-  },
-  ref: React.Ref<unknown> | undefined,
-) {
+    onProgressMouseUp,
+    onError,
+    onvolumechange,
+  } = props;
+  const { videoSrc, width, height, theme } = option;
   /**
    * @description 关灯对象
    */
@@ -76,20 +72,22 @@ const JoLPlayer = function JoLPlayer(
     video: videoRef.current,
   }));
 
-  const { isPlay, handleChangePlayState, currentTime, duration, isPictureinpicture, isEndEd } =
-    useVideo(
-      {
-        videoElement: videoRef.current,
-      },
-      [videoRef.current],
-    );
+  const { videoAttributes } = useVideo(
+    {
+      videoElement: videoRef.current,
+    },
+    [videoRef.current],
+  );
 
-  const callBack = useVideoCallback({ isPlay, currentTime, isEndEd }, videoFlow, {
-    onProgressSlide,
+  useVideoCallback(videoAttributes, videoFlow, {
+    onProgressMouseDown,
+    onProgressMouseUp,
     onPlay,
     onPause,
     onTimeChange,
     onEndEd,
+    onError,
+    onvolumechange,
   });
 
   useEffect(() => {
@@ -101,6 +99,8 @@ const JoLPlayer = function JoLPlayer(
      * @description 设置用户给的视频播放器长宽
      */
     const videoContainerElem = videoContainerRef.current;
+    videoContainerElem.style.width = `${width}px`;
+    videoContainerElem.style.height = `${height}px`;
     const videoElem = videoRef.current;
     // 设置定时器检测 3 秒后视频是否可用
     timerToCheckVideoUseful.current = setTimeout(() => {
@@ -120,7 +120,7 @@ const JoLPlayer = function JoLPlayer(
       videoElem.removeEventListener('waiting', waitingListener);
       videoElem.removeEventListener('playing', playingListener);
     };
-  }, [videoRef.current]);
+  }, [videoRef.current, option]);
 
   const returnVideoSource = useMemo(() => {
     return (
@@ -132,32 +132,6 @@ const JoLPlayer = function JoLPlayer(
     );
   }, [videoSrc]);
 
-  // useEffect(() => {
-  //   if (videoFlow.progressSliderChangeVal) {
-  //     onProgressSlide && onProgressSlide(videoFlow.progressSliderChangeVal);
-  //   }
-  // }, [videoFlow.progressSliderChangeVal]);
-
-  // useEffect(() => {
-  //   if (isPlay) {
-  //     onPlay && onPlay(isPlay);
-  //   } else {
-  //     onPause && onPause(isPlay);
-  //   }
-  // }, [isPlay]);
-
-  // useEffect(() => {
-  //   if (currentTime) {
-  //     onTimeChange && onTimeChange(currentTime);
-  //   }
-  // }, [currentTime]);
-
-  // useEffect(() => {
-  //   if (isEndEd) {
-  //     onEndEd && onEndEd(isEndEd);
-  //   }
-  // }, [isEndEd]);
-
   const contextProps = useMemo(() => {
     return Object.assign(
       {},
@@ -167,9 +141,10 @@ const JoLPlayer = function JoLPlayer(
         lightOffMaskRef: lightOffMaskRef.current,
         dispatch,
         videoFlow,
+        propsAttributes: option,
       },
     );
-  }, [videoRef.current, videoFlow]);
+  }, [videoRef.current, videoFlow, option]);
 
   return (
     <figure className="JoL-player-container" ref={videoContainerRef}>
@@ -179,7 +154,12 @@ const JoLPlayer = function JoLPlayer(
       </video>
       {!isVideoUseful && <p className="video-no-useful-tip">抱歉！视频找不到了 (｡ ́︿ ̀｡)</p>}
       {isBufferring && (
-        <Broadcast iconClass="loading" fill="#ff0000" className="player-loading" fontSize="55px" />
+        <Broadcast
+          iconClass="loading"
+          fill={theme ? theme : defaultTheme}
+          className="player-loading"
+          fontSize="55px"
+        />
       )}
       <FlowContext.Provider value={contextProps}>
         <Controller />
@@ -188,5 +168,6 @@ const JoLPlayer = function JoLPlayer(
   );
 };
 
-const JoLPlayerComponent = forwardRef<HTMLVideoElement, any>(JoLPlayer);
+const JoLPlayerComponent = forwardRef<HTMLVideoElement, videoparameter>(JoLPlayer);
+
 export default JoLPlayerComponent;

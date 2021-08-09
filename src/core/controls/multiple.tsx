@@ -1,7 +1,8 @@
-import React, { memo, FC, useState } from 'react';
+import React, { memo, FC, useState, useContext } from 'react';
 import { multipleList } from '@/core/config';
+import { defaultTheme } from '@/core/config';
+import { FlowContext } from '@/core/context';
 import './index.scss';
-
 export interface MultipleType {
   multipleText: string;
   selectPlayRate: Function;
@@ -13,6 +14,10 @@ const Multiple: FC<MultipleType> = memo(function Multiple({
   selectPlayRate,
   multiple,
 }) {
+  const reviceProps = useContext(FlowContext);
+
+  const { theme } = reviceProps.propsAttributes!;
+
   const [isShow, setIsShow] = useState<boolean>(false);
 
   return (
@@ -31,7 +36,7 @@ const Multiple: FC<MultipleType> = memo(function Multiple({
             <li
               onClick={() => [selectPlayRate(item.id), setIsShow(false)]}
               key={index}
-              style={{ color: multiple === item.id ? 'red' : '#fff' }}
+              style={{ color: multiple === item.id ? (theme ? theme : defaultTheme) : '#fff' }}
             >
               {item.name}
             </li>

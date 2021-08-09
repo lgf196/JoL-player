@@ -5,6 +5,7 @@ import { percentToMinutesAndSeconds, percentToSeconds } from '@/utils';
 import useWindowClient from '@/utils/useWindowClient';
 import { useProgress } from './variable';
 import { hoverShowStyleType } from '@/interface';
+import { defaultTheme } from '@/core/config';
 import './index.scss';
 
 const Index = memo(function Index(props) {
@@ -28,6 +29,8 @@ const Index = memo(function Index(props) {
   const clientXdistance = useRef<number>(0);
 
   const reviceProps = useContext(FlowContext);
+
+  const { theme } = reviceProps.propsAttributes!;
 
   const { currentTime, duration, bufferedTime } = useVideo({ videoElement: reviceProps.videoRef }, [
     reviceProps.videoRef,
@@ -138,6 +141,7 @@ const Index = memo(function Index(props) {
    */
   const clearIntervalFunc = () => {
     whenMouseUpDo();
+    reviceProps.dispatch!({ type: 'progressMouseUpChangeVal', data: Date.now() });
   };
   /**
    * @description 移动悬浮层
@@ -176,12 +180,12 @@ const Index = memo(function Index(props) {
           className="progress-played"
           style={{
             width: `${calculateProcessPercent}%`,
-            background: `red`,
+            background: `${theme ? theme : defaultTheme}`,
           }}
         >
           <i
             className="progress-scrubber"
-            style={{ background: `red` }}
+            style={{ background: `${theme ? theme : defaultTheme}` }}
             ref={progressScrubberRef}
           ></i>
         </div>
@@ -200,13 +204,13 @@ const Index = memo(function Index(props) {
               <div
                 className="top-triangle"
                 style={{
-                  borderTop: `4px solid red`,
+                  borderTop: `4px solid ${theme ? theme : defaultTheme}`,
                 }}
               ></div>
               <div
                 className="bottom-triangle"
                 style={{
-                  borderBottom: `4px solid red`,
+                  borderBottom: `4px solid ${theme ? theme : defaultTheme}`,
                 }}
               ></div>
             </div>
