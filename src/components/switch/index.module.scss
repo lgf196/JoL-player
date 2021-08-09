@@ -1,3 +1,6 @@
+body {
+  --JoL-theme: red;
+}
 .container {
   display: flex;
   align-items: center;
@@ -35,9 +38,8 @@
 
 // checked状态时，背景颜色改变
 .switch:checked {
-  background-color: red;
+  background-color: var(--JoL-theme);
 }
-
 // checked状态时，按钮位置改变
 .switch:checked::after {
   left: 50%;

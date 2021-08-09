@@ -172,7 +172,7 @@ const Index = memo(function Index(props) {
   return (
     <div
       className="progress-container"
-      style={{ opacity: reviceProps.videoFlow!.isControl ? '1' : '0' }}
+      // style={{ opacity: reviceProps.videoFlow!.isControl ? '1' : '0' }}
     >
       <div className="progress-bg" ref={progressBgRef}>
         <div className="progress-buffered" style={{ width: `${calculateBufferedPercent}%` }}></div>
