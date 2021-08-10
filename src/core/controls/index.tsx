@@ -8,8 +8,6 @@ import { useControls } from './variable';
 import useWindowClient from '@/utils/useWindowClient';
 import screenfull, { Screenfull } from 'screenfull';
 import { multipleList } from '@/core/config';
-import Switch from '@/components/switch';
-import useMandatoryUpdate from '@/utils/useMandatoryUpdate';
 import SetComponent from './set';
 import MultipleComponent from './multiple';
 import VolumeComponent from './volume';
@@ -30,12 +28,13 @@ const Index = memo(function Index(props) {
 
   const revicePropsData = useRef<any>();
 
-  const { isPlay, handleChangePlayState, currentTime, duration, isPictureinpicture } = useVideo(
-    {
-      videoElement: reviceProps.videoRef,
-    },
-    [reviceProps.videoRef],
-  );
+  const { isPlay, handleChangePlayState, currentTime, duration, isPictureinpicture, volume } =
+    useVideo(
+      {
+        videoElement: reviceProps.videoRef,
+      },
+      [reviceProps.videoRef],
+    );
 
   const { controlsState, dispatch } = useControls();
 
@@ -44,6 +43,13 @@ const Index = memo(function Index(props) {
   clientYdistance.current = clientY;
 
   revicePropsData.current = reviceProps;
+
+  useEffect(() => {
+    /**
+     * @description 如果调用了setVolume函数，这边的数据就要保持和video的数据一致
+     */
+    dispatch({ type: 'volume', data: Math.floor(volume * 100) });
+  }, [volume]);
 
   useEffect(() => {
     // 为了防止音量滑动元素计时器不暂停

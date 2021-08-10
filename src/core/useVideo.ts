@@ -1,10 +1,11 @@
 import { useRef, useMemo, useEffect, DependencyList } from 'react';
 import useMandatoryUpdate from '@/utils/useMandatoryUpdate';
-import { videoAttributes } from '@/interface';
-
+import { videoAttributes, videoMethod, parVoid } from '@/interface';
+import { defaultVolume } from '@/core/config';
 export interface useVideoType extends videoAttributes {
   handleChangePlayState: () => void;
   videoAttributes: videoAttributes;
+  videoMethod: videoMethod;
 }
 
 export const useVideo = (props: any, dep: DependencyList = []) => {
@@ -32,6 +33,7 @@ export const useVideo = (props: any, dep: DependencyList = []) => {
 
   useEffect(() => {
     if (videoRef.current) {
+      setVolume(defaultVolume);
       /**
        * @description 监听总时长
        */
@@ -108,12 +110,27 @@ export const useVideo = (props: any, dep: DependencyList = []) => {
       videoRef.current.play();
     }
   };
+  const setVolume: parVoid<number> = (val) => {
+    videoRef.current.volume = val < 1 ? val : val / 100;
+  };
+  const videoMethod = useMemo<videoMethod>(() => {
+    return {
+      load: () => videoRef.current.load(),
+      play: () => videoRef.current.play(),
+      pause: () => videoRef.current.pause(),
+      setVolume,
+      seek: (currentTime) => {
+        videoRef.current.currentTime = currentTime;
+      },
+    };
+  }, [dep]);
 
   return useMemo<useVideoType>(
     () => ({
       handleChangePlayState,
       ...videoParameter.current,
       videoAttributes: videoParameter.current,
+      videoMethod,
     }),
     [videoParameter.current],
   );

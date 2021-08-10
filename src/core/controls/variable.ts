@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-
+import { defaultVolume } from '@/core/config';
 export interface controlsVariableType<T = number, K = boolean> {
   /**
    * @description 音量键的值
@@ -61,7 +61,7 @@ export type mergeAction =
 
 export const useControls = () => {
   const initialState = {
-    volume: 0,
+    volume: defaultVolume,
     isMuted: false,
     isSlideVolume: false,
     isScreentFull: false,

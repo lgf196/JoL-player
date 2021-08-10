@@ -62,6 +62,32 @@ export interface videoAttributes<T = number, K = boolean> {
    */
   error: null | T;
 }
+export type noParVoid = () => void;
+
+export type parVoid<T> = (par: T) => void;
+
+export interface videoMethod<T = noParVoid> {
+  /**
+   * @description 重新加载
+   */
+  load: T;
+  /**
+   * @description 开始播放
+   */
+  play: T;
+  /**
+   * @description 暂停
+   */
+  pause: T;
+  /**
+   * @description 设置音量
+   */
+  setVolume: parVoid<number>;
+  /**
+   * @description 设置指定视频的播放位置/s
+   */
+  seek: parVoid<number>;
+}
 export type callBackType = (e: videoAttributes) => void;
 export interface videoCallback<T = callBackType> {
   /**
@@ -91,7 +117,7 @@ export interface videoCallback<T = callBackType> {
   /**
    * @description 视频播放失败的回调
    */
-  onError: () => void;
+  onError: noParVoid;
   /**
    * @description 音量改变时的回调
    */
@@ -105,3 +131,7 @@ export interface videoparameter extends Partial<videoCallback> {
   option: videoOption;
   className?: string;
 }
+export type JoLPlayerRef = videoMethod &
+  videoAttributes & {
+    video: HTMLVideoElement;
+  };

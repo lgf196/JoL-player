@@ -7,7 +7,7 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import Controller from './controller';
-import { videoparameter } from '@/interface';
+import { videoparameter, JoLPlayerRef } from '@/interface';
 import { FlowContext, useVideoFlow } from '@/core/context';
 import useMandatoryUpdate from '@/utils/useMandatoryUpdate';
 import Broadcast from '@/components/svgIcon';
@@ -68,11 +68,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
     setIsBufferring(false);
   };
 
-  useImperativeHandle(ref, () => ({
-    video: videoRef.current,
-  }));
-
-  const { videoAttributes } = useVideo(
+  const { videoAttributes, videoMethod, currentTime, isPlay } = useVideo(
     {
       videoElement: videoRef.current,
     },
@@ -122,6 +118,14 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
     };
   }, [videoRef.current, option]);
 
+  useImperativeHandle(ref, () => {
+    return {
+      video: videoRef.current,
+      ...videoMethod,
+      ...videoAttributes,
+    };
+  });
+
   const returnVideoSource = useMemo(() => {
     return (
       <>
@@ -168,6 +172,6 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
   );
 };
 
-const JoLPlayerComponent = forwardRef<HTMLVideoElement, videoparameter>(JoLPlayer);
+const JoLPlayerComponent = forwardRef<JoLPlayerRef, videoparameter>(JoLPlayer);
 
 export default JoLPlayerComponent;
