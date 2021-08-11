@@ -1,8 +1,11 @@
-import React, { memo, useRef, useEffect, useMemo } from 'react';
+import React, { memo, useRef, useEffect, useMemo, useState } from 'react';
 import JoLPlayer, { JoLPlayerType } from './app';
 import '@/icons/';
 
 const AppComponent = memo(function AppComponent(props) {
+  const url = useRef<string>(
+    'https://gs-files.oss-cn-hongkong.aliyuncs.com/okr/test/file/2021/07/01/haiwang.mp4',
+  );
   const videoRef = useRef<JoLPlayerType.JoLPlayerRef>(null!);
 
   const onProgressMouseDown: JoLPlayerType.callBackType = (val) => {
@@ -24,6 +27,13 @@ const AppComponent = memo(function AppComponent(props) {
     // console.log(`onTimeChange`, val);
   };
   const onEndEd = (val: any) => {
+    setTimeout(() => {
+      videoRef.current.setVideoSrc(
+        'https://gs-files.oss-accelerate.aliyuncs.com/okr/prod/file/2021/08/10/1628605591454mda-met51bhiqb2sgjzd.mp4',
+      );
+      videoRef.current.play();
+    }, 1000);
+
     console.log(`onEndEd`, val);
   };
   const onError = () => {
@@ -51,12 +61,6 @@ const AppComponent = memo(function AppComponent(props) {
   };
   useEffect(() => {
     if (videoRef.current) {
-      setTimeout(() => {
-        videoRef.current.video.play();
-      }, 1000);
-
-      console.log(`object`, videoRef.current.play);
-      // videoRef.current.play();
     }
 
     console.log(`videoRef.current`, videoRef.current);
@@ -66,11 +70,11 @@ const AppComponent = memo(function AppComponent(props) {
       <JoLPlayer
         ref={videoRef}
         option={{
-          videoSrc:
-            'https://gs-files.oss-cn-hongkong.aliyuncs.com/okr/test/file/2021/07/01/haiwang.mp4',
+          videoSrc: url.current,
           width: 750,
           height: 420,
           theme: '#00D3FF',
+          poster: 'https://cdn.gudsen.com/2021/06/28/f81356b08b4842d7a3719499f557c8e4.JPG',
         }}
         onProgressMouseDown={onProgressMouseDown}
         onPlay={onPlay}

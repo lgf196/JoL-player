@@ -30,7 +30,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
     onError,
     onvolumechange,
   } = props;
-  const { videoSrc, width, height, theme } = option;
+  const { videoSrc, width, height, theme, poster } = option;
   /**
    * @description 关灯对象
    */
@@ -153,7 +153,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
   return (
     <figure className="JoL-player-container" ref={videoContainerRef}>
       <div className="light-off-mask" ref={lightOffMaskRef}></div>
-      <video className="JoL-player" ref={videoRef}>
+      <video className="JoL-player" ref={videoRef} poster={poster ? poster : undefined}>
         {returnVideoSource}
       </video>
       {!isVideoUseful && <p className="video-no-useful-tip">抱歉！视频找不到了 (｡ ́︿ ̀｡)</p>}

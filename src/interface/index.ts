@@ -23,6 +23,10 @@ export interface videoOption {
    * @description 视频地址
    */
   videoSrc: string;
+  /**
+   * @description 视频封面图
+   */
+  poster?: string;
 }
 export interface videoAttributes<T = number, K = boolean> {
   /**
@@ -87,6 +91,10 @@ export interface videoMethod<T = noParVoid> {
    * @description 设置指定视频的播放位置/s
    */
   seek: parVoid<number>;
+  /**
+   * @description 设置播放视频的地址src
+   */
+  setVideoSrc: parVoid<string>;
 }
 export type callBackType = (e: videoAttributes) => void;
 export interface videoCallback<T = callBackType> {

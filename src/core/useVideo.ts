@@ -122,6 +122,9 @@ export const useVideo = (props: any, dep: DependencyList = []) => {
       seek: (currentTime) => {
         videoRef.current.currentTime = currentTime;
       },
+      setVideoSrc: (url) => {
+        videoRef.current.src = url;
+      },
     };
   }, [dep]);
 
