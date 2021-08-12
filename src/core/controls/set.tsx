@@ -17,13 +17,16 @@ const Set: FC<SetType> = memo(function Set({ switchChange }) {
   const [isShow, setIsShow] = useState<boolean>(false);
   return (
     <div
-      className="multifunction-set"
+      className="JoL-multifunction-set"
       onMouseEnter={(e) => [setIsShow(true), e.stopPropagation()]}
       onMouseLeave={(e) => [setIsShow(false), e.stopPropagation()]}
     >
       <Broadcast iconClass="set" fill="#fff" />
-      <div className="multifunction-set-container" style={{ display: isShow ? 'block' : 'none' }}>
-        <ul className="multifunction-set-layer">
+      <div
+        className="JoL-multifunction-set-container"
+        style={{ display: isShow ? 'block' : 'none' }}
+      >
+        <ul className="JoL-multifunction-set-layer">
           <li>
             <Switch
               sole="lights"

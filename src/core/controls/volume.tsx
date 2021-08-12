@@ -29,13 +29,13 @@ const Volume = function Volume(
 
   return (
     <div
-      className="multifunction-volume"
+      className="JoL-multifunction-volume"
       onMouseEnter={(e) => [setIsShow(true), e.stopPropagation()]}
       onMouseLeave={(e) => [setIsShow(false), e.stopPropagation()]}
     >
       <Broadcast iconClass="volume" fill="#fff" fontSize={'20px'} />
       <div
-        className="multifunction-volume-container"
+        className="JoL-multifunction-volume-container"
         style={{ display: isShow ? 'block' : 'none' }}
       >
         <div className="volume-box">

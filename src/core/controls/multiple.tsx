@@ -22,16 +22,16 @@ const Multiple: FC<MultipleType> = memo(function Multiple({
 
   return (
     <div
-      className="multifunction-multiple"
+      className="JoL-multifunction-multiple"
       onMouseEnter={(e) => [setIsShow(true), e.stopPropagation()]}
       onMouseLeave={(e) => [setIsShow(false), e.stopPropagation()]}
     >
       <p>{multipleText}</p>
       <div
-        className="multifunction-multiple-container"
+        className="JoL-multifunction-multiple-container"
         style={{ display: isShow ? 'block' : 'none' }}
       >
-        <ul className="multifunction-multiple-layer">
+        <ul className="JoL-multifunction-multiple-layer">
           {multipleList.map((item, index) => (
             <li
               onClick={() => [selectPlayRate(item.id), setIsShow(false)]}

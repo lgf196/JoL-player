@@ -5,77 +5,26 @@
   justify-content: $jc;
   align-items: center;
 }
-
-@mixin flexItem($n) {
-  box-sizing: border-box;
-  flex-grow: $n;
-}
-
 @mixin style($size, $color, $bold: normal) {
   font-size: $size;
   color: $color;
   font-weight: $bold;
 }
-
 @mixin wh($w, $h) {
   width: $w;
   height: $h;
 }
-
-@mixin center() {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+@mixin position($type, $top, $right, $bottom, $left) {
+  position: $type;
+  left: $left;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
 }
-
-@mixin textOverflow($n) {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  /* autoprefixer: off */ //针对打包不显示的问题
-  -webkit-box-orient: vertical;
-  /* autoprefixer: on */
-  -webkit-line-clamp: $n;
-}
-
-@mixin cicle($size: 8px) {
-  border-radius: $size;
-}
-
-@mixin lh($h) {
-  line-height: $h;
-}
-
 @mixin fixed($t, $l) {
   position: fixed;
   top: $t;
   left: $l;
-}
-
-@mixin textAlign($h) {
-  height: $h;
-  line-height: $h;
-  text-align: center;
-  vertical-align: middle;
-}
-
-@mixin auto($l, $r) {
-  margin: $l auto $r auto;
-}
-@mixin scroll($w, $h) {
-  &::-webkit-scrollbar {
-    /*滚动条整体样式*/
-    @include wh($w, $h); /*高宽分别对应横竖滚动条的尺寸*/
-  }
-  &::-webkit-scrollbar-thumb {
-    /*滚动条里面小方块*/
-    border-radius: 5px;
-    background: rgba(0, 0, 0, 0.15);
-  }
-  &::-webkit-scrollbar-track {
-    /*滚动条里面轨道*/
-    -webkit-box-shadow: inset 0 0 5px #fff;
-  }
 }
 @keyframes show {
   0% {

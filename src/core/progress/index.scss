@@ -1,3 +1,4 @@
+@import 'src/assets/css/mixin.scss';
 @keyframes example {
   from {
     opacity: 0;
@@ -18,66 +19,48 @@
     transform: scale(1.5);
   }
 }
-.progress-container {
+.JoL-progress-container {
   transition: all 0.5s;
   width: 100%;
   .progress-bg {
     transition: all 0.3s;
-    width: 100%;
-    height: 5px;
+    @include wh(100%, 5px);
     background: rgba(255, 255, 255, 0.2);
     border-radius: 2px;
     position: relative;
     .progress-buffered {
-      position: absolute;
+      @include wh(0%, 100%);
+      @include position(absolute, 0, auto, auto, 0);
       z-index: 1;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 100%;
       border-radius: 2px;
       background: rgba(255, 255, 255, 0.5);
     }
     .progress-played {
-      position: absolute;
+      @include wh(0%, 100%);
+      @include position(absolute, 0, auto, auto, 0);
       z-index: 2;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 100%;
       border-radius: 2px;
-      // background: #fbc100;
       .progress-scrubber {
         transition: all 0.3s;
-        position: absolute;
-        right: -5px;
-        top: -50%;
+        @include wh(12px, 12px);
+        @include position(absolute, -50%, -5px, auto, auto);
         margin-top: -1px;
-        width: 12px;
-        height: 12px;
         border-radius: 50%;
-        // background-color: #fbc100;
       }
     }
     .progress-seek-mask {
-      position: absolute;
+      @include wh(100%, calc(100% + 6px));
+      @include position(absolute, -3px, auto, auto, 0);
       z-index: 100;
-      top: -3px;
-      left: 0;
-      width: 100%;
-      height: calc(100% + 6px);
       &:hover {
         cursor: pointer;
       }
     }
     .pointer {
-      position: absolute;
-      left: 714px;
-      top: 0;
+      @include position(absolute, 0, auto, auto, 714px);
       .top-triangle,
       .bottom-triangle {
-        width: 0;
-        height: 0;
+        @include wh(0, 0);
         position: absolute;
         border-right: 4px solid transparent;
         border-left: 4px solid transparent;
@@ -94,26 +77,18 @@
       }
     }
     .video-img-box {
-      position: absolute;
-      top: -120px;
-      left: 0px;
-      width: 169px;
-      height: 96px;
+      @include wh(169px, 96px);
+      @include position(absolute, -120px, auto, auto, 0);
       margin-left: calc(-169px / 2);
-      // background-color: aliceblue;
       .video-current-img {
-        width: 100%;
-        height: 100%;
+        @include wh(100%, 100%);
       }
       .current-time {
-        position: absolute;
-        bottom: 0;
-        left: 50%;
+        @include position(absolute, auto, auto, 0, 50%);
+        @include style(12px, #fff);
         transform: translateX(-50%);
         background-color: #222222;
-        color: #fff;
         padding: 0 5px;
-        font-size: 12px;
       }
     }
   }

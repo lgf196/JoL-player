@@ -203,7 +203,7 @@ const Index = memo(function Index(props) {
   };
   return (
     <div
-      className="controls-container"
+      className="JoL-controls-container"
       style={{ opacity: reviceProps.videoFlow!.isControl ? '1' : '0' }}
     >
       <MonitorComponent
@@ -212,7 +212,7 @@ const Index = memo(function Index(props) {
         currentTime={secondsToMinutesAndSecondes(currentTime)}
         totalTime={secondsToMinutesAndSecondes(duration)}
       />
-      <div className="multifunction">
+      <div className="JoL-multifunction">
         <MultipleComponent
           multipleText={multipleText}
           multiple={controlsState.multiple}

@@ -1,20 +1,14 @@
 @import 'src/assets/css/mixin.scss';
 .clientFullScreen {
-  position: fixed !important;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: auto !important;
-  height: auto !important;
+  @include wh(auto !important, auto !important);
+  @include position(fixed !important, 0, 0, 0, 0);
   z-index: 100000;
 }
-.controls-container {
+.JoL-controls-container {
   padding: 0 5px;
   box-sizing: border-box;
   transition: all 0.5s;
-  width: 100%;
-  height: 42px;
+  @include wh(100%, 42px);
   color: rgb(238, 238, 238);
   position: relative;
   // z-index: 10020;
@@ -25,11 +19,8 @@
   }
   &:after {
     content: '';
-    width: calc(100% + 26px);
-    height: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
+    @include wh(calc(100% + 26px), 100%);
+    @include position(absolute, auto, auto, 0, 50%);
     z-index: -1;
     transform: translateX(-50%);
     background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
@@ -43,26 +34,19 @@
       padding: 0 10px;
     }
   }
-  .multifunction {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+  .JoL-multifunction {
+    @include wh(100%, 100%);
+    @include flexContainer(flex-end);
     text-align: center;
     line-height: 42px;
     &-multiple {
       padding: 0 10px;
       position: relative;
       &-container {
-        position: absolute;
         transition: all 0.5s;
-        top: -12px;
-        left: 50%;
+        @include position(absolute, -12px, auto, auto, 50%);
         transform: translateX(-50%);
-        // display: none;
-        height: 70px;
-        width: 100%;
+        @include wh(100%, 70px);
         &:hover {
           .multifunction-multiple-layer {
             animation: show 0.3s ease;
@@ -71,10 +55,8 @@
       }
       &-layer {
         list-style: none;
-        position: absolute;
         line-height: normal;
-        bottom: 65px;
-        left: 50%;
+        @include position(absolute, auto, auto, 65px, 50%);
         transform: translateX(-50%);
         border-radius: 3px;
         background-color: rgba(0, 0, 0, 0.7);
@@ -103,14 +85,9 @@
         }
       }
       &-container {
-        position: absolute;
-        transition: all 0.5s;
-        left: 50%;
+        @include wh(100%, 70px);
+        @include position(absolute, -12px, auto, 0, 50%);
         transform: translateX(-50%);
-        top: -12px;
-        // display: none;
-        height: 70px;
-        width: 100%;
         &:hover {
           .volume-box {
             animation: show 0.3s ease;
@@ -121,17 +98,12 @@
         line-height: normal;
         position: absolute;
         bottom: 65px;
-        // left: 50%;
-        // transform: translateX(-50%);
-        // margin-left: -16px;
-        width: 40px;
-        height: 120px;
+        @include wh(40px, 120px);
         padding-bottom: 8px;
         border-radius: 3px;
         background-color: rgba(0, 0, 0, 0.7);
         .current-volume {
-          width: 100%;
-          height: 24px;
+          @include wh(100%, 24px);
           margin: 0;
           line-height: 24px;
           text-align: center;
@@ -144,44 +116,29 @@
           }
         }
         .volume-slider {
-          width: 100%;
-          height: 96px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
+          @include wh(100%, 96px);
+          @include flexContainer(center);
           .volume-slider-bg {
-            width: 2px;
-            height: 86px;
+            @include wh(2px, 86px);
             border-radius: 1px;
             background-color: #fff;
             position: relative;
             .volume-slider-op {
-              position: absolute;
+              @include wh(100%, 100%);
+              @include position(absolute, auto, auto, 0, 0);
               z-index: 1;
-              bottom: 0;
-              left: 0;
-              width: 100%;
-              height: 100%;
               border-radius: 1px;
-              // background-color: #fbc100;
               .volume-slider-op-circle {
-                position: absolute;
-                top: -(10px/2);
-                left: 50%;
+                @include wh(10px, 10px);
+                @include position(absolute, -(10px/2), auto, auto, 50%);
                 margin-left: -(10px/2);
-                width: 10px;
-                height: 10px;
                 border-radius: 50%;
-                // background-color: #fbc100;
               }
             }
             .volume-slider-mirror {
-              position: absolute;
+              @include wh(32px, calc(100% + 5px));
+              @include position(absolute, auto, auto, 0, -15px);
               z-index: 2;
-              bottom: 0;
-              left: -15px;
-              width: 32px;
-              height: calc(100% + 5px);
             }
           }
         }
@@ -191,14 +148,10 @@
       padding: 0 10px;
       position: relative;
       &-container {
-        position: absolute;
+        @include wh(100%, 70px);
+        @include position(absolute, -12px, auto, 0, 50%);
         transition: all 0.5s;
-        left: 50%;
         transform: translateX(-50%);
-        top: -12px;
-        // display: none;
-        height: 70px;
-        width: 100%;
       }
       &:hover {
         z-index: 1000000000;
@@ -209,9 +162,7 @@
       &-layer {
         line-height: normal;
         list-style: none;
-        position: absolute;
-        bottom: 65px;
-        left: 50%;
+        @include position(absolute, auto, auto, 65px, 50%);
         transform: translateX(-50%);
         border-radius: 3px;
         background-color: rgba(0, 0, 0, 0.7);

@@ -76,14 +76,14 @@ const Index = memo(function Index(props) {
 
   return (
     <div
-      className="controller-container"
+      className="JoL-controller-container"
       onMouseEnter={(e) => showControl(e, 'enter')}
       onMouseLeave={(e) => showControl(e, 'leave')}
       ref={controllerRef}
     >
       <div
-        id="play-or-pause-mask"
-        className="click-to-play-or-pause"
+        // id="play-or-pause-mask"
+        className="JoL-click-to-play-or-pause"
         onMouseEnter={hiddleCursor}
         onMouseLeave={clearTimer}
         onClick={handleChangePlayState}
@@ -96,7 +96,7 @@ const Index = memo(function Index(props) {
           className="iconfont play-icon"
         />
       )}
-      <div className="progress-and-controls-wrap">
+      <div className="JoL-progress-and-controls-wrap">
         <Progress />
         <Controls />
       </div>

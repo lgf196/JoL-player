@@ -1,73 +1,38 @@
+@import 'src/assets/css/mixin.scss';
 .JoL-player-container {
   -moz-user-select: none;
   -khtml-user-select: none;
   -webkit-user-select: none;
   user-select: none;
-  // width: 740px;
-  // height: 420px;
   margin: 0;
   box-sizing: border-box;
   position: relative;
   .JoL-player {
-    width: 100%;
-    height: 100%;
+    @include wh(100%, 100%);
     background-color: #000;
-    position: absolute;
-    top: 0;
-    left: 0;
+    @include position(absolute, 0, auto, auto, 0);
     z-index: 1;
   }
-  .light-off-mask {
-    position: fixed;
-    left: 0;
-    top: 0;
+  .JoL-light-off-mask {
+    @include wh(100vw, 100vh);
+    @include position(fixed, 0, auto, auto, 0);
     z-index: 0;
-    width: 100vw;
-    height: 100vh;
     background-color: rgba(0, 0, 0, 0.9);
     display: none;
   }
   .video-no-useful-tip,
   .buffering-animation {
-    position: absolute;
-    left: 0;
-    top: 50%;
+    @include wh(100%, 100px);
+    @include position(fixed, 50%, auto, auto, 0);
+    @include style(16px, #fff);
     margin-top: -50px;
-    width: 100%;
-    height: 100px;
-    font-size: 16px;
     text-align: center;
     line-height: 100px;
-    color: #fff;
     z-index: 99;
   }
-  .buffering-animation {
-    .bufferring-dot {
-      display: inline-block;
-      vertical-align: middle;
-      width: 100px;
-      line-height: 100px;
-      animation: dot-ami 1s infinite;
-      overflow: hidden;
-    }
-  }
   .player-loading {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    @include position(absolute, 50%, auto, auto, 50%);
     z-index: 30;
     transform: translate(-50%, -50%);
-  }
-}
-
-@keyframes dot-ami {
-  0% {
-    width: 4px;
-  }
-  50% {
-    width: 8px;
-  }
-  100% {
-    width: 12px;
   }
 }

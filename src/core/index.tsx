@@ -152,7 +152,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
 
   return (
     <figure className="JoL-player-container" ref={videoContainerRef}>
-      <div className="light-off-mask" ref={lightOffMaskRef}></div>
+      <div className="JoL-light-off-mask" ref={lightOffMaskRef}></div>
       <video className="JoL-player" ref={videoRef} poster={poster ? poster : undefined}>
         {returnVideoSource}
       </video>
