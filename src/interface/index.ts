@@ -6,27 +6,31 @@ export interface hoverShowStyleType {
   progressBgRefEle: HTMLDivElement;
   progressScrubberRefEle: HTMLDivElement;
 }
-export interface videoOption {
+export interface videoOption<T = string, K = boolean, U = number> {
   /**
    * @description 视频容器的width
    */
-  width: number;
+  width: U;
   /**
    * @description 视频容器的height
    */
-  height: number;
-  /**
-   * @description 主题
-   */
-  theme?: string;
+  height: U;
   /**
    * @description 视频地址
    */
-  videoSrc: string;
+  videoSrc: T;
+  /**
+   * @description 主题
+   */
+  theme?: T;
   /**
    * @description 视频封面图
    */
-  poster?: string;
+  poster?: T;
+  /**
+   * @description 是否自动播放
+   */
+  isAutoPlay?: K;
 }
 export interface videoAttributes<T = number, K = boolean> {
   /**

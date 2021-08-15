@@ -44,7 +44,7 @@
         transition: all 0.3s;
         @include wh(12px, 12px);
         @include position(absolute, -50%, -5px, auto, auto);
-        margin-top: -1px;
+        margin-top: 1px;
         border-radius: 50%;
       }
     }
@@ -72,13 +72,13 @@
       }
       .bottom-triangle {
         left: -4px;
-        top: 1px;
+        top: 3px;
         border-top: 4px solid transparent;
       }
     }
     .video-img-box {
       @include wh(169px, 96px);
-      @include position(absolute, -120px, auto, auto, 0);
+      @include position(absolute, -105px, auto, auto, 0);
       margin-left: calc(-169px / 2);
       .video-current-img {
         @include wh(100%, 100%);
@@ -88,7 +88,7 @@
         @include style(12px, #fff);
         transform: translateX(-50%);
         background-color: #222222;
-        padding: 0 5px;
+        padding: 1px 4px;
       }
     }
   }

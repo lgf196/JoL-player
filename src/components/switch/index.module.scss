@@ -1,3 +1,4 @@
+@import 'src/assets/css/mixin.scss';
 body {
   --JoL-theme: red;
 }
@@ -12,8 +13,7 @@ body {
 }
 .switch {
   position: relative;
-  width: 30px;
-  height: 15px;
+  @include wh(30px, 15px);
   background-color: #dadada;
   border-radius: 30px;
   border: none;
@@ -26,11 +26,8 @@ body {
 // 按钮
 .switch::after {
   content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
+  @include wh(50%, 100%);
+  @include position(absolute, 0, auto, auto, 0);
   background-color: #fff;
   border-radius: 50%;
   transition: all 0.2s ease;

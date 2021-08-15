@@ -49,7 +49,7 @@ const Index = memo(function Index(props) {
       intervalToJudgeIsMovingProgress.current = setInterval(() => {
         if (progressState.isMovingProgress) {
           hoverShowStyle({
-            height: 5,
+            height: 7,
             opacity: 1,
             animationName: 'example',
             progressBgRefEle,
@@ -215,7 +215,7 @@ const Index = memo(function Index(props) {
               ></div>
             </div>
             <div className="video-img-box" style={{ left: `${progressState.positionX}px` }}>
-              <img className="video-current-img" src="" alt="" />
+              {/* <img className="video-current-img" src="" alt="" /> */}
               <span className="current-time">
                 {percentToMinutesAndSeconds(progressState.progressPercent, duration)}
               </span>

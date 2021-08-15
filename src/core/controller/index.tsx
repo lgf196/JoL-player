@@ -6,6 +6,7 @@ import { FlowContext } from '@/core/context';
 import { useVideo } from '@/core/useVideo';
 import useWindowClient from '@/utils/useWindowClient';
 import usePrevious from '@/utils/usePrevious';
+import EndComponent from '@/components/end';
 import './index.scss';
 
 const Index = memo(function Index(props) {
@@ -13,9 +14,9 @@ const Index = memo(function Index(props) {
 
   const reviceProps = useContext(FlowContext);
 
-  const { dispatch } = reviceProps;
+  const { dispatch, propsAttributes } = reviceProps;
 
-  const { isPlay, handleChangePlayState, currentTime } = useVideo(
+  const { isPlay, handleChangePlayState, isEndEd } = useVideo(
     {
       videoElement: reviceProps.videoRef,
     },
@@ -43,7 +44,7 @@ const Index = memo(function Index(props) {
    * @description 显示操作控件
    */
   const showControl = (e: any, status: string) => {
-    dispatch!({ type: 'isControl', data: status === 'enter' ? true : false });
+    dispatch!({ type: 'isControl', data: status === 'enter' && !isEndEd ? true : false });
   };
   /**
    * @description 隐藏鼠标
@@ -52,7 +53,6 @@ const Index = memo(function Index(props) {
     if (timer.current) {
       clearInterval(timer.current);
     }
-
     timer.current = setInterval(() => {
       setPre(viewClientX.current);
       /**
@@ -73,7 +73,9 @@ const Index = memo(function Index(props) {
       clearInterval(timer.current);
     }
   };
-
+  const handlePlay = () => {
+    handleChangePlayState && handleChangePlayState();
+  };
   return (
     <div
       className="JoL-controller-container"
@@ -82,13 +84,13 @@ const Index = memo(function Index(props) {
       ref={controllerRef}
     >
       <div
-        // id="play-or-pause-mask"
+        id="play-or-pause-mask"
         className="JoL-click-to-play-or-pause"
         onMouseEnter={hiddleCursor}
         onMouseLeave={clearTimer}
-        onClick={handleChangePlayState}
+        onClick={handlePlay}
       ></div>
-      {!isPlay && (
+      {!isPlay && !isEndEd && (
         <Broadcast
           iconClass="player"
           fill="#fff"
@@ -100,6 +102,7 @@ const Index = memo(function Index(props) {
         <Progress />
         <Controls />
       </div>
+      {isEndEd ? <EndComponent handle={() => [handleChangePlayState(), hiddleCursor()]} /> : null}
     </div>
   );
 });

@@ -27,12 +27,12 @@ const AppComponent = memo(function AppComponent(props) {
     // console.log(`onTimeChange`, val);
   };
   const onEndEd = (val: any) => {
-    setTimeout(() => {
-      videoRef.current.setVideoSrc(
-        'https://gs-files.oss-accelerate.aliyuncs.com/okr/prod/file/2021/08/10/1628605591454mda-met51bhiqb2sgjzd.mp4',
-      );
-      videoRef.current.play();
-    }, 1000);
+    // setTimeout(() => {
+    //   videoRef.current.setVideoSrc(
+    //     'https://gs-files.oss-accelerate.aliyuncs.com/okr/prod/file/2021/08/10/1628605591454mda-met51bhiqb2sgjzd.mp4',
+    //   );
+    //   videoRef.current.play();
+    // }, 1000);
 
     console.log(`onEndEd`, val);
   };
@@ -65,6 +65,11 @@ const AppComponent = memo(function AppComponent(props) {
 
     console.log(`videoRef.current`, videoRef.current);
   }, [videoRef.current]);
+  const toggle = () => {
+    videoRef.current.setVideoSrc(
+      'https://gs-files.oss-accelerate.aliyuncs.com/okr/prod/file/2021/08/10/1628605591454mda-met51bhiqb2sgjzd.mp4',
+    );
+  };
   return (
     <>
       <JoLPlayer
@@ -75,6 +80,7 @@ const AppComponent = memo(function AppComponent(props) {
           height: 420,
           theme: '#00D3FF',
           poster: 'https://cdn.gudsen.com/2021/06/28/f81356b08b4842d7a3719499f557c8e4.JPG',
+          isAutoPlay: true,
         }}
         onProgressMouseDown={onProgressMouseDown}
         onPlay={onPlay}
@@ -85,13 +91,24 @@ const AppComponent = memo(function AppComponent(props) {
         onError={onError}
         onvolumechange={onvolumechange}
       />
-      {/* <JoLPlayer /> */}
+      <JoLPlayer
+        option={{
+          videoSrc:
+            'https://gs-files.oss-accelerate.aliyuncs.com/okr/prod/file/2021/08/10/1628605591454mda-met51bhiqb2sgjzd.mp4',
+          width: 750,
+          height: 420,
+          theme: 'red',
+          poster: 'https://cdn.gudsen.com/2021/06/28/f81356b08b4842d7a3719499f557c8e4.JPG',
+          isAutoPlay: false,
+        }}
+      />
       <button onClick={() => videoMethod('play')}>播放</button>
       <button onClick={() => videoMethod('pause')}>暂停</button>
       <button onClick={() => videoMethod('load')}>重新加载</button>
       <button onClick={() => videoMethod('volume')}>改变声音80</button>
       <button onClick={() => videoMethod('seek')}>快进500s</button>
       <button onClick={xx}>3333</button>
+      <button onClick={toggle}>切换播放视频路劲</button>
     </>
   );
 });

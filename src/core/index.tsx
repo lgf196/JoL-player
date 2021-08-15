@@ -14,6 +14,7 @@ import Broadcast from '@/components/svgIcon';
 import { useVideo } from '@/core/useVideo';
 import useVideoCallback from '@/core/useVideoCallback';
 import { defaultTheme } from '@/core/config';
+
 // import videoUrl from '@/assets/haiwang.mp4';
 import '@/assets/css/reset.scss';
 import './index.scss';
@@ -30,7 +31,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
     onError,
     onvolumechange,
   } = props;
-  const { videoSrc, width, height, theme, poster } = option;
+  const { videoSrc, width, height, theme, poster, isAutoPlay } = option;
   /**
    * @description 关灯对象
    */
@@ -68,7 +69,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
     setIsBufferring(false);
   };
 
-  const { videoAttributes, videoMethod, currentTime, isPlay } = useVideo(
+  const { videoAttributes, videoMethod } = useVideo(
     {
       videoElement: videoRef.current,
     },
@@ -107,9 +108,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
         clearTimeout(timerToCheckVideoUseful.current!);
       }
     }, 3000);
-    // 监听是否在缓冲
     videoElem.addEventListener('waiting', waitingListener);
-    // 当开始播放时更改waiting状态
     videoElem.addEventListener('playing', playingListener);
     return () => {
       timerToCheckVideoUseful.current && clearTimeout(timerToCheckVideoUseful.current);
