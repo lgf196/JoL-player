@@ -6,6 +6,7 @@ export interface hoverShowStyleType {
   progressBgRefEle: HTMLDivElement;
   progressScrubberRefEle: HTMLDivElement;
 }
+export type pausePlacement = 'bottomRight' | 'center';
 export interface videoOption<T = string, K = boolean, U = number> {
   /**
    * @description 视频容器的width
@@ -28,9 +29,17 @@ export interface videoOption<T = string, K = boolean, U = number> {
    */
   poster?: T;
   /**
-   * @description 是否自动播放
+   * @description 自定义视频结束时显示的内容
    */
-  isAutoPlay?: K;
+  setEndPlayContent?: React.ReactNode;
+  /**
+   * @description 自定义视频缓冲加载组件
+   */
+  setBufferContent?: React.ReactNode;
+  /**
+   * @description 暂停键的位置
+   */
+  pausePlacement?: pausePlacement;
 }
 export interface videoAttributes<T = number, K = boolean> {
   /**

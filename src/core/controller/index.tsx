@@ -102,7 +102,13 @@ const Index = memo(function Index(props) {
         <Progress />
         <Controls />
       </div>
-      {isEndEd ? <EndComponent handle={() => [handleChangePlayState(), hiddleCursor()]} /> : null}
+      {isEndEd ? (
+        propsAttributes!.setEndPlayContent ? (
+          propsAttributes!.setEndPlayContent
+        ) : (
+          <EndComponent handle={() => [handleChangePlayState(), hiddleCursor()]} />
+        )
+      ) : null}
     </div>
   );
 });

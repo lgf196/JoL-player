@@ -80,7 +80,6 @@ const AppComponent = memo(function AppComponent(props) {
           height: 420,
           theme: '#00D3FF',
           poster: 'https://cdn.gudsen.com/2021/06/28/f81356b08b4842d7a3719499f557c8e4.JPG',
-          isAutoPlay: true,
         }}
         onProgressMouseDown={onProgressMouseDown}
         onPlay={onPlay}
@@ -99,7 +98,6 @@ const AppComponent = memo(function AppComponent(props) {
           height: 420,
           theme: 'red',
           poster: 'https://cdn.gudsen.com/2021/06/28/f81356b08b4842d7a3719499f557c8e4.JPG',
-          isAutoPlay: false,
         }}
       />
       <button onClick={() => videoMethod('play')}>播放</button>

@@ -31,7 +31,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
     onError,
     onvolumechange,
   } = props;
-  const { videoSrc, width, height, theme, poster, isAutoPlay } = option;
+  const { videoSrc, width, height, theme, poster, setBufferContent } = option;
   /**
    * @description 关灯对象
    */
@@ -156,14 +156,17 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
         {returnVideoSource}
       </video>
       {!isVideoUseful && <p className="video-no-useful-tip">抱歉！视频找不到了 (｡ ́︿ ̀｡)</p>}
-      {isBufferring && (
-        <Broadcast
-          iconClass="loading"
-          fill={theme ? theme : defaultTheme}
-          className="player-loading"
-          fontSize="55px"
-        />
-      )}
+      {isBufferring &&
+        (setBufferContent ? (
+          setBufferContent
+        ) : (
+          <Broadcast
+            iconClass="loading"
+            fill={theme ? theme : defaultTheme}
+            className="player-loading"
+            fontSize="55px"
+          />
+        ))}
       <FlowContext.Provider value={contextProps}>
         <Controller />
       </FlowContext.Provider>
