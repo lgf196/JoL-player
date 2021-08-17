@@ -6,13 +6,22 @@ import './index.scss';
 
 export interface VolumeType {
   volume: number;
+  isMuted: boolean;
   changeCurrentVolume: React.MouseEventHandler<HTMLDivElement>;
   slideCurrentVolume: React.MouseEventHandler<HTMLDivElement>;
   clearVolumeInterval: React.MouseEventHandler<HTMLDivElement>;
+  toggleVolume: Function;
 }
 
 const Volume = function Volume(
-  { volume, changeCurrentVolume, slideCurrentVolume, clearVolumeInterval }: VolumeType,
+  {
+    volume,
+    changeCurrentVolume,
+    slideCurrentVolume,
+    clearVolumeInterval,
+    isMuted,
+    toggleVolume,
+  }: VolumeType,
   ref: React.Ref<unknown> | undefined,
 ) {
   const volumeSliderMirror = useRef<HTMLDivElement>(null);
@@ -30,10 +39,11 @@ const Volume = function Volume(
   return (
     <div
       className="JoL-multifunction-volume"
-      onMouseEnter={(e) => [setIsShow(true), e.stopPropagation()]}
-      onMouseLeave={(e) => [setIsShow(false), e.stopPropagation()]}
+      onMouseEnter={(e) => [setIsShow(true)]}
+      onMouseLeave={(e) => [setIsShow(false)]}
+      onClick={(e) => [toggleVolume()]}
     >
-      <Broadcast iconClass="volume" fill="#fff" fontSize={'20px'} />
+      <Broadcast iconClass={isMuted ? 'set' : 'volume'} fill="#fff" fontSize={'20px'} />
       <div
         className="JoL-multifunction-volume-container"
         style={{ display: isShow ? 'block' : 'none' }}

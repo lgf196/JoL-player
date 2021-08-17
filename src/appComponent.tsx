@@ -94,10 +94,11 @@ const AppComponent = memo(function AppComponent(props) {
         option={{
           videoSrc:
             'https://gs-files.oss-accelerate.aliyuncs.com/okr/prod/file/2021/08/10/1628605591454mda-met51bhiqb2sgjzd.mp4',
-          width: 750,
-          height: 420,
+          width: 500,
+          height: 320,
           theme: 'red',
           poster: 'https://cdn.gudsen.com/2021/06/28/f81356b08b4842d7a3719499f557c8e4.JPG',
+          pausePlacement: 'center',
         }}
       />
       <button onClick={() => videoMethod('play')}>播放</button>

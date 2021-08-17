@@ -37,3 +37,19 @@
     opacity: 1;
   }
 }
+@keyframes scaleAnimate {
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes rotateAnimate {
+  0% {
+    transform: rotate(270deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

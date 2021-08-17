@@ -23,8 +23,8 @@ const Multiple: FC<MultipleType> = memo(function Multiple({
   return (
     <div
       className="JoL-multifunction-multiple"
-      onMouseEnter={(e) => [setIsShow(true), e.stopPropagation()]}
-      onMouseLeave={(e) => [setIsShow(false), e.stopPropagation()]}
+      onClick={(e) => setIsShow((pre) => !pre)}
+      onMouseLeave={(e) => [setIsShow(false)]}
     >
       <p>{multipleText}</p>
       <div
@@ -34,7 +34,7 @@ const Multiple: FC<MultipleType> = memo(function Multiple({
         <ul className="JoL-multifunction-multiple-layer">
           {multipleList.map((item, index) => (
             <li
-              onClick={() => [selectPlayRate(item.id), setIsShow(false)]}
+              onClick={(e) => [selectPlayRate(item.id), setIsShow(false), e.stopPropagation()]}
               key={index}
               style={{ color: multiple === item.id ? (theme ? theme : defaultTheme) : '#fff' }}
             >

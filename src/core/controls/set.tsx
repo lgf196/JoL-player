@@ -1,7 +1,6 @@
 import React, { memo, FC, useState, useContext } from 'react';
 import Broadcast from '@/components/svgIcon';
 import Switch from '@/components/switch';
-
 import { FlowContext } from '@/core/context';
 import './index.scss';
 
@@ -19,9 +18,9 @@ const Set: FC<SetType> = memo(function Set({ switchChange }) {
     <div
       className="JoL-multifunction-set"
       onMouseEnter={(e) => [setIsShow(true), e.stopPropagation()]}
-      onMouseLeave={(e) => [setIsShow(false), e.stopPropagation()]}
+      onMouseLeave={(e) => [setIsShow(false)]}
     >
-      <Broadcast iconClass="set" fill="#fff" />
+      <Broadcast iconClass="set" fill="#fff" className="hover-icon-rotateAnimate" />
       <div
         className="JoL-multifunction-set-container"
         style={{ display: isShow ? 'block' : 'none' }}

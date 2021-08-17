@@ -14,6 +14,7 @@ const Index: FC<switchType> = function Index({ sole, label, onChange, theme }) {
   const refs = useRef<HTMLInputElement>(null!);
 
   const switchChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    e.stopPropagation();
     const status = e.target.value === 'yes' ? 'no' : 'yes';
     setOn(status);
     onChange && onChange(status);

@@ -1,4 +1,4 @@
-import React, { memo, useContext, useRef, useState } from 'react';
+import React, { memo, useContext, useRef, useState, useMemo } from 'react';
 import Broadcast from '@/components/svgIcon';
 import Progress from '../progress';
 import Controls from '../controls';
@@ -76,6 +76,23 @@ const Index = memo(function Index(props) {
   const handlePlay = () => {
     handleChangePlayState && handleChangePlayState();
   };
+  /**
+   * @description 暂停键的位置
+   */
+  const pausePosition = useMemo(() => {
+    if (propsAttributes!.pausePlacement === 'center') {
+      return {
+        left: '50%',
+        top: '50%',
+        transform: 'translate(-50%, -50%)',
+      };
+    } else {
+      return {
+        right: '30px',
+        bottom: '60px',
+      };
+    }
+  }, [propsAttributes!.pausePlacement]);
   return (
     <div
       className="JoL-controller-container"
@@ -96,6 +113,7 @@ const Index = memo(function Index(props) {
           fill="#fff"
           fontSize={'47px'}
           className="iconfont play-icon"
+          style={pausePosition}
         />
       )}
       <div className="JoL-progress-and-controls-wrap">

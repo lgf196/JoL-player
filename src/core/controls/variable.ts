@@ -25,6 +25,10 @@ export interface controlsVariableType<T = number, K = boolean> {
    * @description 是否网页全屏
    */
   isWebPageFullScreen: K;
+  /**
+   * @description 是否静音
+   */
+  isMute: K;
 }
 
 export interface volumeActionType {
@@ -51,13 +55,18 @@ export interface isWebPageFullScreenActionType {
   type: 'isWebPageFullScreen';
   data: controlsVariableType['isWebPageFullScreen'];
 }
+export interface isMuteActionType {
+  type: 'isMute';
+  data: controlsVariableType['isMute'];
+}
 export type mergeAction =
   | volumeActionType
   | isMutedActionType
   | isSlideVolumeActionType
   | isScreentFullActionType
   | multipleActionType
-  | isWebPageFullScreenActionType;
+  | isWebPageFullScreenActionType
+  | isMuteActionType;
 
 export const useControls = () => {
   const initialState = {
@@ -67,6 +76,7 @@ export const useControls = () => {
     isScreentFull: false,
     multiple: 1.0,
     isWebPageFullScreen: false,
+    isMute: false,
   };
 
   const reducer = (state: controlsVariableType, action: mergeAction) => {
@@ -83,6 +93,8 @@ export const useControls = () => {
         return { ...state, multiple: action.data };
       case 'isWebPageFullScreen':
         return { ...state, isWebPageFullScreen: action.data };
+      case 'isMute':
+        return { ...state, isMute: action.data };
       default:
         return state;
     }

@@ -1,13 +1,13 @@
 import React, { memo, useContext, useRef, useEffect, useMemo, useCallback } from 'react';
 import Broadcast from '@/components/svgIcon';
 import Tooltip from '@/components/tooltip';
-import { FlowContext, contextType } from '@/core/context';
+import { FlowContext } from '@/core/context';
 import { useVideo } from '@/core/useVideo';
 import { secondsToMinutesAndSecondes, createALabel } from '@/utils';
 import { useControls } from './variable';
 import useWindowClient from '@/utils/useWindowClient';
 import screenfull, { Screenfull } from 'screenfull';
-import { multipleList } from '@/core/config';
+import { multipleList, defaultVolume } from '@/core/config';
 import SetComponent from './set';
 import MultipleComponent from './multiple';
 import VolumeComponent from './volume';
@@ -87,6 +87,7 @@ const Index = memo(function Index(props) {
    * @description 音量滑动元素点击
    */
   const changeCurrentVolume: React.MouseEventHandler<HTMLDivElement> = (e) => {
+    e.stopPropagation();
     const volumeSliderMirrorElement = (
       volumeSliderMirror.current as HTMLDivElement & { element: HTMLDivElement }
     ).element;
@@ -99,7 +100,8 @@ const Index = memo(function Index(props) {
     updateCurrentVolume(volumePercent);
   };
 
-  const slideCurrentVolume = () => {
+  const slideCurrentVolume: React.MouseEventHandler<HTMLDivElement> = (e) => {
+    e.stopPropagation();
     const volumeSliderMirrorElement = (
       volumeSliderMirror.current as HTMLDivElement & { element: HTMLDivElement }
     ).element;
@@ -123,7 +125,8 @@ const Index = memo(function Index(props) {
     volumeInterval.current && clearInterval(volumeInterval.current);
     dispatch({ type: 'isSlideVolume', data: false });
   };
-  const clearVolumeInterval = () => {
+  const clearVolumeInterval: React.MouseEventHandler<HTMLDivElement> = (e) => {
+    e.stopPropagation();
     whenMouseUpDo();
   };
   /**
@@ -201,6 +204,15 @@ const Index = memo(function Index(props) {
       dispatch({ type: 'isWebPageFullScreen', data: true });
     }
   };
+  /**
+   * @description 静音键和非静音键的切换
+   */
+  const toggleVolume = () => {
+    reviceProps.videoRef!.volume = controlsState.isMuted ? defaultVolume / 100 : 0;
+    dispatch({ type: 'isMuted', data: controlsState.isMuted ? false : true });
+    reviceProps.videoRef!.muted = controlsState.isMuted ? false : true;
+  };
+
   return (
     <div
       className="JoL-controls-container"
@@ -224,12 +236,21 @@ const Index = memo(function Index(props) {
           changeCurrentVolume={changeCurrentVolume}
           slideCurrentVolume={slideCurrentVolume}
           clearVolumeInterval={clearVolumeInterval}
+          isMuted={controlsState.isMuted}
+          toggleVolume={toggleVolume}
         />
         <SetComponent switchChange={switchChange} />
         <Tooltip
           styleCss={{ padding: '0 5px' }}
           title="截图"
-          icon={<Broadcast iconClass="screenshot" fill="#fff" onClick={screenshot} />}
+          icon={
+            <Broadcast
+              iconClass="screenshot"
+              className="hover-icon-animate"
+              fill="#fff"
+              onClick={screenshot}
+            />
+          }
         />
         <Tooltip
           styleCss={{ padding: '0 5px' }}
@@ -238,6 +259,7 @@ const Index = memo(function Index(props) {
             <Broadcast
               iconClass="fullScreen"
               fill="#fff"
+              className="hover-icon-animate"
               fontSize={'20px'}
               onClick={pictureInPicture}
             />
@@ -250,6 +272,7 @@ const Index = memo(function Index(props) {
             <Broadcast
               iconClass="fullScreen"
               fill="#fff"
+              className="hover-icon-animate"
               fontSize={'20px'}
               onClick={clientFullScreen}
             />
@@ -264,6 +287,7 @@ const Index = memo(function Index(props) {
               fill="#fff"
               fontSize={'20px'}
               onClick={requestFullScreen}
+              className="hover-icon-animate"
             />
           }
         />

@@ -40,6 +40,7 @@
     text-align: center;
     line-height: 42px;
     &-multiple {
+      cursor: pointer;
       padding: 0 10px;
       position: relative;
       &-container {
@@ -78,6 +79,7 @@
     &-volume {
       padding: 0 10px;
       position: relative;
+      cursor: pointer;
       &:hover {
         z-index: 1000000000;
         &-layer {
@@ -147,6 +149,7 @@
     &-set {
       padding: 0 10px;
       position: relative;
+      cursor: pointer;
       &-container {
         @include wh(100%, 70px);
         @include position(absolute, -12px, auto, 0, 50%);
@@ -155,7 +158,10 @@
       }
       &:hover {
         z-index: 1000000000;
-        .multifunction-set-layer {
+        .hover-icon-rotateAnimate {
+          animation: rotateAnimate 0.5s ease;
+        }
+        .JoL-multifunction-set-layer {
           animation: show 0.3s ease;
         }
       }
@@ -174,6 +180,11 @@
           white-space: nowrap;
         }
       }
+    }
+  }
+  .hover-icon-animate {
+    &:hover {
+      animation: scaleAnimate 0.5s ease;
     }
   }
 }

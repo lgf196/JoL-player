@@ -4,6 +4,7 @@ export type svgProps = {
   fill?: string;
   fontSize?: string;
   className?: string;
+  style?: React.CSSProperties;
   onClick?: React.MouseEventHandler<SVGSVGElement>;
 };
 
@@ -13,12 +14,13 @@ const SvgIcon: React.FC<svgProps> = memo(function SvgIcon({
   fontSize = '18px',
   className,
   onClick,
+  style,
 }) {
   const iconName = useMemo(() => '#icon-' + iconClass, [iconClass]);
   return (
     <svg
       fontSize={fontSize!}
-      style={{ ...svgStyle, fontSize }}
+      style={{ ...svgStyle, fontSize, ...style }}
       aria-hidden="true"
       className={className!}
       onClick={onClick}
