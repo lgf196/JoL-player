@@ -79,6 +79,7 @@ const AppComponent = memo(function AppComponent(props) {
           width: 750,
           height: 420,
           theme: '#00D3FF',
+          isShowMultiple: false,
           poster: 'https://cdn.gudsen.com/2021/06/28/f81356b08b4842d7a3719499f557c8e4.JPG',
         }}
         onProgressMouseDown={onProgressMouseDown}

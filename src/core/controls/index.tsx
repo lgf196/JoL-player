@@ -1,9 +1,9 @@
-import React, { memo, useContext, useRef, useEffect, useMemo, useCallback } from 'react';
+import React, { memo, useContext, useRef, useEffect, useMemo, FC } from 'react';
 import Broadcast from '@/components/svgIcon';
 import Tooltip from '@/components/tooltip';
-import { FlowContext } from '@/core/context';
+import { contextType, FlowContext } from '@/core/context';
 import { useVideo } from '@/core/useVideo';
-import { secondsToMinutesAndSecondes, createALabel } from '@/utils';
+import { secondsToMinutesAndSecondes, capture } from '@/utils';
 import { useControls } from './variable';
 import useWindowClient from '@/utils/useWindowClient';
 import screenfull, { Screenfull } from 'screenfull';
@@ -14,286 +14,295 @@ import VolumeComponent from './volume';
 import MonitorComponent from './monitor';
 import './index.scss';
 
-const Index = memo(function Index(props) {
-  /**
-   * @description 音量滑动元素
-   */
-  const volumeSliderMirror = useRef<HTMLDivElement>(null!);
-
-  const clientYdistance = useRef<number>(0);
-
-  const volumeInterval = useRef<NodeJS.Timeout | null>(null);
-
-  const reviceProps = useContext(FlowContext);
-
-  const revicePropsData = useRef<any>();
-
-  const { isPlay, handleChangePlayState, currentTime, duration, isPictureinpicture, volume } =
-    useVideo(
-      {
-        videoElement: reviceProps.videoRef,
-      },
-      [reviceProps.videoRef],
-    );
-
-  const { controlsState, dispatch } = useControls();
-
-  const { clientY } = useWindowClient();
-
-  clientYdistance.current = clientY;
-
-  revicePropsData.current = reviceProps;
-
-  useEffect(() => {
+const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> = memo(
+  function Index({ setIsscreenshot, setScreenshotLoading }) {
     /**
-     * @description 如果调用了setVolume函数，这边的数据就要保持和video的数据一致
+     * @description 音量滑动元素
      */
-    dispatch({ type: 'volume', data: Math.floor(volume * 100) });
-  }, [volume]);
+    const volumeSliderMirror = useRef<HTMLDivElement>(null!);
 
-  useEffect(() => {
-    // 为了防止音量滑动元素计时器不暂停
-    window.addEventListener('mouseup', whenMouseUpDo);
-    return () => {
-      window.removeEventListener('mouseup', whenMouseUpDo);
+    const clientYdistance = useRef<number>(0);
+
+    const volumeInterval = useRef<NodeJS.Timeout | null>(null);
+
+    const reviceProps = useContext(FlowContext);
+
+    const { propsAttributes } = reviceProps!;
+
+    const revicePropsData = useRef<contextType>();
+
+    const { isPlay, handleChangePlayState, currentTime, duration, isPictureinpicture, volume } =
+      useVideo(
+        {
+          videoElement: reviceProps.videoRef,
+        },
+        [reviceProps.videoRef],
+      );
+
+    const { controlsState, dispatch } = useControls();
+
+    const { clientY } = useWindowClient();
+
+    clientYdistance.current = clientY;
+
+    revicePropsData.current = reviceProps;
+
+    useEffect(() => {
+      /**
+       * @description 如果调用了setVolume函数，这边的数据就要保持和video的数据一致
+       */
+      dispatch({ type: 'volume', data: Math.floor(volume * 100) });
+    }, [volume]);
+
+    useEffect(() => {
+      // 为了防止音量滑动元素计时器不暂停
+      window.addEventListener('mouseup', whenMouseUpDo);
+      return () => {
+        window.removeEventListener('mouseup', whenMouseUpDo);
+      };
+    }, []);
+
+    /**
+     * @description 更新当前音量控制条
+     */
+    const updateCurrentVolume = (volumePercent: number) => {
+      const videoRef = reviceProps.videoRef!;
+      if (volumePercent >= 0 && volumePercent <= 1) {
+        videoRef.volume = volumePercent;
+        videoRef.muted = false;
+        dispatch({ type: 'volume', data: volumePercent * 100 });
+        dispatch({ type: 'isMuted', data: Math.floor(volumePercent * 100) === 0 ? true : false });
+      }
+      if (volumePercent < 0) {
+        videoRef.volume = 0;
+        videoRef.muted = true;
+        dispatch({ type: 'volume', data: 0 });
+        dispatch({ type: 'isMuted', data: true });
+      }
+      if (volumePercent > 1) {
+        videoRef.volume = 1;
+        dispatch({ type: 'volume', data: 100 });
+      }
     };
-  }, []);
-
-  /**
-   * @description 更新当前音量控制条
-   */
-  const updateCurrentVolume = (volumePercent: number) => {
-    const videoRef = reviceProps.videoRef!;
-    if (volumePercent >= 0 && volumePercent <= 1) {
-      videoRef.volume = volumePercent;
-      videoRef.muted = false;
-      dispatch({ type: 'volume', data: volumePercent * 100 });
-      dispatch({ type: 'isMuted', data: Math.floor(volumePercent * 100) === 0 ? true : false });
-    }
-    if (volumePercent < 0) {
-      videoRef.volume = 0;
-      videoRef.muted = true;
-      dispatch({ type: 'volume', data: 0 });
-      dispatch({ type: 'isMuted', data: true });
-    }
-    if (volumePercent > 1) {
-      videoRef.volume = 1;
-      dispatch({ type: 'volume', data: 100 });
-    }
-  };
-  /**
-   *
-   * @param e event对象
-   * @description 音量滑动元素点击
-   */
-  const changeCurrentVolume: React.MouseEventHandler<HTMLDivElement> = (e) => {
-    e.stopPropagation();
-    const volumeSliderMirrorElement = (
-      volumeSliderMirror.current as HTMLDivElement & { element: HTMLDivElement }
-    ).element;
-    // 获取音量区域高度
-    const volumeAreaHeight = volumeSliderMirrorElement.offsetHeight;
-    // 获取当前位置在整个音量区域高度的占比
-    const volumePercent =
-      1 - (e.clientY - volumeSliderMirrorElement.getBoundingClientRect().top) / volumeAreaHeight;
-    // 修改当前音量大小
-    updateCurrentVolume(volumePercent);
-  };
-
-  const slideCurrentVolume: React.MouseEventHandler<HTMLDivElement> = (e) => {
-    e.stopPropagation();
-    const volumeSliderMirrorElement = (
-      volumeSliderMirror.current as HTMLDivElement & { element: HTMLDivElement }
-    ).element;
-    // 获取音量区域高度
-    const volumeAreaHeight = volumeSliderMirrorElement.offsetHeight;
-    // 防止点击的时候，再次出发计时器，重而造成点击卡顿
-    volumeInterval.current && clearInterval(volumeInterval.current);
-    volumeInterval.current = setInterval(() => {
+    /**
+     *
+     * @param e event对象
+     * @description 音量滑动元素点击
+     */
+    const changeCurrentVolume: React.MouseEventHandler<HTMLDivElement> = (e) => {
+      e.stopPropagation();
+      const volumeSliderMirrorElement = (
+        volumeSliderMirror.current as HTMLDivElement & { element: HTMLDivElement }
+      ).element;
+      // 获取音量区域高度
+      const volumeAreaHeight = volumeSliderMirrorElement.offsetHeight;
       // 获取当前位置在整个音量区域高度的占比
       const volumePercent =
-        1 -
-        (clientYdistance.current - volumeSliderMirrorElement.getBoundingClientRect().top) /
-          volumeAreaHeight;
+        1 - (e.clientY - volumeSliderMirrorElement.getBoundingClientRect().top) / volumeAreaHeight;
       // 修改当前音量大小
       updateCurrentVolume(volumePercent);
-      dispatch({ type: 'isSlideVolume', data: true });
-    }, 1);
-  };
-  // 当鼠标抬起时
-  const whenMouseUpDo = () => {
-    volumeInterval.current && clearInterval(volumeInterval.current);
-    dispatch({ type: 'isSlideVolume', data: false });
-  };
-  const clearVolumeInterval: React.MouseEventHandler<HTMLDivElement> = (e) => {
-    e.stopPropagation();
-    whenMouseUpDo();
-  };
-  /**
-   * @description 开启全屏
-   */
-  const requestFullScreen = () => {
-    if (screenfull.isEnabled) {
-      screenfull.toggle(reviceProps.videoContainerRef!);
-      screenfull.on('change', () =>
-        dispatch({ type: 'isScreentFull', data: (screenfull as Screenfull).isFullscreen }),
-      );
-    }
-  };
-  /**
-   * @description 开启画中画
-   */
-  const pictureInPicture = () => {
-    if (isPictureinpicture) {
-      (document as any).exitPictureInPicture();
-    } else {
-      (reviceProps.videoRef! as any).requestPictureInPicture();
-    }
-  };
-  /**
-   * @description 设置视频倍数
-   */
-  const selectPlayRate = (playbackRate: number) => {
-    reviceProps.videoRef!.playbackRate = playbackRate;
-    dispatch({ type: 'multiple', data: playbackRate });
-  };
-  const multipleText = useMemo(() => {
-    if (controlsState.multiple === 1.0) {
-      return '倍数';
-    } else {
-      return multipleList.filter((item) => item.id === controlsState.multiple)[0].name;
-    }
-  }, [controlsState.multiple]);
-  /**
-   * @description 在线截图
-   */
-  const screenshot = () => {
-    const canvas = document.createElement('canvas') as HTMLCanvasElement;
-    canvas.width = reviceProps.videoRef!.offsetWidth;
-    canvas.height = reviceProps.videoRef!.offsetHeight;
-    const context = canvas.getContext('2d')!;
-    context.drawImage(reviceProps.videoRef!, 0, 0, canvas.width, canvas.height);
-    try {
-      createALabel(canvas.toDataURL('image/png'));
-    } catch (error) {}
-  };
-  /**
-   * @description 设置
-   */
-  const switchChange = (e: string, flag: string) => {
-    const { videoRef, lightOffMaskRef } = revicePropsData.current;
-    if (flag === 'lights') {
-      if (lightOffMaskRef) {
-        lightOffMaskRef.style.display = e === 'yes' ? 'block' : 'none';
-      }
-    } else {
-      const loop = videoRef.loop;
-      videoRef.loop = loop ? false : true;
-    }
-  };
-  /**
-   * @description 网页全屏
-   */
-  const clientFullScreen = () => {
-    const videoContainerRef = reviceProps.videoContainerRef!;
-    if (videoContainerRef.classList.contains('clientFullScreen')) {
-      videoContainerRef.classList.remove('clientFullScreen');
-      dispatch({ type: 'isWebPageFullScreen', data: false });
-    } else {
-      videoContainerRef.classList.add('clientFullScreen');
-      dispatch({ type: 'isWebPageFullScreen', data: true });
-    }
-  };
-  /**
-   * @description 静音键和非静音键的切换
-   */
-  const toggleVolume = () => {
-    reviceProps.videoRef!.volume = controlsState.isMuted ? defaultVolume / 100 : 0;
-    dispatch({ type: 'isMuted', data: controlsState.isMuted ? false : true });
-    reviceProps.videoRef!.muted = controlsState.isMuted ? false : true;
-  };
+    };
 
-  return (
-    <div
-      className="JoL-controls-container"
-      style={{ opacity: reviceProps.videoFlow!.isControl ? '1' : '0' }}
-    >
-      <MonitorComponent
-        isPlay={isPlay}
-        handleChangePlayState={handleChangePlayState}
-        currentTime={secondsToMinutesAndSecondes(currentTime)}
-        totalTime={secondsToMinutesAndSecondes(duration)}
-      />
-      <div className="JoL-multifunction">
-        <MultipleComponent
-          multipleText={multipleText}
-          multiple={controlsState.multiple}
-          selectPlayRate={selectPlayRate}
+    const slideCurrentVolume: React.MouseEventHandler<HTMLDivElement> = (e) => {
+      e.stopPropagation();
+      const volumeSliderMirrorElement = (
+        volumeSliderMirror.current as HTMLDivElement & { element: HTMLDivElement }
+      ).element;
+      // 获取音量区域高度
+      const volumeAreaHeight = volumeSliderMirrorElement.offsetHeight;
+      // 防止点击的时候，再次出发计时器，重而造成点击卡顿
+      volumeInterval.current && clearInterval(volumeInterval.current);
+      volumeInterval.current = setInterval(() => {
+        // 获取当前位置在整个音量区域高度的占比
+        const volumePercent =
+          1 -
+          (clientYdistance.current - volumeSliderMirrorElement.getBoundingClientRect().top) /
+            volumeAreaHeight;
+        // 修改当前音量大小
+        updateCurrentVolume(volumePercent);
+        dispatch({ type: 'isSlideVolume', data: true });
+      }, 1);
+    };
+    // 当鼠标抬起时
+    const whenMouseUpDo = () => {
+      volumeInterval.current && clearInterval(volumeInterval.current);
+      dispatch({ type: 'isSlideVolume', data: false });
+    };
+    const clearVolumeInterval: React.MouseEventHandler<HTMLDivElement> = (e) => {
+      e.stopPropagation();
+      whenMouseUpDo();
+    };
+    /**
+     * @description 开启全屏
+     */
+    const requestFullScreen = () => {
+      if (screenfull.isEnabled) {
+        screenfull.toggle(reviceProps.videoContainerRef!);
+        screenfull.on('change', () =>
+          dispatch({ type: 'isScreentFull', data: (screenfull as Screenfull).isFullscreen }),
+        );
+      }
+    };
+    /**
+     * @description 开启画中画
+     */
+    const pictureInPicture = () => {
+      if (isPictureinpicture) {
+        (document as any).exitPictureInPicture();
+      } else {
+        (reviceProps.videoRef! as any).requestPictureInPicture();
+      }
+    };
+    /**
+     * @description 设置视频倍数
+     */
+    const selectPlayRate = (playbackRate: number) => {
+      reviceProps.videoRef!.playbackRate = playbackRate;
+      dispatch({ type: 'multiple', data: playbackRate });
+    };
+    const multipleText = useMemo(() => {
+      if (controlsState.multiple === 1.0) {
+        return '倍数';
+      } else {
+        return multipleList.filter((item) => item.id === controlsState.multiple)[0].name;
+      }
+    }, [controlsState.multiple]);
+    /**
+     * @description 在线截图
+     */
+    const screenshot = async () => {
+      const output = document.querySelector('#JoL-screenshotCanvas')!;
+      const canvas = capture(reviceProps.videoRef!, 0.45);
+      setIsscreenshot(true);
+      if (output) {
+        setScreenshotLoading(false);
+        output.innerHTML = '';
+        output.appendChild(canvas);
+      } else {
+        setScreenshotLoading(true);
+      }
+    };
+    /**
+     * @description 设置
+     */
+    const switchChange = (e: string, flag: string) => {
+      const { videoRef, lightOffMaskRef } = revicePropsData.current!;
+      if (flag === 'lights') {
+        if (lightOffMaskRef) {
+          lightOffMaskRef.style.display = e === 'yes' ? 'block' : 'none';
+        }
+      } else {
+        const loop = videoRef!.loop;
+        videoRef!.loop = loop ? false : true;
+      }
+    };
+    /**
+     * @description 网页全屏
+     */
+    const clientFullScreen = () => {
+      const videoContainerRef = reviceProps.videoContainerRef!;
+      if (videoContainerRef.classList.contains('clientFullScreen')) {
+        videoContainerRef.classList.remove('clientFullScreen');
+        dispatch({ type: 'isWebPageFullScreen', data: false });
+      } else {
+        videoContainerRef.classList.add('clientFullScreen');
+        dispatch({ type: 'isWebPageFullScreen', data: true });
+      }
+    };
+    /**
+     * @description 静音键和非静音键的切换
+     */
+    const toggleVolume = () => {
+      reviceProps.videoRef!.volume = controlsState.isMuted ? defaultVolume / 100 : 0;
+      dispatch({ type: 'isMuted', data: controlsState.isMuted ? false : true });
+      reviceProps.videoRef!.muted = controlsState.isMuted ? false : true;
+    };
+
+    return (
+      <div
+        className="JoL-controls-container"
+        // style={{ opacity: reviceProps.videoFlow!.isControl ? '1' : '0' }}
+      >
+        <MonitorComponent
+          isPlay={isPlay}
+          handleChangePlayState={handleChangePlayState}
+          currentTime={secondsToMinutesAndSecondes(currentTime)}
+          totalTime={secondsToMinutesAndSecondes(duration)}
         />
-        <VolumeComponent
-          ref={volumeSliderMirror}
-          volume={controlsState.volume}
-          changeCurrentVolume={changeCurrentVolume}
-          slideCurrentVolume={slideCurrentVolume}
-          clearVolumeInterval={clearVolumeInterval}
-          isMuted={controlsState.isMuted}
-          toggleVolume={toggleVolume}
-        />
-        <SetComponent switchChange={switchChange} />
-        <Tooltip
-          styleCss={{ padding: '0 5px' }}
-          title="截图"
-          icon={
-            <Broadcast
-              iconClass="screenshot"
-              className="hover-icon-animate"
-              fill="#fff"
-              onClick={screenshot}
+        <div className="JoL-multifunction">
+          {propsAttributes!.isShowMultiple && (
+            <MultipleComponent
+              multipleText={multipleText}
+              multiple={controlsState.multiple}
+              selectPlayRate={selectPlayRate}
             />
-          }
-        />
-        <Tooltip
-          styleCss={{ padding: '0 5px' }}
-          title={isPictureinpicture ? '关闭画中画' : '开启画中画'}
-          icon={
-            <Broadcast
-              iconClass="fullScreen"
-              fill="#fff"
-              className="hover-icon-animate"
-              fontSize={'20px'}
-              onClick={pictureInPicture}
-            />
-          }
-        />
-        <Tooltip
-          styleCss={{ padding: '0 5px' }}
-          title="网页全屏"
-          icon={
-            <Broadcast
-              iconClass="fullScreen"
-              fill="#fff"
-              className="hover-icon-animate"
-              fontSize={'20px'}
-              onClick={clientFullScreen}
-            />
-          }
-        />
-        <Tooltip
-          styleCss={{ padding: '0 5px' }}
-          title={controlsState.isScreentFull ? '退出全屏' : '全屏'}
-          icon={
-            <Broadcast
-              iconClass="fullScreen"
-              fill="#fff"
-              fontSize={'20px'}
-              onClick={requestFullScreen}
-              className="hover-icon-animate"
-            />
-          }
-        />
+          )}
+
+          <VolumeComponent
+            ref={volumeSliderMirror}
+            volume={controlsState.volume}
+            changeCurrentVolume={changeCurrentVolume}
+            slideCurrentVolume={slideCurrentVolume}
+            clearVolumeInterval={clearVolumeInterval}
+            isMuted={controlsState.isMuted}
+            toggleVolume={toggleVolume}
+          />
+          <SetComponent switchChange={switchChange} />
+          <Tooltip
+            styleCss={{ padding: '0 5px' }}
+            title="截图"
+            icon={
+              <Broadcast
+                iconClass="screenshot"
+                className="hover-icon-animate"
+                fill="#fff"
+                onClick={screenshot}
+              />
+            }
+          />
+          <Tooltip
+            styleCss={{ padding: '0 5px' }}
+            title={isPictureinpicture ? '关闭画中画' : '开启画中画'}
+            icon={
+              <Broadcast
+                iconClass="fullScreen"
+                fill="#fff"
+                className="hover-icon-animate"
+                fontSize={'20px'}
+                onClick={pictureInPicture}
+              />
+            }
+          />
+          <Tooltip
+            styleCss={{ padding: '0 5px' }}
+            title="网页全屏"
+            icon={
+              <Broadcast
+                iconClass="fullScreen"
+                fill="#fff"
+                className="hover-icon-animate"
+                fontSize={'20px'}
+                onClick={clientFullScreen}
+              />
+            }
+          />
+          <Tooltip
+            styleCss={{ padding: '0 5px' }}
+            title={controlsState.isScreentFull ? '退出全屏' : '全屏'}
+            icon={
+              <Broadcast
+                iconClass="fullScreen"
+                fill="#fff"
+                fontSize={'20px'}
+                onClick={requestFullScreen}
+                className="hover-icon-animate"
+              />
+            }
+          />
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  },
+);
 
 export default Index;

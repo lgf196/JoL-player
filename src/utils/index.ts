@@ -37,3 +37,14 @@ export const createALabel = (path: string, fileName: string = 'JoL-player.png') 
   link.remove();
   window.URL.revokeObjectURL(path);
 };
+
+export const capture = (video: HTMLVideoElement, scaleFactor: number = 0.25) => {
+  var w = video.videoWidth * scaleFactor;
+  var h = video.videoHeight * scaleFactor;
+  var canvas = document.createElement('canvas') as HTMLCanvasElement;
+  canvas.width = w;
+  canvas.height = h;
+  var ctx = canvas.getContext('2d');
+  ctx!.drawImage(video, 0, 0, w, h);
+  return canvas;
+};

@@ -175,5 +175,12 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
 };
 
 const JoLPlayerComponent = forwardRef<JoLPlayerRef, videoparameter>(JoLPlayer);
-
+JoLPlayerComponent.defaultProps = {
+  option: {
+    width: 750,
+    height: 420,
+    videoSrc: 'https://cdn.gudsen.com/2021/06/28/f81356b08b4842d7a3719499f557c8e4.JPG',
+    isShowMultiple: true,
+  },
+};
 export default JoLPlayerComponent;

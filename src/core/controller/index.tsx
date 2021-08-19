@@ -1,17 +1,14 @@
-import React, { memo, useContext, useRef, useState, useMemo } from 'react';
+import React, { memo, useContext, useRef, useMemo, useEffect, useState } from 'react';
 import Broadcast from '@/components/svgIcon';
 import Progress from '../progress';
 import Controls from '../controls';
 import { FlowContext } from '@/core/context';
 import { useVideo } from '@/core/useVideo';
-import useWindowClient from '@/utils/useWindowClient';
-import usePrevious from '@/utils/usePrevious';
 import EndComponent from '@/components/end';
+import Screenshot from '@/components/screenshot';
 import './index.scss';
 
-const Index = memo(function Index(props) {
-  const { clientX } = useWindowClient();
-
+const Index = memo(function Index() {
   const reviceProps = useContext(FlowContext);
 
   const { dispatch, propsAttributes } = reviceProps;
@@ -25,56 +22,71 @@ const Index = memo(function Index(props) {
 
   const timer = useRef<NodeJS.Timeout | null>(null!);
 
-  const viewClientX = useRef<number>(null!);
-
-  const prevCalculation = useRef<number>(null!);
-
   const controllerRef = useRef<HTMLDivElement>(null!);
 
-  const [pre, setPre] = useState<number>(0);
-
-  viewClientX.current = clientX;
-
   /**
-   * @description 返回上一次的记录值
+   * @description 检查器，检查鼠标是否移动
    */
-  prevCalculation.current = usePrevious(pre) as number;
+  const userActivity = useRef<boolean>(false);
+
+  const inactivityTimeout = useRef<NodeJS.Timeout | null>(null!);
+  /**
+   * @description 是否在控制器上
+   */
+  const isControlsContainerMove = useRef<boolean>(false);
+
+  const [isScreenshot, setIsscreenshot] = useState<boolean>(false);
+
+  const [screenshotLoading, setScreenshotLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    timer.current = setInterval(() => {
+      if (userActivity.current) {
+        /**
+         * @description 重置
+         */
+        userActivity.current = false;
+        dispatch!({ type: 'isControl', data: true });
+        controllerRef.current.style.cursor = 'pointer';
+        inactivityTimeout.current && clearTimeout(inactivityTimeout.current);
+        inactivityTimeout.current = setTimeout(
+          () => {
+            /**
+             * @note 当鼠标移动在控制器Controls上时，这个时候，鼠标不能隐藏
+             */
+            if (!userActivity.current && !isControlsContainerMove.current) {
+              dispatch!({ type: 'isControl', data: false });
+              controllerRef.current.style.cursor = 'none';
+            }
+          },
+          propsAttributes!.hideMouseTime ? propsAttributes!.hideMouseTime : 2000,
+        );
+      }
+    }, 200);
+    return () => {
+      timer.current && clearInterval(timer.current);
+    };
+  }, []);
 
   /**
    * @description 显示操作控件
    */
-  const showControl = (e: any, status: string) => {
+  const showControl = (status: string) => {
     dispatch!({ type: 'isControl', data: status === 'enter' && !isEndEd ? true : false });
-  };
-  /**
-   * @description 隐藏鼠标
-   */
-  const hiddleCursor = () => {
-    if (timer.current) {
-      clearInterval(timer.current);
-    }
-    timer.current = setInterval(() => {
-      setPre(viewClientX.current);
-      /**
-       * @description 如果在1200ms没有任何操作的话，就隐藏控件和鼠标
-       */
-      if (viewClientX.current! !== prevCalculation.current) {
-        dispatch!({ type: 'isControl', data: true });
-        controllerRef.current.style.cursor = 'pointer';
-      } else {
-        dispatch!({ type: 'isControl', data: false });
-        controllerRef.current.style.cursor = 'none';
-      }
-    }, 1200);
-  };
-  const clearTimer = () => {
-    controllerRef.current.style.cursor = 'pointer';
-    if (timer.current) {
-      clearInterval(timer.current);
-    }
   };
   const handlePlay = () => {
     handleChangePlayState && handleChangePlayState();
+  };
+  const mouseMove: React.MouseEventHandler<HTMLDivElement> = (e) => {
+    userActivity.current = true;
+    /**
+     * @note 这个时候要将控制器区设置为false,此时鼠标在播放器，如果不设置为false，会造成移出不能隐藏控制器的bug
+     */
+    isControlsContainerMove.current = false;
+  };
+  const leaveMove: React.MouseEventHandler<HTMLDivElement> = (e) => {
+    userActivity.current = false;
+    controllerRef.current.style.cursor = 'pointer';
   };
   /**
    * @description 暂停键的位置
@@ -93,18 +105,25 @@ const Index = memo(function Index(props) {
       };
     }
   }, [propsAttributes!.pausePlacement]);
+  /**
+   * @param status 鼠标状态
+   * @description 控制器容器鼠标操作
+   */
+  const controlsContainerMove = (status: string) => {
+    isControlsContainerMove.current = status === 'move' ? true : false;
+  };
   return (
     <div
       className="JoL-controller-container"
-      onMouseEnter={(e) => showControl(e, 'enter')}
-      onMouseLeave={(e) => showControl(e, 'leave')}
+      onMouseEnter={(e) => [showControl('enter')]}
+      onMouseLeave={(e) => [showControl('leave'), e.stopPropagation()]}
       ref={controllerRef}
     >
       <div
         id="play-or-pause-mask"
         className="JoL-click-to-play-or-pause"
-        onMouseEnter={hiddleCursor}
-        onMouseLeave={clearTimer}
+        onMouseLeave={leaveMove}
+        onMouseMove={mouseMove}
         onClick={handlePlay}
       ></div>
       {!isPlay && !isEndEd && (
@@ -116,15 +135,22 @@ const Index = memo(function Index(props) {
           style={pausePosition}
         />
       )}
-      <div className="JoL-progress-and-controls-wrap">
+      <div
+        className="JoL-progress-and-controls-wrap"
+        onMouseMove={(e) => [controlsContainerMove('move')]}
+        onMouseLeave={(e) => [controlsContainerMove('leave')]}
+      >
+        {isScreenshot ? (
+          <Screenshot setIsscreenshot={setIsscreenshot} screenshotLoading={screenshotLoading} />
+        ) : null}
         <Progress />
-        <Controls />
+        <Controls setIsscreenshot={setIsscreenshot} setScreenshotLoading={setScreenshotLoading} />
       </div>
       {isEndEd ? (
         propsAttributes!.setEndPlayContent ? (
           propsAttributes!.setEndPlayContent
         ) : (
-          <EndComponent handle={() => [handleChangePlayState(), hiddleCursor()]} />
+          <EndComponent handle={() => [handleChangePlayState(), showControl('enter')]} />
         )
       ) : null}
     </div>

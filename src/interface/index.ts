@@ -40,6 +40,30 @@ export interface videoOption<T = string, K = boolean, U = number> {
    * @description 暂停键的位置
    */
   pausePlacement?: pausePlacement;
+  /**
+   * @description 多少毫秒，无任何操作，隐藏鼠标和控制器/ms
+   */
+  hideMouseTime?: U;
+  /**
+   * @description 是否显示播放倍数功能
+   */
+  isShowMultiple?: K;
+  /**
+   * @description 是否显示设置功能
+   */
+  isShowSet?: K;
+  /**
+   * @description 是否显示截图功能
+   */
+  isShowScreenshot?: K;
+  /**
+   * @description 是否显示画中画
+   */
+  isShowPicture?: K;
+  /**
+   * @description 是否显示网页全屏
+   */
+  isShowWebFullScreen?: K;
 }
 export interface videoAttributes<T = number, K = boolean> {
   /**
