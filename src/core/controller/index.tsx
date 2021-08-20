@@ -141,7 +141,12 @@ const Index = memo(function Index() {
         onMouseLeave={(e) => [controlsContainerMove('leave')]}
       >
         {isScreenshot ? (
-          <Screenshot setIsscreenshot={setIsscreenshot} screenshotLoading={screenshotLoading} />
+          <Screenshot
+            setIsscreenshot={setIsscreenshot}
+            screenshotLoading={screenshotLoading}
+            theme={propsAttributes!.theme}
+            language={propsAttributes!.language}
+          />
         ) : null}
         <Progress />
         <Controls setIsscreenshot={setIsscreenshot} setScreenshotLoading={setScreenshotLoading} />
@@ -150,7 +155,10 @@ const Index = memo(function Index() {
         propsAttributes!.setEndPlayContent ? (
           propsAttributes!.setEndPlayContent
         ) : (
-          <EndComponent handle={() => [handleChangePlayState(), showControl('enter')]} />
+          <EndComponent
+            handle={() => [handleChangePlayState(), showControl('enter')]}
+            language={propsAttributes!.language}
+          />
         )
       ) : null}
     </div>

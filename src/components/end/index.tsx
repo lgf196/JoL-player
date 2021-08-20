@@ -1,8 +1,13 @@
 import React, { memo, FC } from 'react';
 import style from './index.module.scss';
 import Broadcast from '@/components/svgIcon';
-
-const Index: FC<{ handle: Function }> = memo(function Index({ handle }) {
+import { languageType } from '@/interface';
+import { il8n } from '@/language';
+import { defaultLanguage } from '@/core/config';
+const Index: FC<{ handle: Function; language: languageType | undefined }> = memo(function Index({
+  handle,
+  language,
+}) {
   const handleFunc = () => {
     handle();
   };
@@ -12,7 +17,7 @@ const Index: FC<{ handle: Function }> = memo(function Index({ handle }) {
         <div className={style.cicle} onClick={handleFunc}>
           <Broadcast iconClass="replay" fill="#fff" fontSize={'37px'} />
         </div>
-        <p>重播</p>
+        <p>{il8n(language || defaultLanguage, 'replay')}</p>
       </div>
     </div>
   );

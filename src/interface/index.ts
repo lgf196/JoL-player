@@ -7,6 +7,8 @@ export interface hoverShowStyleType {
   progressScrubberRefEle: HTMLDivElement;
 }
 export type pausePlacement = 'bottomRight' | 'center';
+
+export type languageType = 'zh' | 'en';
 export interface videoOption<T = string, K = boolean, U = number> {
   /**
    * @description 视频容器的width
@@ -64,6 +66,10 @@ export interface videoOption<T = string, K = boolean, U = number> {
    * @description 是否显示网页全屏
    */
   isShowWebFullScreen?: K;
+  /**
+   * @description  语言,默认中文
+   */
+  language?: languageType;
 }
 export interface videoAttributes<T = number, K = boolean> {
   /**

@@ -7,12 +7,14 @@ export interface MultipleType {
   multipleText: string;
   selectPlayRate: Function;
   multiple: number;
+  style?: React.CSSProperties;
 }
 
 const Multiple: FC<MultipleType> = memo(function Multiple({
   multipleText,
   selectPlayRate,
   multiple,
+  style,
 }) {
   const reviceProps = useContext(FlowContext);
 
@@ -25,6 +27,7 @@ const Multiple: FC<MultipleType> = memo(function Multiple({
       className="JoL-multifunction-multiple"
       onClick={(e) => setIsShow((pre) => !pre)}
       onMouseLeave={(e) => [setIsShow(false)]}
+      style={style}
     >
       <p>{multipleText}</p>
       <div

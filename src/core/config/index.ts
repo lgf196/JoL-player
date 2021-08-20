@@ -10,3 +10,5 @@ export const multipleList = [
 export const defaultTheme: string = 'blue';
 
 export const defaultVolume: number = 60;
+
+export const defaultLanguage = 'zh';

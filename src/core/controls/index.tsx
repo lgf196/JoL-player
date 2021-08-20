@@ -3,15 +3,16 @@ import Broadcast from '@/components/svgIcon';
 import Tooltip from '@/components/tooltip';
 import { contextType, FlowContext } from '@/core/context';
 import { useVideo } from '@/core/useVideo';
-import { secondsToMinutesAndSecondes, capture } from '@/utils';
+import { secondsToMinutesAndSecondes, capture, filterDefaults } from '@/utils';
 import { useControls } from './variable';
 import useWindowClient from '@/utils/useWindowClient';
 import screenfull, { Screenfull } from 'screenfull';
-import { multipleList, defaultVolume } from '@/core/config';
+import { multipleList, defaultVolume, defaultLanguage } from '@/core/config';
 import SetComponent from './set';
 import MultipleComponent from './multiple';
 import VolumeComponent from './volume';
 import MonitorComponent from './monitor';
+import { il8n } from '@/language';
 import './index.scss';
 
 const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> = memo(
@@ -162,7 +163,7 @@ const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> =
     };
     const multipleText = useMemo(() => {
       if (controlsState.multiple === 1.0) {
-        return '倍数';
+        return il8n(propsAttributes!.language || defaultLanguage, 'multiple');
       } else {
         return multipleList.filter((item) => item.id === controlsState.multiple)[0].name;
       }
@@ -217,11 +218,17 @@ const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> =
       dispatch({ type: 'isMuted', data: controlsState.isMuted ? false : true });
       reviceProps.videoRef!.muted = controlsState.isMuted ? false : true;
     };
+    /**
+     * @description 全屏之后，对控件的间距设置一下
+     */
+    const space = useMemo(() => {
+      return controlsState.isScreentFull || controlsState.isWebPageFullScreen ? '13px' : '8px';
+    }, [controlsState.isWebPageFullScreen, controlsState.isScreentFull]);
 
     return (
       <div
         className="JoL-controls-container"
-        // style={{ opacity: reviceProps.videoFlow!.isControl ? '1' : '0' }}
+        style={{ opacity: reviceProps.videoFlow!.isControl ? '1' : '0' }}
       >
         <MonitorComponent
           isPlay={isPlay}
@@ -230,15 +237,17 @@ const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> =
           totalTime={secondsToMinutesAndSecondes(duration)}
         />
         <div className="JoL-multifunction">
-          {propsAttributes!.isShowMultiple && (
+          {filterDefaults(propsAttributes!.isShowMultiple) && (
             <MultipleComponent
               multipleText={multipleText}
               multiple={controlsState.multiple}
               selectPlayRate={selectPlayRate}
             />
           )}
-
           <VolumeComponent
+            style={{
+              padding: `0 ${space}`,
+            }}
             ref={volumeSliderMirror}
             volume={controlsState.volume}
             changeCurrentVolume={changeCurrentVolume}
@@ -247,48 +256,67 @@ const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> =
             isMuted={controlsState.isMuted}
             toggleVolume={toggleVolume}
           />
-          <SetComponent switchChange={switchChange} />
+          {filterDefaults(propsAttributes!.isShowSet) && (
+            <SetComponent
+              switchChange={switchChange}
+              style={{
+                padding: `0 ${space}`,
+              }}
+            />
+          )}
+          {filterDefaults(propsAttributes!.isShowScreenshot) && (
+            <Tooltip
+              styleCss={{ padding: `0 ${space}` }}
+              title={il8n(propsAttributes!.language || defaultLanguage, 'screenshots')}
+              icon={
+                <Broadcast
+                  iconClass="screenshot"
+                  className="hover-icon-animate"
+                  fill="#fff"
+                  onClick={screenshot}
+                />
+              }
+            />
+          )}
+          {filterDefaults(propsAttributes!.isShowPicture) && (
+            <Tooltip
+              styleCss={{ padding: `0 ${space}` }}
+              title={il8n(
+                propsAttributes!.language || defaultLanguage,
+                isPictureinpicture ? 'closePicture' : 'openPicture',
+              )}
+              icon={
+                <Broadcast
+                  iconClass="fullScreen"
+                  fill="#fff"
+                  className="hover-icon-animate"
+                  fontSize={'20px'}
+                  onClick={pictureInPicture}
+                />
+              }
+            />
+          )}
+          {filterDefaults(propsAttributes!.isShowWebFullScreen) && (
+            <Tooltip
+              styleCss={{ padding: `0 ${space}` }}
+              title={il8n(propsAttributes!.language || defaultLanguage, 'Fullscreen')}
+              icon={
+                <Broadcast
+                  iconClass="fullScreen"
+                  fill="#fff"
+                  className="hover-icon-animate"
+                  fontSize={'20px'}
+                  onClick={clientFullScreen}
+                />
+              }
+            />
+          )}
           <Tooltip
-            styleCss={{ padding: '0 5px' }}
-            title="截图"
-            icon={
-              <Broadcast
-                iconClass="screenshot"
-                className="hover-icon-animate"
-                fill="#fff"
-                onClick={screenshot}
-              />
-            }
-          />
-          <Tooltip
-            styleCss={{ padding: '0 5px' }}
-            title={isPictureinpicture ? '关闭画中画' : '开启画中画'}
-            icon={
-              <Broadcast
-                iconClass="fullScreen"
-                fill="#fff"
-                className="hover-icon-animate"
-                fontSize={'20px'}
-                onClick={pictureInPicture}
-              />
-            }
-          />
-          <Tooltip
-            styleCss={{ padding: '0 5px' }}
-            title="网页全屏"
-            icon={
-              <Broadcast
-                iconClass="fullScreen"
-                fill="#fff"
-                className="hover-icon-animate"
-                fontSize={'20px'}
-                onClick={clientFullScreen}
-              />
-            }
-          />
-          <Tooltip
-            styleCss={{ padding: '0 5px' }}
-            title={controlsState.isScreentFull ? '退出全屏' : '全屏'}
+            styleCss={{ padding: `0 ${space}` }}
+            title={il8n(
+              propsAttributes!.language || defaultLanguage,
+              controlsState.isScreentFull ? 'closefullScreen' : 'fullScreen',
+            )}
             icon={
               <Broadcast
                 iconClass="fullScreen"

@@ -11,6 +11,7 @@ export interface VolumeType {
   slideCurrentVolume: React.MouseEventHandler<HTMLDivElement>;
   clearVolumeInterval: React.MouseEventHandler<HTMLDivElement>;
   toggleVolume: Function;
+  style?: React.CSSProperties;
 }
 
 const Volume = function Volume(
@@ -21,6 +22,7 @@ const Volume = function Volume(
     clearVolumeInterval,
     isMuted,
     toggleVolume,
+    style,
   }: VolumeType,
   ref: React.Ref<unknown> | undefined,
 ) {
@@ -42,6 +44,7 @@ const Volume = function Volume(
       onMouseEnter={(e) => [setIsShow(true)]}
       onMouseLeave={(e) => [setIsShow(false)]}
       onClick={(e) => [toggleVolume()]}
+      style={style}
     >
       <Broadcast iconClass={isMuted ? 'set' : 'volume'} fill="#fff" fontSize={'20px'} />
       <div

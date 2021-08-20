@@ -48,3 +48,13 @@ export const capture = (video: HTMLVideoElement, scaleFactor: number = 0.25) => 
   ctx!.drawImage(video, 0, 0, w, h);
   return canvas;
 };
+
+export const filterDefaults = (val: unknown) => {
+  if (val === null || val === undefined) {
+    return true;
+  } else if (val === true) {
+    return true;
+  } else {
+    return false;
+  }
+};
