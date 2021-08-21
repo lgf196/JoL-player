@@ -1,4 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './appComponent';
-ReactDOM.render(<App />, document.getElementById('root'));
+import * as JoLPlayerType from '@/interface';
+import JoLPlayer from '@/core/index';
+import '@/icons/';
+export { JoLPlayerType };
+export default JoLPlayer;

@@ -1,6 +1,5 @@
 import React, { memo, useRef, useEffect, useMemo, useState } from 'react';
-import JoLPlayer, { JoLPlayerType } from './index';
-import '@/icons/';
+import JoLPlayer, { JoLPlayerType } from '../src/index';
 
 const AppComponent = memo(function AppComponent(props) {
   const url = useRef<string>(
