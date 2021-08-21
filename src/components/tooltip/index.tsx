@@ -1,5 +1,5 @@
-import React, { memo, FC } from 'react';
-import style from './index.module.scss';
+import React, { memo, FC } from "react";
+import "./index.module.scss";
 export type tooltip = {
   title: string;
   icon: React.ReactNode;
@@ -8,9 +8,9 @@ export type tooltip = {
 
 const Index: FC<tooltip> = memo(function Index({ title, icon, styleCss }) {
   return (
-    <div className={style.tooltip} style={styleCss}>
+    <div className="tooltip" style={styleCss}>
       <>{icon}</>
-      <div className={style.title}>{title}</div>
+      <div className="title">{title}</div>
     </div>
   );
 });

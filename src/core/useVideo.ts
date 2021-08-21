@@ -1,7 +1,7 @@
-import { useRef, useMemo, useEffect, DependencyList } from 'react';
-import useMandatoryUpdate from '@/utils/useMandatoryUpdate';
-import { videoAttributes, videoMethod, parVoid } from '@/interface';
-import { defaultVolume } from '@/core/config';
+import { useRef, useMemo, useEffect, DependencyList } from "react";
+import useMandatoryUpdate from "@/utils/useMandatoryUpdate";
+import { videoAttributes, videoMethod, parVoid } from "@/interface";
+import { defaultVolume } from "@/core/config";
 export interface useVideoType extends videoAttributes {
   handleChangePlayState: () => void;
   videoAttributes: videoAttributes;
@@ -37,13 +37,13 @@ export const useVideo = (props: any, dep: DependencyList = []) => {
       /**
        * @description 监听总时长
        */
-      videoRef.current.addEventListener('canplay', () => {
+      videoRef.current.addEventListener("canplay", () => {
         torture({ duration: videoRef.current.duration });
       });
       /**
        * @description 监听缓冲
        */
-      videoRef.current.addEventListener('progress', () => {
+      videoRef.current.addEventListener("progress", () => {
         if (videoRef.current.buffered.length >= 1) {
           torture({ bufferedTime: videoRef.current.buffered.end(0) });
         }
@@ -51,13 +51,13 @@ export const useVideo = (props: any, dep: DependencyList = []) => {
       /**
        * @description 已经进入画中画
        */
-      videoRef.current.addEventListener('enterpictureinpicture', () => {
+      videoRef.current.addEventListener("enterpictureinpicture", () => {
         torture({ isPictureinpicture: true });
       });
       /**
        * @description 已退出画中画模式
        */
-      videoRef.current.addEventListener('leavepictureinpicture', () => {
+      videoRef.current.addEventListener("leavepictureinpicture", () => {
         torture({ isPictureinpicture: false });
       });
       // 定时器用于更新当前视频时间
@@ -74,11 +74,11 @@ export const useVideo = (props: any, dep: DependencyList = []) => {
           isEndEd: videoRef.current.ended ? true : false,
         });
       }, 1);
-      videoRef.current.addEventListener('pause', pauseChange);
-      videoRef.current.addEventListener('play', playChange);
-      videoRef.current.addEventListener('timeupdate', timeupdate);
-      videoRef.current.addEventListener('ended', endedChange);
-      videoRef.current.addEventListener('error', errorChange);
+      videoRef.current.addEventListener("pause", pauseChange);
+      videoRef.current.addEventListener("play", playChange);
+      videoRef.current.addEventListener("timeupdate", timeupdate);
+      videoRef.current.addEventListener("ended", endedChange);
+      videoRef.current.addEventListener("error", errorChange);
     }
     return () => {
       interval.current && clearInterval(interval.current);
@@ -135,6 +135,6 @@ export const useVideo = (props: any, dep: DependencyList = []) => {
       videoAttributes: videoParameter.current,
       videoMethod,
     }),
-    [videoParameter.current],
+    [videoParameter.current]
   );
 };

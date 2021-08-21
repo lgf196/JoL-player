@@ -1,4 +1,4 @@
-@import 'src/assets/css/mixin.scss';
+@import "src/assets/css/mixin.scss";
 .clientFullScreen {
   @include wh(auto !important, auto !important);
   @include position(fixed !important, 0, 0, 0, 0);
@@ -18,7 +18,7 @@
     cursor: default;
   }
   &:after {
-    content: '';
+    content: "";
     @include wh(calc(100% + 26px), 100%);
     @include position(absolute, auto, auto, 0, 50%);
     z-index: -1;
@@ -132,8 +132,8 @@
               border-radius: 1px;
               .volume-slider-op-circle {
                 @include wh(10px, 10px);
-                @include position(absolute, -(10px/2), auto, auto, 50%);
-                margin-left: -(10px/2);
+                @include position(absolute, calc(-10px / 2), auto, auto, 50%);
+                margin-left: calc(-10px / 2);
                 border-radius: 50%;
               }
             }
