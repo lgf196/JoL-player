@@ -46,7 +46,7 @@ const Volume = function Volume(
       onClick={(e) => [toggleVolume()]}
       style={style}
     >
-      <Broadcast iconClass={isMuted ? 'set' : 'volume'} fill="#fff" fontSize={'20px'} />
+      <Broadcast iconClass={isMuted ? 'mute' : 'volume'} fill="#fff" fontSize="20px" />
       <div
         className="JoL-multifunction-volume-container"
         style={{ display: isShow ? 'block' : 'none' }}

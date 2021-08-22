@@ -24,7 +24,7 @@ const Set: FC<SetType> = memo(function Set({ switchChange, style }) {
       onMouseLeave={(e) => [setIsShow(false)]}
       style={style}
     >
-      <Broadcast iconClass="set" fill="#fff" className="hover-icon-rotateAnimate" />
+      <Broadcast iconClass="set" fill="#fff" className="hover-icon-rotateAnimate" fontSize="20px" />
       <div
         className="JoL-multifunction-set-container"
         style={{ display: isShow ? 'block' : 'none' }}

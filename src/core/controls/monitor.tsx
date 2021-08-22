@@ -17,17 +17,12 @@ const Monitor: FC<MonitorType> = memo(function Monitor({
 }) {
   return (
     <div className="play-pause-timeline">
-      {!isPlay ? (
-        <Broadcast iconClass="player" fill="#fff" onClick={handleChangePlayState} />
-      ) : (
-        <Broadcast
-          iconClass="pause"
-          fill="#fff"
-          fontSize={'20px'}
-          onClick={handleChangePlayState}
-        />
-      )}
-
+      <Broadcast
+        iconClass={!isPlay ? 'player' : 'pause'}
+        fill="#fff"
+        fontSize="20px"
+        onClick={handleChangePlayState}
+      />
       <span className="time-wrap">
         <span className="current-time">{currentTime}</span>
         <span className="time-divider">&nbsp;/&nbsp;</span>

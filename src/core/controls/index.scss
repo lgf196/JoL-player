@@ -1,8 +1,8 @@
-@import "src/assets/css/mixin.scss";
+@import 'src/assets/css/mixin.scss';
 .clientFullScreen {
   @include wh(auto !important, auto !important);
   @include position(fixed !important, 0, 0, 0, 0);
-  z-index: 100000;
+  z-index: 100000 !important;
 }
 .JoL-controls-container {
   padding: 0 5px;
@@ -18,7 +18,7 @@
     cursor: default;
   }
   &:after {
-    content: "";
+    content: '';
     @include wh(calc(100% + 26px), 100%);
     @include position(absolute, auto, auto, 0, 50%);
     z-index: -1;

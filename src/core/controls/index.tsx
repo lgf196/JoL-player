@@ -270,7 +270,8 @@ const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> =
               title={il8n(propsAttributes!.language || defaultLanguage, 'screenshots')}
               icon={
                 <Broadcast
-                  iconClass="screenshot"
+                  fontSize="20px"
+                  iconClass="screenshots"
                   className="hover-icon-animate"
                   fill="#fff"
                   onClick={screenshot}
@@ -287,7 +288,7 @@ const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> =
               )}
               icon={
                 <Broadcast
-                  iconClass="fullScreen"
+                  iconClass="inPicture"
                   fill="#fff"
                   className="hover-icon-animate"
                   fontSize={'20px'}
@@ -299,10 +300,15 @@ const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> =
           {filterDefaults(propsAttributes!.isShowWebFullScreen) && (
             <Tooltip
               styleCss={{ padding: `0 ${space}` }}
-              title={il8n(propsAttributes!.language || defaultLanguage, 'Fullscreen')}
+              title={il8n(
+                propsAttributes!.language || defaultLanguage,
+                controlsState.isWebPageFullScreen ? 'closeFullscreen' : 'Fullscreen',
+              )}
               icon={
                 <Broadcast
-                  iconClass="fullScreen"
+                  iconClass={
+                    !controlsState.isWebPageFullScreen ? 'webFullscreen' : 'closeWebFullscreen'
+                  }
                   fill="#fff"
                   className="hover-icon-animate"
                   fontSize={'20px'}
@@ -319,9 +325,9 @@ const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> =
             )}
             icon={
               <Broadcast
-                iconClass="fullScreen"
+                iconClass={!controlsState.isScreentFull ? 'fullScreen' : 'closeFullScreen'}
                 fill="#fff"
-                fontSize={'20px'}
+                fontSize={'19px'}
                 onClick={requestFullScreen}
                 className="hover-icon-animate"
               />

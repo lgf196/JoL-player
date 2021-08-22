@@ -1,32 +1,31 @@
 {
-  "name": " JoL-player",
-  "version": "1.0.0",
-  "description": "A multifunctional and beautiful React-based web video player.",
-  "main": "dist/index.js",
+  "name": "jol-player",
+  "version": "2.0.0",
+  "description": "简洁，美观，功能强大的react播放器，simple and beautiful, powerful react player",
+  "main": "index.js",
   "scripts": {
     "build": "webpack --config ./build/webpack.prod.config.js",
     "start": "webpack-dev-server  --inline --config ./build/webpack.dev.config.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vortesnail/Qier.git"
+    "url": "git+https://github.com/lgf196/JoL-player.git"
   },
   "keywords": [
-    "vortesnail",
-    "qier",
-    "video-player",
+    "lgf",
+    "react-video",
     "video",
     "player",
     "react",
     "react-components",
-    "html5-video-player"
+    "JoL-player"
   ],
-  "author": "vortesnail",
+  "author": "lgf",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/vortesnail/Qier/issues"
+    "url": "https://github.com/lgf196/JoL-player/issues"
   },
-  "homepage": "https://github.com/vortesnail/Qier#readme",
+  "homepage": "https://github.com/lgf196/JoL-player",
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",

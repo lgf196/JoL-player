@@ -7,7 +7,7 @@ export const multipleList = [
   { id: 2, name: '2.0x' },
 ];
 
-export const defaultTheme: string = 'blue';
+export const defaultTheme: string = '#ffb821';
 
 export const defaultVolume: number = 60;
 
