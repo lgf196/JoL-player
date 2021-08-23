@@ -154,7 +154,7 @@ export interface videoAttributes<T = number, K = boolean> {
 export interface videoparameter extends Partial<videoCallback> {
   style?: React.CSSProperties;
   /**
-   * @description 组件的配置项
+   * @description Component configuration items
    */
   option: videoOption;
   className?: string;
