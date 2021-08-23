@@ -57,6 +57,8 @@ const App = () => (
 
 #### 属性/配置项
 
+如下属性来自`option`属性配置项
+
 | 参数                | 说明                                      | 类型              | 默认值   |
 | ------------------- | ----------------------------------------- | ----------------- | -------- | ----------- |
 | width               | 视频容器的 width（必传）                  | `number`          | 必传     |
@@ -143,6 +145,22 @@ export interface videoAttributes<T = number, K = boolean> {
 | onEndEd             | 视频结束时回调           | (e: videoAttributes) => void |
 | onvolumechange      | 音量改变时的回调         | (e: videoAttributes) => void |
 | onError             | 视频播放失败的回调       | () => void                   |
+
+#### `JoLPlaye`r接收的参数接口如下：:point_down:
+
+``` tsx
+export interface videoparameter extends Partial<videoCallback> {
+  style?: React.CSSProperties;
+  /**
+   * @description 组件的配置项
+   */
+  option: videoOption;
+  className?: string;
+  ref?: JoLPlayerRef
+}
+```
+
+
 
 ## :muscle:后期版本
 

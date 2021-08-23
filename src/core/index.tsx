@@ -20,6 +20,8 @@ import './index.scss';
 const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unknown> | undefined) {
   const {
     option,
+    className,
+    style,
     onProgressMouseDown,
     onPlay,
     onPause,
@@ -148,7 +150,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
   }, [videoRef.current, videoFlow, option]);
 
   return (
-    <figure className="JoL-player-container" ref={videoContainerRef}>
+    <figure className={`JoL-player-container ${className}`} ref={videoContainerRef} style={style}>
       <div className="JoL-light-off-mask" ref={lightOffMaskRef}></div>
       <video className="JoL-player" ref={videoRef} poster={poster ? poster : undefined}>
         {returnVideoSource}

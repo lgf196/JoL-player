@@ -1,6 +1,6 @@
 {
   "name": "jol-player",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "简洁，美观，功能强大的react播放器，simple and beautiful, powerful react player",
   "main": "index.js",
   "scripts": {

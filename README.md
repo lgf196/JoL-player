@@ -59,6 +59,8 @@ const App = () => (
 
 #### Properties/Configuration Items
 
+The following attributes come from the `option` property configuration item
+
 | Parameter           | Description                                                  | type              | Default value |
 | ------------------- | ------------------------------------------------------------ | ----------------- | ------------- |
 | width               | The width of the video container (required)                  | `number`          | required      |
@@ -145,6 +147,20 @@ export interface videoAttributes<T = number, K = boolean> {
 | onEndEd             | Callback when the video ends                    | (e: videoAttributes) => void |
 | onvolumechange      | Callback when the volume changes                | (e: videoAttributes) => void |
 | onError             | Video playback failed callback                  | () => void                   |
+
+#### The parameter interface received by `JoLPlaye`r is as follows: :point_down:
+
+``` tsx
+export interface videoparameter extends Partial<videoCallback> {
+  style?: React.CSSProperties;
+  /**
+   * @description 组件的配置项
+   */
+  option: videoOption;
+  className?: string;
+  ref?: JoLPlayerRef
+}
+```
 
 ## :muscle:Later version
 
