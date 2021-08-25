@@ -61,23 +61,23 @@ const App = () => (
 
 The following attributes come from the `option` property configuration item
 
-| Parameter           | Description                                                  | type              | Default value |
-| ------------------- | ------------------------------------------------------------ | ----------------- | ------------- |
-| width               | The width of the video container (required)                  | `number`          | required      |
-| height              | The height of the video container (required)                 | `number`          | required      |
-| videoSrc            | Video address (required)                                     | `string`          | required      |
-| theme               | theme                                                        | `string`          | \#ffb821      |
-| poster              | Video cover image                                            | `string`          | -             |
-| setEndPlayContent   | Customize what is displayed at the end of the video          | `React.ReactNode` | -             |
-| setBufferContent    | Custom video buffer loading component                        | `React.ReactNode` | -             |
-| pausePlacement      | The position of the pause button                             | `bottomRight`     | `center`      |
-| hideMouseTime       | How many milliseconds, without any operation, hide the mouse and controller/ms | `number`          | 2000          |
-| isShowMultiple      | Whether to display the multiplier function                   | `boolean`         | true          |
-| isShowSet           | Whether to display the setting function                      | `boolean`         | true          |
-| isShowScreenshot    | Whether to display the screenshot function                   | `boolean`         | true          |
-| isShowPicture       | Whether to show picture-in-picture                           | `boolean`         | true          |
-| isShowWebFullScreen | Whether to display the full screen of the webpage            | `boolean`         | true          |
-| language            | Language                                                     | `zh`              | `en`          |
+| Parameter           | Description                                                  | type                      | Default value |
+| ------------------- | ------------------------------------------------------------ | ------------------------- | ------------- |
+| width               | The width of the video container (required)                  | `number`                  | required      |
+| height              | The height of the video container (required)                 | `number`                  | required      |
+| videoSrc            | Video address (required)                                     | `string`                  | required      |
+| theme               | theme                                                        | `string`                  | \#ffb821      |
+| poster              | Video cover image                                            | `string`                  | -             |
+| setEndPlayContent   | Customize what is displayed at the end of the video          | `React.ReactNode`         | -             |
+| setBufferContent    | Custom video buffer loading component                        | `React.ReactNode`         | -             |
+| pausePlacement      | The position of the pause button                             | `bottomRight`  | `center` | `bottomRight` |
+| hideMouseTime       | How many milliseconds, without any operation, hide the mouse and controller/ms | `number`                  | 2000          |
+| isShowMultiple      | Whether to display the multiplier function                   | `boolean`                 | true          |
+| isShowSet           | Whether to display the setting function                      | `boolean`                 | true          |
+| isShowScreenshot    | Whether to display the screenshot function                   | `boolean`                 | true          |
+| isShowPicture       | Whether to show picture-in-picture                           | `boolean`                 | true          |
+| isShowWebFullScreen | Whether to display the full screen of the webpage            | `boolean`                 | true          |
+| language            | Language                                                     | `zh` | `en`               | `zh`          |
 
 #### Method
 

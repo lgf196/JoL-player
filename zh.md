@@ -59,23 +59,23 @@ const App = () => (
 
 如下属性来自`option`属性配置项.
 
-| 参数                | 说明                                      | 类型              | 默认值   |
-| ------------------- | ----------------------------------------- | ----------------- | -------- | ----------- |
-| width               | 视频容器的 width（必传）                  | `number`          | 必传     |
-| height              | 视频容器的 height（必传）                 | `number`          | 必传     |
-| videoSrc            | 视频地址（必传）                          | `string`          | 必传     |
-| theme               | 主题                                      | `string`          | \#ffb821 |
-| poster              | 视频封面图                                | `string`          | -        |
-| setEndPlayContent   | 自定义视频结束时显示的内容                | `React.ReactNode` | -        |
-| setBufferContent    | 自定义视频缓冲加载组件                    | `React.ReactNode` | -        |
-| pausePlacement      | 暂停键的位置                              | `bottomRight`     | `center` | bottomRight |
-| hideMouseTime       | 多少毫秒，无任何操作，隐藏鼠标和控制器/ms | `number`          | 2000     |
-| isShowMultiple      | 是否显示播放倍数功能                      | `boolean`         | true     |
-| isShowSet           | 是否显示设置功能                          | `boolean`         | true     |
-| isShowScreenshot    | 是否显示截图功能                          | `boolean`         | true     |
-| isShowPicture       | 是否显示画中画                            | `boolean`         | true     |
-| isShowWebFullScreen | 是否显示网页全屏                          | `boolean`         | true     |
-| language            | 语言                                      | `zh`              | `en`     | zh          |
+| 参数                | 说明                                      | 类型                     | 默认值        |
+| ------------------- | ----------------------------------------- | ------------------------ | ------------- |
+| width               | 视频容器的 width（必传）                  | `number`                 | 必传          |
+| height              | 视频容器的 height（必传）                 | `number`                 | 必传          |
+| videoSrc            | 视频地址（必传）                          | `string`                 | 必传          |
+| theme               | 主题                                      | `string`                 | \#ffb821      |
+| poster              | 视频封面图                                | `string`                 | -             |
+| setEndPlayContent   | 自定义视频结束时显示的内容                | `React.ReactNode`        | -             |
+| setBufferContent    | 自定义视频缓冲加载组件                    | `React.ReactNode`        | -             |
+| pausePlacement      | 暂停键的位置                              | `bottomRight` | `center` | `bottomRight` |
+| hideMouseTime       | 多少毫秒，无任何操作，隐藏鼠标和控制器/ms | `number`                 | 2000          |
+| isShowMultiple      | 是否显示播放倍数功能                      | `boolean`                | true          |
+| isShowSet           | 是否显示设置功能                          | `boolean`                | true          |
+| isShowScreenshot    | 是否显示截图功能                          | `boolean`                | true          |
+| isShowPicture       | 是否显示画中画                            | `boolean`                | true          |
+| isShowWebFullScreen | 是否显示网页全屏                          | `boolean`                | true          |
+| language            | 语言                                      | `zh` | `en`              | `zh`          |
 
 #### 方法
 
