@@ -60,8 +60,7 @@ const App = () => (
 如下属性来自`option`属性配置项.
 
 | 参数                | 说明                                      | 类型              | 默认值   |
-| ------------------- | ----------------------------------------- | ----------------- | -------- | ----------- |
-| width               | 视频容器的 width（必传）                  | `number`          | 必传     |
+| ------------------- | ----------------------------------------- | ----------------- | -------- | 
 | height              | 视频容器的 height（必传）                 | `number`          | 必传     |
 | videoSrc            | 视频地址（必传）                          | `string`          | 必传     |
 | theme               | 主题                                      | `string`          | \#ffb821 |
@@ -75,7 +74,7 @@ const App = () => (
 | isShowScreenshot    | 是否显示截图功能                          | `boolean`         | true     |
 | isShowPicture       | 是否显示画中画                            | `boolean`         | true     |
 | isShowWebFullScreen | 是否显示网页全屏                          | `boolean`         | true     |
-| language            | 语言                                      | `zh`              | `en`     | zh          |
+| language            | 语言                                      | `zh`              | `en`     | zh|
 
 #### 方法
 
