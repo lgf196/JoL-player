@@ -74,7 +74,7 @@ const App = () => (
 | isShowScreenshot    | 是否显示截图功能                          | `boolean`         | true     |
 | isShowPicture       | 是否显示画中画                            | `boolean`         | true     |
 | isShowWebFullScreen | 是否显示网页全屏                          | `boolean`         | true     |
-| language            | 语言                                      | `zh`              | `en`     | zh|
+| language            | 语言                                     | `zh`              | `en`     | zh          |
 
 #### 方法
 
