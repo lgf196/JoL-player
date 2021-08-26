@@ -161,7 +161,6 @@ export interface videoparameter extends Partial<videoCallback> {
 ```
 
 
-
 ## :muscle:后期版本
 
 - [ ] 增加快捷键功能
@@ -172,6 +171,11 @@ export interface videoparameter extends Partial<videoCallback> {
 ## :rose:赞赏
 
 如果您认为该项目对您有所帮助，则可以给作者一个赞，作者非常感激:blush::blush::rose:
+
+## 扫如下码，进行bug提问，和学习交流。
+<p align="left">
+  <img width="100" src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6d6d3f624f4143fe8833d2458aeaf002~tplv-k3u1fbpfcp-zoom-1.image">
+</p>
 
 ##  :european_castle:生态圈
 
