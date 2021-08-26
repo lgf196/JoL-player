@@ -41,12 +41,16 @@ const Volume = function Volume(
   return (
     <div
       className="JoL-multifunction-volume"
-      onMouseEnter={(e) => [setIsShow(true)]}
-      onMouseLeave={(e) => [setIsShow(false)]}
-      onClick={(e) => [toggleVolume()]}
+      onMouseEnter={(e) => [e.stopPropagation(), setIsShow(true)]}
+      onMouseLeave={(e) => [e.stopPropagation(), setIsShow(false)]}
+      onClick={(e) => {
+        e.stopPropagation();
+        toggleVolume();
+      }}
       style={style}
     >
       <Broadcast iconClass={isMuted ? 'mute' : 'volume'} fill="#fff" fontSize="20px" />
+
       <div
         className="JoL-multifunction-volume-container"
         style={{ display: isShow ? 'block' : 'none' }}

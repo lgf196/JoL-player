@@ -30,7 +30,7 @@ const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> =
 
     const { propsAttributes } = reviceProps!;
 
-    const revicePropsData = useRef<contextType>();
+    const revicePropsData = useRef<contextType>(null!);
 
     const { isPlay, handleChangePlayState, currentTime, duration, isPictureinpicture, volume } =
       useVideo(
@@ -53,6 +53,10 @@ const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> =
        * @description 如果调用了setVolume函数，这边的数据就要保持和video的数据一致
        */
       dispatch({ type: 'volume', data: Math.floor(volume * 100) });
+      /**
+       * @description volume为0，就直接等于处于静音模式下
+       */
+      dispatch({ type: 'isMuted', data: volume === 0 ? true : false });
     }, [volume]);
 
     useEffect(() => {
@@ -62,7 +66,15 @@ const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> =
         window.removeEventListener('mouseup', whenMouseUpDo);
       };
     }, []);
-
+    /**
+     * @description 静音键和非静音键的切换
+     */
+    useEffect(() => {
+      if (revicePropsData.current && revicePropsData.current.videoRef) {
+        revicePropsData.current.videoRef!.muted = controlsState.isMuted ? true : false;
+        dispatch({ type: 'volume', data: controlsState.isMuted ? 0 : Math.floor(volume * 100) });
+      }
+    }, [controlsState.isMuted]);
     /**
      * @description 更新当前音量控制条
      */
@@ -211,14 +223,6 @@ const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> =
       }
     };
     /**
-     * @description 静音键和非静音键的切换
-     */
-    const toggleVolume = () => {
-      reviceProps.videoRef!.volume = controlsState.isMuted ? defaultVolume / 100 : 0;
-      dispatch({ type: 'isMuted', data: controlsState.isMuted ? false : true });
-      reviceProps.videoRef!.muted = controlsState.isMuted ? false : true;
-    };
-    /**
      * @description 全屏之后，对控件的间距设置一下
      */
     const space = useMemo(() => {
@@ -254,7 +258,8 @@ const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> =
             slideCurrentVolume={slideCurrentVolume}
             clearVolumeInterval={clearVolumeInterval}
             isMuted={controlsState.isMuted}
-            toggleVolume={toggleVolume}
+            // toggleVolume={toggleVolume}
+            toggleVolume={() => dispatch({ type: 'isMuted', data: !controlsState.isMuted })}
           />
           {filterDefaults(propsAttributes!.isShowSet) && (
             <SetComponent
