@@ -68,14 +68,14 @@ const App = () => (
 | poster              | 视频封面图                                | `string`                 | -             |
 | setEndPlayContent   | 自定义视频结束时显示的内容                | `React.ReactNode`        | -             |
 | setBufferContent    | 自定义视频缓冲加载组件                    | `React.ReactNode`        | -             |
-| pausePlacement      | 暂停键的位置                              | `bottomRight` | `center` | `bottomRight` |
+| pausePlacement      | 暂停键的位置                              | `bottomRight`,`center` | `bottomRight` |
 | hideMouseTime       | 多少毫秒，无任何操作，隐藏鼠标和控制器/ms | `number`                 | 2000          |
 | isShowMultiple      | 是否显示播放倍数功能                      | `boolean`                | true          |
 | isShowSet           | 是否显示设置功能                          | `boolean`                | true          |
 | isShowScreenshot    | 是否显示截图功能                          | `boolean`                | true          |
 | isShowPicture       | 是否显示画中画                            | `boolean`                | true          |
 | isShowWebFullScreen | 是否显示网页全屏                          | `boolean`                | true          |
-| language            | 语言                                      | `zh` | `en`              | `zh`          |
+| language            | 语言                                      | `zh`,`en`              | `zh`          |
 
 #### 方法
 
