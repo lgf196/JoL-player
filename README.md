@@ -1,6 +1,7 @@
 <p align="center">
-  <img src="https://qiniu.qyhever.com/16296253101982eb82305cfc3%E6%90%9C%E7%8B%97%E6%88%AA%E5%9B%BE20210822173735.png">
+  <img src="https://cdn.gudsen.com/2021/08/31/11f7398259634e94bddb8b0d9d7506c8.png">
 </p>
+
 
 
 
@@ -78,6 +79,29 @@ The following attributes come from the `option` property configuration item
 | isShowPicture       | Whether to show picture-in-picture                           | `boolean`                 | true          |
 | isShowWebFullScreen | Whether to display the full screen of the webpage            | `boolean`                 | true          |
 | language            | Language                                                     | `zh`， `en`               | `zh`          |
+| isShowPauseButton | Whether to show the pause button | `boolean` | true |
+| quality | Selection list of video quality definition | `qualityAttributes[]` | - |
+
+> Tips：`qualityAttributes`接口声明如下：The interface declaration is as follows:point_down:
+>
+> ```typescript
+> /**
+>  * 360P SD
+>  * 540P HD
+>  * 720P FHD
+>  * 1080P BD
+>  */
+> export type qualityName = 'SD' | 'HD' | 'FHD' | 'BD';
+> 
+> export type qualityKey = '360P' | '540P' | '720P' | '1080P';
+> 
+> export interface qualityAttributes<T = qualityName> {
+>   name: T;
+>   url: string;
+> }
+> ```
+>
+> 
 
 #### Method
 
@@ -135,18 +159,20 @@ export interface videoAttributes<T = number, K = boolean> {
    */
   error: null | T;
 }
+export type qualityKey = '360P' | '540P' | '720P' | '1080P';
 ```
 
-| Name                | Description                                     | type                         |
-| ------------------- | ----------------------------------------------- | ---------------------------- |
-| onProgressMouseDown | Press and hold the slide bar, drag the callback | (e: videoAttributes) => void |
-| onProgressMouseUp   | Slide bar press and release callback            | (e: videoAttributes) => void |
-| onPlay              | Video start playing callback                    | (e: videoAttributes) => void |
-| onPause             | Callback when the video is paused               | (e: videoAttributes) => void |
-| onTimeChange        | Video is playing, time change callback          | (e: videoAttributes) => void |
-| onEndEd             | Callback when the video ends                    | (e: videoAttributes) => void |
-| onvolumechange      | Callback when the volume changes                | (e: videoAttributes) => void |
-| onError             | Video playback failed callback                  | () => void                   |
+| Name                | Description                                     | type                                     |
+| ------------------- | ----------------------------------------------- | ---------------------------------------- |
+| onProgressMouseDown | Press and hold the slide bar, drag the callback | (e: videoAttributes) => void             |
+| onProgressMouseUp   | Slide bar press and release callback            | (e: videoAttributes) => void             |
+| onPlay              | Video start playing callback                    | (e: videoAttributes) => void             |
+| onPause             | Callback when the video is paused               | (e: videoAttributes) => void             |
+| onTimeChange        | Video is playing, time change callback          | (e: videoAttributes) => void             |
+| onEndEd             | Callback when the video ends                    | (e: videoAttributes) => void             |
+| onvolumechange      | Callback when the volume changes                | (e: videoAttributes) => void             |
+| onError             | Video playback failed callback                  | () => void                               |
+| onQualityChange     | Callback when the video resolution changes      | (e: videoAttributes<qualityKey>) => void |
 
 #### The parameter interface received by `JoLPlaye`r is as follows: :point_down:
 

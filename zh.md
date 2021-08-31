@@ -1,6 +1,7 @@
 <p align="center">
-  <img src="https://qiniu.qyhever.com/16296253101982eb82305cfc3%E6%90%9C%E7%8B%97%E6%88%AA%E5%9B%BE20210822173735.png">
+  <img src="https://cdn.gudsen.com/2021/08/31/11f7398259634e94bddb8b0d9d7506c8.png">
 </p>
+
 
 
 <h1 align="center">JoL-player</h1>
@@ -59,23 +60,46 @@ const App = () => (
 
 如下属性来自`option`属性配置项.
 
-| 参数                | 说明                                      | 类型                     | 默认值        |
-| ------------------- | ----------------------------------------- | ------------------------ | ------------- |
-| width               | 视频容器的 width（必传）                  | `number`                 | 必传          |
-| height              | 视频容器的 height（必传）                 | `number`                 | 必传          |
-| videoSrc            | 视频地址（必传）                          | `string`                 | 必传          |
-| theme               | 主题                                      | `string`                 | \#ffb821      |
-| poster              | 视频封面图                                | `string`                 | -             |
-| setEndPlayContent   | 自定义视频结束时显示的内容                | `React.ReactNode`        | -             |
-| setBufferContent    | 自定义视频缓冲加载组件                    | `React.ReactNode`        | -             |
+| 参数                | 说明                                      | 类型                   | 默认值        |
+| ------------------- | ----------------------------------------- | ---------------------- | ------------- |
+| width               | 视频容器的 width（必传）                  | `number`               | 必传          |
+| height              | 视频容器的 height（必传）                 | `number`               | 必传          |
+| videoSrc            | 视频地址（必传）                          | `string`               | 必传          |
+| theme               | 主题                                      | `string`               | \#ffb821      |
+| poster              | 视频封面图                                | `string`               | -             |
+| setEndPlayContent   | 自定义视频结束时显示的内容                | `React.ReactNode`      | -             |
+| setBufferContent    | 自定义视频缓冲加载组件                    | `React.ReactNode`      | -             |
 | pausePlacement      | 暂停键的位置                              | `bottomRight`,`center` | `bottomRight` |
-| hideMouseTime       | 多少毫秒，无任何操作，隐藏鼠标和控制器/ms | `number`                 | 2000          |
-| isShowMultiple      | 是否显示播放倍数功能                      | `boolean`                | true          |
-| isShowSet           | 是否显示设置功能                          | `boolean`                | true          |
-| isShowScreenshot    | 是否显示截图功能                          | `boolean`                | true          |
-| isShowPicture       | 是否显示画中画                            | `boolean`                | true          |
-| isShowWebFullScreen | 是否显示网页全屏                          | `boolean`                | true          |
+| hideMouseTime       | 多少毫秒，无任何操作，隐藏鼠标和控制器/ms | `number`               | 2000          |
+| isShowMultiple      | 是否显示播放倍数功能                      | `boolean`              | true          |
+| isShowSet           | 是否显示设置功能                          | `boolean`              | true          |
+| isShowScreenshot    | 是否显示截图功能                          | `boolean`              | true          |
+| isShowPicture       | 是否显示画中画                            | `boolean`              | true          |
+| isShowWebFullScreen | 是否显示网页全屏                          | `boolean`              | true          |
 | language            | 语言                                      | `zh`,`en`              | `zh`          |
+| isShowPauseButton   | 是否显示暂停键                            | `boolean`              | true          |
+| quality             | 视频质量清晰度的选择列表                  | `qualityAttributes[]`  | -             |
+
+> 温馨提示：`qualityAttributes`接口声明如下：:point_down:
+>
+> ```typescript
+> /**
+>  * 标清 360P SD
+>  * 高清 540P HD
+>  * 超清 720P FHD
+>  * 蓝光 1080P BD
+>  */
+> export type qualityName = 'SD' | 'HD' | 'FHD' | 'BD';
+> 
+> export type qualityKey = '360P' | '540P' | '720P' | '1080P';
+> 
+> export interface qualityAttributes<T = qualityName> {
+>   name: T;
+>   url: string;
+> }
+> ```
+>
+> 
 
 #### 方法
 
@@ -94,7 +118,7 @@ const App = () => (
 
 #### 回调函数
 
-```tsx
+```typescript
 export interface videoAttributes<T = number, K = boolean> {
   /**
    * @description 是否播放
@@ -133,18 +157,21 @@ export interface videoAttributes<T = number, K = boolean> {
    */
   error: null | T;
 }
+
+export type qualityKey = '360P' | '540P' | '720P' | '1080P';
 ```
 
-| 名称                | 说明                     | 类型                         |
-| ------------------- | ------------------------ | ---------------------------- |
-| onProgressMouseDown | 滑动条按下不放，拖动回调 | (e: videoAttributes) => void |
-| onProgressMouseUp   | 滑动条按下松开回调       | (e: videoAttributes) => void |
-| onPlay              | 视频开始播放回调         | (e: videoAttributes) => void |
-| onPause             | 视频暂停播放的回调       | (e: videoAttributes) => void |
-| onTimeChange        | 视频在播放，时间变化回调 | (e: videoAttributes) => void |
-| onEndEd             | 视频结束时回调           | (e: videoAttributes) => void |
-| onvolumechange      | 音量改变时的回调         | (e: videoAttributes) => void |
-| onError             | 视频播放失败的回调       | () => void                   |
+| 名称                | 说明                     | 类型                                 |
+| ------------------- | ------------------------ | ------------------------------------ |
+| onProgressMouseDown | 滑动条按下不放，拖动回调 | (e: videoAttributes) => void         |
+| onProgressMouseUp   | 滑动条按下松开回调       | (e: videoAttributes) => void         |
+| onPlay              | 视频开始播放回调         | (e: videoAttributes) => void         |
+| onPause             | 视频暂停播放的回调       | (e: videoAttributes) => void         |
+| onTimeChange        | 视频在播放，时间变化回调 | (e: videoAttributes) => void         |
+| onEndEd             | 视频结束时回调           | (e: videoAttributes) => void         |
+| onvolumechange      | 音量改变时的回调         | (e: videoAttributes) => void         |
+| onError             | 视频播放失败的回调       | () => void                           |
+| onQualityChange     | 视频清晰度改变时的回调   | (e：callBackType<qualityKey>)=> void |
 
 #### `JoLPlaye`r接收的参数接口如下：:point_down:
 
