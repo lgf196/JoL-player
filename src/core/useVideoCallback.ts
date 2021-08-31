@@ -8,7 +8,7 @@ const useVideoCallback = (
   handle: Partial<videoCallback>,
 ) => {
   const { isPlay, currentTime, isEndEd, error, volume } = videoPr;
-  const { progressSliderChangeVal, progressMouseUpChangeVal } = videoFlow;
+  const { progressSliderChangeVal, progressMouseUpChangeVal, quality } = videoFlow;
   const {
     onProgressMouseDown,
     onPlay,
@@ -18,6 +18,7 @@ const useVideoCallback = (
     onProgressMouseUp,
     onError,
     onvolumechange,
+    onQualityChange,
   } = handle;
 
   useEffect(() => {
@@ -63,6 +64,12 @@ const useVideoCallback = (
       onvolumechange && onvolumechange(videoPr);
     }
   }, [volume]);
+
+  useEffect(() => {
+    if (quality) {
+      onQualityChange && onQualityChange(quality);
+    }
+  }, [quality]);
 };
 
 export default useVideoCallback;

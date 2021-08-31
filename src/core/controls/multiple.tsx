@@ -1,6 +1,5 @@
 import React, { memo, FC, useState, useContext } from 'react';
-import { multipleList } from '@/core/config';
-import { defaultTheme } from '@/core/config';
+import { multipleList, defaultTheme } from '@/core/config';
 import { FlowContext } from '@/core/context';
 import './index.scss';
 export interface MultipleType {

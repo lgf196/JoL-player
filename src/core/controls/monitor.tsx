@@ -22,6 +22,7 @@ const Monitor: FC<MonitorType> = memo(function Monitor({
         fill="#fff"
         fontSize="20px"
         onClick={handleChangePlayState}
+        className="icon"
       />
       <span className="time-wrap">
         <span className="current-time">{currentTime}</span>

@@ -28,6 +28,9 @@
   .play-pause-timeline {
     display: flex;
     align-items: center;
+    .icon {
+      cursor: pointer;
+    }
     .time-wrap {
       font-size: 13px;
       vertical-align: middle;
@@ -62,8 +65,14 @@
         border-radius: 3px;
         background-color: rgba(0, 0, 0, 0.7);
         li {
-          padding: 12px 15px;
+          padding: 10px 22px;
           cursor: pointer;
+          font-size: 14px;
+          white-space: nowrap;
+          display: flex;
+          p {
+            padding: 0 3px;
+          }
           &:hover {
             background: rgba(255, 255, 255, 0.2);
           }

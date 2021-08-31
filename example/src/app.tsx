@@ -1,4 +1,4 @@
-import { callBackType, JoLPlayerRef } from '@/interface';
+import { callBackType, JoLPlayerRef, qualityKey } from '@/interface';
 import React, { useRef, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import JoLPlayer from '../../src/index';
@@ -22,7 +22,7 @@ const AppCompent = () => {
     console.log(`onPlay`, val);
   };
   const onTimeChange: callBackType = (val) => {
-    console.log(`onTimeChange`, val);
+    // console.log(`onTimeChange`, val);
   };
   const onvolumechange: callBackType = (val) => {
     console.log(`onvolumechange`, val);
@@ -30,9 +30,10 @@ const AppCompent = () => {
   const onError = () => {
     console.log(`onError`);
   };
-  useEffect(() => {
-    console.log(`videoRef.current`, videoRef.current);
-  }, [videoRef.current]);
+  const onQualityChange: callBackType<qualityKey> = (val) => {
+    console.log(`onQualityChange`, val);
+  };
+  useEffect(() => {}, [videoRef.current]);
 
   const videoMethod = (status: string) => {
     if (status === 'play') {
@@ -64,14 +65,33 @@ const AppCompent = () => {
         onTimeChange={onTimeChange}
         onvolumechange={onvolumechange}
         onError={onError}
+        onQualityChange={onQualityChange}
         option={{
-          videoSrc: 'https://qiniu.qyhever.com/162962488432086ba29652658echrome.mp4',
+          videoSrc:
+            'https://gs-files.oss-cn-hongkong.aliyuncs.com/okr/prod/file/2021/08/31/540p.mp4',
           width: 750,
           height: 420,
           theme,
-          poster: 'https://cdn.gudsen.com/2021/06/28/f81356b08b4842d7a3719499f557c8e4.JPG',
+          poster:
+            'https://gs-files.oss-cn-hongkong.aliyuncs.com/okr/prod/file/2021/08/31/1080pp.png',
           language: 'en',
           isShowMultiple,
+          pausePlacement: 'center',
+          isShowPauseButton: false,
+          quality: [
+            {
+              name: 'FHD',
+              url: 'https://gs-files.oss-cn-hongkong.aliyuncs.com/okr/prod/file/2021/08/31/720p.mp4',
+            },
+            {
+              name: 'HD',
+              url: 'https://gs-files.oss-cn-hongkong.aliyuncs.com/okr/prod/file/2021/08/31/540p.mp4',
+            },
+            {
+              name: 'SD',
+              url: 'https://gs-files.oss-accelerate.aliyuncs.com/okr/prod/file/2021/08/31/1630377480138360p.mp4',
+            },
+          ],
         }}
       />
       <JoLPlayer
@@ -80,6 +100,7 @@ const AppCompent = () => {
           width: 750,
           height: 420,
           poster: 'https://cdn.gudsen.com/2021/06/28/f81356b08b4842d7a3719499f557c8e4.JPG',
+          quality: [],
         }}
       />
       <button onClick={() => videoMethod('play')}>play</button>

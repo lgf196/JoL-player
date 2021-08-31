@@ -9,6 +9,20 @@ export interface hoverShowStyleType {
 export type pausePlacement = 'bottomRight' | 'center';
 
 export type languageType = 'zh' | 'en';
+/**
+ * 标清 360P SD
+ * 高清 540P HD
+ * 超清 720P FHD
+ * 蓝光 1080P BD
+ */
+export type qualityName = 'SD' | 'HD' | 'FHD' | 'BD';
+
+export type qualityKey = '360P' | '540P' | '720P' | '1080P';
+
+export interface qualityAttributes<T = qualityName> {
+  name: T;
+  url: string;
+}
 export interface videoOption<T = string, K = boolean, U = number> {
   /**
    * @description 视频容器的width
@@ -70,6 +84,14 @@ export interface videoOption<T = string, K = boolean, U = number> {
    * @description  语言,默认中文
    */
   language?: languageType;
+  /**
+   * @description 是否显示暂停键
+   */
+  isShowPauseButton?: K;
+  /**
+   * @description 视频质量清晰度的选择 列表
+   */
+  quality?: qualityAttributes[];
 }
 export interface videoAttributes<T = number, K = boolean> {
   /**
@@ -139,8 +161,8 @@ export interface videoMethod<T = noParVoid> {
    */
   setVideoSrc: parVoid<string>;
 }
-export type callBackType = (e: videoAttributes) => void;
-export interface videoCallback<T = callBackType> {
+export type callBackType<T = videoAttributes> = (e: T) => void;
+export interface videoCallback<T = callBackType, U = callBackType<qualityKey>> {
   /**
    * @description 滑动条按下不放，拖动回调
    */
@@ -173,6 +195,10 @@ export interface videoCallback<T = callBackType> {
    * @description 音量改变时的回调
    */
   onvolumechange: T;
+  /**
+   * @description 视频清晰度改变时的回调
+   */
+  onQualityChange: U;
 }
 export interface videoparameter extends Partial<videoCallback> {
   style?: React.CSSProperties;

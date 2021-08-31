@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { videoOption } from '@/interface';
+import { videoOption, qualityKey } from '@/interface';
 export interface VideoStateType<K = boolean, T = number> {
   /**
    * @description 是否显示控件
@@ -13,6 +13,10 @@ export interface VideoStateType<K = boolean, T = number> {
    * @description onProgressMouseUp事件的变化数据，用来区分是onProgressMouseUp事件触发的
    */
   progressMouseUpChangeVal: T;
+  /**
+   * @description 视频质量清晰度
+   */
+  quality: qualityKey | undefined;
 }
 /**
  * @description 永不变的数据
@@ -32,6 +36,7 @@ export const initialState = {
   isControl: false,
   progressSliderChangeVal: 0,
   progressMouseUpChangeVal: 0,
+  quality: undefined,
 };
 
 export const defaultValue = {
@@ -54,10 +59,15 @@ export interface progressMouseUpChangeValValActionType {
   type: 'progressMouseUpChangeVal';
   data: VideoStateType['progressMouseUpChangeVal'];
 }
+export interface qualityActionType {
+  type: 'quality';
+  data: VideoStateType['quality'];
+}
 export type mergeAction =
   | isControlActionType
   | progressSliderChangeValActionType
-  | progressMouseUpChangeValValActionType;
+  | progressMouseUpChangeValValActionType
+  | qualityActionType;
 
 export const useVideoFlow = () => {
   const reducer = (state: VideoStateType, action: mergeAction) => {
@@ -68,6 +78,8 @@ export const useVideoFlow = () => {
         return { ...state, progressSliderChangeVal: action.data };
       case 'progressMouseUpChangeVal':
         return { ...state, progressMouseUpChangeVal: action.data };
+      case 'quality':
+        return { ...state, quality: action.data };
       default:
         return state;
     }

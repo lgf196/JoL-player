@@ -6,6 +6,7 @@ import { FlowContext } from '@/core/context';
 import { useVideo } from '@/core/useVideo';
 import EndComponent from '@/components/end';
 import Screenshot from '@/components/screenshot';
+import { filterDefaults } from '@/utils';
 import './index.scss';
 
 const Index = memo(function Index() {
@@ -126,15 +127,18 @@ const Index = memo(function Index() {
         onMouseMove={mouseMove}
         onClick={handlePlay}
       ></div>
-      {!isPlay && !isEndEd && (
-        <Broadcast
-          iconClass="player"
-          fill="#fff"
-          fontSize={'47px'}
-          className="iconfont play-icon"
-          style={pausePosition}
-        />
-      )}
+      {filterDefaults(propsAttributes!.isShowPauseButton)
+        ? !isPlay &&
+          !isEndEd && (
+            <Broadcast
+              iconClass="player"
+              fill="#fff"
+              fontSize={'55px'}
+              className="iconfont play-icon"
+              style={pausePosition}
+            />
+          )
+        : null}
       <div
         className="JoL-progress-and-controls-wrap"
         onMouseMove={(e) => [controlsContainerMove('move')]}

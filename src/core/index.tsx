@@ -30,6 +30,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
     onProgressMouseUp,
     onError,
     onvolumechange,
+    onQualityChange,
   } = props;
   const { videoSrc, width, height, theme, poster, setBufferContent } = option;
   /**
@@ -85,6 +86,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
     onEndEd,
     onError,
     onvolumechange,
+    onQualityChange,
   });
 
   useEffect(() => {
@@ -152,7 +154,13 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
   return (
     <figure className={`JoL-player-container ${className}`} ref={videoContainerRef} style={style}>
       <div className="JoL-light-off-mask" ref={lightOffMaskRef}></div>
-      <video className="JoL-player" ref={videoRef} poster={poster ? poster : undefined}>
+      <video
+        className="JoL-player"
+        ref={videoRef}
+        src={videoSrc}
+        poster={poster ? poster : undefined}
+        id="JoL-player"
+      >
         {returnVideoSource}
       </video>
       {!isVideoUseful && <p className="video-no-useful-tip">抱歉！视频找不到了 (｡ ́︿ ̀｡)</p>}

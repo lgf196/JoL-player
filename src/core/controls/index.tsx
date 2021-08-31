@@ -7,11 +7,12 @@ import { secondsToMinutesAndSecondes, capture, filterDefaults } from '@/utils';
 import { useControls } from './variable';
 import useWindowClient from '@/utils/useWindowClient';
 import screenfull, { Screenfull } from 'screenfull';
-import { multipleList, defaultVolume, defaultLanguage } from '@/core/config';
+import { multipleList, defaultLanguage } from '@/core/config';
 import SetComponent from './set';
 import MultipleComponent from './multiple';
 import VolumeComponent from './volume';
 import MonitorComponent from './monitor';
+import QualityComponent, { qualityToggleType } from './quality';
 import { il8n } from '@/language';
 import './index.scss';
 
@@ -28,17 +29,24 @@ const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> =
 
     const reviceProps = useContext(FlowContext);
 
-    const { propsAttributes } = reviceProps!;
+    const { propsAttributes, dispatch: contentDispatch } = reviceProps!;
 
     const revicePropsData = useRef<contextType>(null!);
 
-    const { isPlay, handleChangePlayState, currentTime, duration, isPictureinpicture, volume } =
-      useVideo(
-        {
-          videoElement: reviceProps.videoRef,
-        },
-        [reviceProps.videoRef],
-      );
+    const {
+      isPlay,
+      handleChangePlayState,
+      currentTime,
+      duration,
+      isPictureinpicture,
+      volume,
+      videoMethod,
+    } = useVideo(
+      {
+        videoElement: reviceProps.videoRef,
+      },
+      [reviceProps.videoRef],
+    );
 
     const { controlsState, dispatch } = useControls();
 
@@ -229,6 +237,15 @@ const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> =
       return controlsState.isScreentFull || controlsState.isWebPageFullScreen ? '13px' : '8px';
     }, [controlsState.isWebPageFullScreen, controlsState.isScreentFull]);
 
+    /**
+     * @description 视频清晰度切换
+     */
+    const qualityToggle: qualityToggleType = (url, key) => {
+      contentDispatch!({ type: 'quality', data: key });
+      videoMethod.setVideoSrc(url);
+      videoMethod.seek(currentTime);
+      videoMethod.play();
+    };
     return (
       <div
         className="JoL-controls-container"
@@ -241,6 +258,16 @@ const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> =
           totalTime={secondsToMinutesAndSecondes(duration)}
         />
         <div className="JoL-multifunction">
+          {propsAttributes!.quality && propsAttributes!.quality.length ? (
+            <QualityComponent
+              videoSrc={
+                revicePropsData.current && revicePropsData.current.videoRef
+                  ? revicePropsData.current.videoRef!.src
+                  : undefined
+              }
+              qualityToggle={qualityToggle}
+            />
+          ) : null}
           {filterDefaults(propsAttributes!.isShowMultiple) && (
             <MultipleComponent
               multipleText={multipleText}
@@ -258,7 +285,6 @@ const Index: FC<{ setIsscreenshot: Function; setScreenshotLoading: Function }> =
             slideCurrentVolume={slideCurrentVolume}
             clearVolumeInterval={clearVolumeInterval}
             isMuted={controlsState.isMuted}
-            // toggleVolume={toggleVolume}
             toggleVolume={() => dispatch({ type: 'isMuted', data: !controlsState.isMuted })}
           />
           {filterDefaults(propsAttributes!.isShowSet) && (

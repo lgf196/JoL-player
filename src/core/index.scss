@@ -8,9 +8,12 @@
   box-sizing: border-box;
   position: relative;
   z-index: 100;
+  // background-color: #000;
   .JoL-player {
     @include wh(100%, 100%);
     background-color: #000;
+    // 去除视频黑边
+    object-fit: cover;
     @include position(absolute, 0, auto, auto, 0);
     z-index: 1;
   }
