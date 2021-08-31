@@ -187,14 +187,6 @@ export interface videoparameter extends Partial<videoCallback> {
 }
 ```
 
-
-## :muscle:后期版本
-
-- [ ] 增加快捷键功能
-- [ ] 增加视频清晰度选择列表
-- [ ] 增加暂停，播放，播放区动画效果
-- [ ] 增加自动播放功能
-
 ## :rose:赞赏
 
 如果您认为该项目对您有所帮助，则可以给作者一个赞，作者非常感激:blush::blush::rose:
