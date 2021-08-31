@@ -54,7 +54,7 @@ const App = () => (
 );
 ```
 
-:point_right:[demo case](https://codesandbox.io/s/inspiring-hawking-g5ukb?file=/src/App.tsx)
+:point_right:[demo case](https://codesandbox.io/s/dank-flower-b3119?file=/src/App.tsx)
 
 ## :blue_book:  Documentation
 
@@ -116,7 +116,7 @@ The following attributes come from the `option` property configuration item
 
 `Hint：`The above method requires the help of`ref`Can call，as：xxx.current.load()
 
-:point_right:[For details, please refer to the demo case](https://codesandbox.io/s/inspiring-hawking-g5ukb?file=/src/App.tsx)
+:point_right:[For details, please refer to the demo case](https://codesandbox.io/s/dank-flower-b3119?file=/src/App.tsx)
 
 #### Callback function
 
