@@ -187,14 +187,6 @@ export interface videoparameter extends Partial<videoCallback> {
   ref?: JoLPlayerRef
 }
 ```
-
-## :muscle:Later version
-
-- [ ] Add shortcut key function
-- [ ] Add video definition selection list
-- [ ] Increase the animation effects of pause, play, and play area
-- [ ] Add auto play function
-
 ## :rose:Praise
 
 If you think this project is helpful to you, you can give the author a like, the author is very grateful: blush::blush::rose:
