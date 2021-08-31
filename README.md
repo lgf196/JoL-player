@@ -82,7 +82,7 @@ The following attributes come from the `option` property configuration item
 | isShowPauseButton | Whether to show the pause button | `boolean` | true |
 | quality | Selection list of video quality definition | `qualityAttributes[]` | - |
 
-> Tips：`qualityAttributes`接口声明如下：The interface declaration is as follows:point_down:
+> Tips：`qualityAttributes`：The interface declaration is as follows:point_down:
 >
 > ```typescript
 > /**
