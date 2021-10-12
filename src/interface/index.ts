@@ -9,6 +9,9 @@ export interface hoverShowStyleType {
 export type pausePlacement = 'bottomRight' | 'center';
 
 export type languageType = 'zh' | 'en';
+
+export type videoType = 'h264' | 'hls';
+
 /**
  * 标清 360P SD
  * 高清 540P HD
@@ -92,6 +95,10 @@ export interface videoOption<T = string, K = boolean, U = number> {
    * @description 视频质量清晰度的选择 列表
    */
   quality?: qualityAttributes[];
+  /**
+   * @description 视频播放格式，支持h264(.mp4,.webm,.ogg)，hls(m3u8),默认h264格式
+   */
+  videoType?: videoType;
 }
 export interface videoAttributes<T = number, K = boolean> {
   /**

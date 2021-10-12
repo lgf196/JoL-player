@@ -14,6 +14,7 @@ import Broadcast from '@/components/svgIcon';
 import { useVideo } from '@/core/useVideo';
 import useVideoCallback from '@/core/useVideoCallback';
 import { defaultTheme } from '@/core/config';
+import Hls from 'hls.js';
 import '@/assets/css/reset.scss';
 import './index.scss';
 
@@ -32,7 +33,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
     onvolumechange,
     onQualityChange,
   } = props;
-  const { videoSrc, width, height, theme, poster, setBufferContent } = option;
+  const { videoSrc, width, height, theme, poster, setBufferContent, videoType } = option;
   /**
    * @description 关灯对象
    */
@@ -70,6 +71,22 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
     setIsBufferring(false);
   };
 
+  const setVideoContainerStyle = (ele: HTMLElement, width: number, height: number) => {
+    ele.style.width = `${width}px`;
+    ele.style.height = `${height}px`;
+  };
+
+  const setHls = (videoElem: HTMLVideoElement) => {
+    if (videoType && videoType === 'hls') {
+      // 支持hls格式
+      if (Hls.isSupported()) {
+        var hls = new Hls();
+        hls.loadSource(videoSrc);
+        hls.attachMedia(videoElem);
+      }
+    }
+  };
+
   const { videoAttributes, videoMethod } = useVideo(
     {
       videoElement: videoRef.current,
@@ -94,14 +111,9 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
      * @description 强制更新dom层
      */
     forceUpdate();
-    /**
-     * @description 设置用户给的视频播放器长宽
-     */
-    const videoContainerElem = videoContainerRef.current;
-    videoContainerElem.style.width = `${width}px`;
-    videoContainerElem.style.height = `${height}px`;
     const videoElem = videoRef.current;
-    // 设置定时器检测 3 秒后视频是否可用
+    setVideoContainerStyle(videoContainerRef.current, width, height);
+    setHls(videoElem);
     timerToCheckVideoUseful.current = setTimeout(() => {
       // 当视频未初始化时（即不可用时）
       if (videoElem.networkState === 0) {
