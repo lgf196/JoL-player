@@ -7,6 +7,9 @@ import { useVideo } from '@/core/useVideo';
 import EndComponent from '@/components/end';
 import Screenshot from '@/components/screenshot';
 import { filterDefaults } from '@/utils';
+import toast from '@/components/toast';
+import { il8n } from '@/language';
+import { defaultLanguage } from '@/core/config';
 import './index.scss';
 
 const Index = memo(function Index() {
@@ -39,6 +42,12 @@ const Index = memo(function Index() {
   const [isScreenshot, setIsscreenshot] = useState<boolean>(false);
 
   const [screenshotLoading, setScreenshotLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    propsAttributes!.isToast &&
+      !isPlay &&
+      toast({ message: il8n(propsAttributes!.language || defaultLanguage, 'playText') });
+  }, [isPlay]);
 
   useEffect(() => {
     timer.current = setInterval(() => {

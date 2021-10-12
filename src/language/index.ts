@@ -13,6 +13,7 @@ export interface langType<T = string> {
   closefullScreen: T;
   screenshotsFailText: T;
   screenshotsSucessText: T;
+  playText: T;
 }
 export const zhJson: langType = {
   multiple: '倍数',
@@ -28,6 +29,7 @@ export const zhJson: langType = {
   replay: '重播',
   screenshotsSucessText: '鼠标右键图片另存为',
   screenshotsFailText: '截图加载失败，在点击下',
+  playText: '暂停中',
 };
 export const enJson: langType = {
   multiple: 'multiple',
@@ -43,6 +45,7 @@ export const enJson: langType = {
   replay: 'Replay',
   screenshotsSucessText: 'Right mouse button to save the picture as',
   screenshotsFailText: 'The screenshot failed to load, click',
+  playText: 'Paused',
 };
 export const il8n = (lang: languageType, key: keyof langType) => {
   if (lang === 'zh') {

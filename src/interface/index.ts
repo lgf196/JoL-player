@@ -12,6 +12,13 @@ export type languageType = 'zh' | 'en';
 
 export type videoType = 'h264' | 'hls';
 
+export type toastPosition = 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'center';
+export interface toastType {
+  message: React.ReactNode;
+  duration?: number;
+  position?: toastPosition;
+}
+
 /**
  * 标清 360P SD
  * 高清 540P HD
@@ -99,6 +106,10 @@ export interface videoOption<T = string, K = boolean, U = number> {
    * @description 视频播放格式，支持h264(.mp4,.webm,.ogg)，hls(m3u8),默认h264格式
    */
   videoType?: videoType;
+  /**
+   * @description 是否显示toast，默认不显示
+   */
+  isToast?: K;
 }
 export interface videoAttributes<T = number, K = boolean> {
   /**

@@ -15,6 +15,7 @@ import { useVideo } from '@/core/useVideo';
 import useVideoCallback from '@/core/useVideoCallback';
 import { defaultTheme } from '@/core/config';
 import Hls from 'hls.js';
+import toast from '@/components/toast';
 import '@/assets/css/reset.scss';
 import './index.scss';
 
@@ -50,10 +51,6 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
    * @description 定时器检测 3 秒后视频是否可用
    */
   const timerToCheckVideoUseful = useRef<NodeJS.Timeout | null>(null);
-  /**
-   * @description 视频是否可播发的开关
-   */
-  const [isVideoUseful, setIsVideoUseful] = useState<boolean>(true);
   /**
    * @description 视频缓存的开关
    */
@@ -116,8 +113,8 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
     setHls(videoElem);
     timerToCheckVideoUseful.current = setTimeout(() => {
       // 当视频未初始化时（即不可用时）
-      if (videoElem.networkState === 0) {
-        setIsVideoUseful(false);
+      if (videoElem.networkState === 0 || videoElem.networkState === 3) {
+        toast({ message: 'Error：Video source not found', duration: 4000 });
       } else {
         clearTimeout(timerToCheckVideoUseful.current!);
       }
@@ -164,7 +161,12 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
   }, [videoRef.current, videoFlow, option]);
 
   return (
-    <figure className={`JoL-player-container ${className}`} ref={videoContainerRef} style={style}>
+    <figure
+      className={`JoL-player-container ${className}`}
+      ref={videoContainerRef}
+      style={style}
+      id="JoL-player-container"
+    >
       <div className="JoL-light-off-mask" ref={lightOffMaskRef}></div>
       <video
         className="JoL-player"
@@ -175,7 +177,6 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
       >
         {returnVideoSource}
       </video>
-      {/* {!isVideoUseful && <p className="video-no-useful-tip">抱歉！视频找不到了 (｡ ́︿ ̀｡)</p>} */}
       {isBufferring &&
         (setBufferContent ? (
           setBufferContent
