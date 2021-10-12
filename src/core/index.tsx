@@ -175,7 +175,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
       >
         {returnVideoSource}
       </video>
-      {!isVideoUseful && <p className="video-no-useful-tip">抱歉！视频找不到了 (｡ ́︿ ̀｡)</p>}
+      {/* {!isVideoUseful && <p className="video-no-useful-tip">抱歉！视频找不到了 (｡ ́︿ ̀｡)</p>} */}
       {isBufferring &&
         (setBufferContent ? (
           setBufferContent
