@@ -1,6 +1,9 @@
 import React, { memo, FC, useState, useContext } from 'react';
 import { multipleList, defaultTheme } from '@/core/config';
 import { FlowContext } from '@/core/context';
+import toast from '@/components/toast';
+import { il8n } from '@/language';
+import { defaultLanguage } from '@/core/config';
 import './index.scss';
 export interface MultipleType {
   multipleText: string;
@@ -17,7 +20,7 @@ const Multiple: FC<MultipleType> = memo(function Multiple({
 }) {
   const reviceProps = useContext(FlowContext);
 
-  const { theme } = reviceProps.propsAttributes!;
+  const { theme, language, isToast, toastPosition } = reviceProps.propsAttributes!;
 
   const [isShow, setIsShow] = useState<boolean>(false);
 
@@ -36,7 +39,21 @@ const Multiple: FC<MultipleType> = memo(function Multiple({
         <ul className="JoL-multifunction-multiple-layer">
           {multipleList.map((item, index) => (
             <li
-              onClick={(e) => [selectPlayRate(item.id), setIsShow(false), e.stopPropagation()]}
+              onClick={(e) => [
+                selectPlayRate(item.id),
+                setIsShow(false),
+                e.stopPropagation(),
+                isToast &&
+                  toast({
+                    message: (
+                      <div>
+                        {`${il8n(language || defaultLanguage, 'multipleHint')} ：`}
+                        <strong style={{ color: '#FF455B' }}>{item.name}</strong>
+                      </div>
+                    ),
+                    position: toastPosition,
+                  }),
+              ]}
               key={index}
               style={{ color: multiple === item.id ? (theme ? theme : defaultTheme) : '#fff' }}
             >

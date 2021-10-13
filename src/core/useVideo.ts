@@ -67,6 +67,7 @@ export const useVideo = (props: any, dep: DependencyList = []) => {
          */
         forceUpdate();
         torture({
+          // duration: videoRef.current.duration,
           currentTime: videoRef.current.currentTime,
           isPlay: videoRef.current.paused ? false : true,
           volume: videoRef.current.volume,

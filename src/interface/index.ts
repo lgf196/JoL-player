@@ -13,6 +13,8 @@ export type languageType = 'zh' | 'en';
 export type videoType = 'h264' | 'hls';
 
 export type toastPosition = 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'center';
+
+export type progressFloatPosition = 'tp' | 'bt';
 export interface toastType {
   message: React.ReactNode;
   duration?: number;
@@ -110,6 +112,18 @@ export interface videoOption<T = string, K = boolean, U = number> {
    * @description 是否显示toast，默认不显示
    */
   isToast?: K;
+  /**
+   * @description toast的位置，此值只有isToast为true时，才有效果
+   */
+  toastPosition?: toastPosition;
+  /**
+   * @description 是否显示进度条浮层提示
+   */
+  isProgressFloat?: K;
+  /**
+   *  @description 进度条浮层提示的位置，此值只有isProgressFloat为true时，才有效果
+   */
+  progressFloatPosition?: progressFloatPosition;
 }
 export interface videoAttributes<T = number, K = boolean> {
   /**

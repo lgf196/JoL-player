@@ -41,8 +41,8 @@ const Volume = function Volume(
   return (
     <div
       className="JoL-multifunction-volume"
-      onMouseEnter={(e) => [e.stopPropagation(), setIsShow(true)]}
-      onMouseLeave={(e) => [e.stopPropagation(), setIsShow(false)]}
+      onMouseEnter={(e) => [setIsShow(true)]}
+      onMouseLeave={(e) => [setIsShow(false)]}
       onClick={(e) => {
         e.stopPropagation();
         toggleVolume();

@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { toastType } from '@/interface';
+import { defaultToastPosition } from '@/core/config';
 import './toast.scss';
 
 const removeToast = () => {
@@ -26,7 +27,7 @@ const Toast: FC<toastType> = function Toast({ message, duration, position }) {
       timer && clearTimeout(timer);
     };
   }, []);
-  return <div className={`jolPlayerToast ${position || 'leftTop'}`}>{message}</div>;
+  return <div className={`jolPlayerToast ${position || defaultToastPosition}`}>{message}</div>;
 };
 
 const toast = (option: toastType) => {

@@ -10,14 +10,15 @@ import { filterDefaults } from '@/utils';
 import toast from '@/components/toast';
 import { il8n } from '@/language';
 import { defaultLanguage } from '@/core/config';
+import SuspendedProgressBoard from '@/core/suspendedProgressBoard';
 import './index.scss';
 
 const Index = memo(function Index() {
   const reviceProps = useContext(FlowContext);
 
-  const { dispatch, propsAttributes } = reviceProps;
+  const { dispatch, propsAttributes, videoFlow } = reviceProps;
 
-  const { isPlay, handleChangePlayState, isEndEd } = useVideo(
+  const { isPlay, handleChangePlayState, isEndEd, duration, currentTime } = useVideo(
     {
       videoElement: reviceProps.videoRef,
     },
@@ -46,7 +47,10 @@ const Index = memo(function Index() {
   useEffect(() => {
     propsAttributes!.isToast &&
       !isPlay &&
-      toast({ message: il8n(propsAttributes!.language || defaultLanguage, 'playText') });
+      toast({
+        message: il8n(propsAttributes!.language || defaultLanguage, 'playText'),
+        position: propsAttributes!.toastPosition,
+      });
   }, [isPlay]);
 
   useEffect(() => {
@@ -126,7 +130,7 @@ const Index = memo(function Index() {
     <div
       className="JoL-controller-container"
       onMouseEnter={(e) => [showControl('enter')]}
-      onMouseLeave={(e) => [showControl('leave'), e.stopPropagation()]}
+      onMouseLeave={(e) => [showControl('leave')]}
       ref={controllerRef}
     >
       <div
@@ -173,6 +177,10 @@ const Index = memo(function Index() {
             language={propsAttributes!.language}
           />
         )
+      ) : null}
+      {/* 悬浮进度条 */}
+      {!videoFlow.isControl && propsAttributes!.isProgressFloat ? (
+        <SuspendedProgressBoard duration={duration} currentTime={currentTime} />
       ) : null}
     </div>
   );

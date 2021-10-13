@@ -15,6 +15,10 @@ export const defaultVolume: number = 60;
 
 export const defaultLanguage = 'zh';
 
+export const defaultToastPosition = 'leftTop';
+
+export const defaultProgressFloatPosition = 'bt';
+
 export interface qualityListType {
   key: qualityKey;
   enName: qualityName;

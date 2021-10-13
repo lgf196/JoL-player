@@ -34,7 +34,8 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
     onvolumechange,
     onQualityChange,
   } = props;
-  const { videoSrc, width, height, theme, poster, setBufferContent, videoType } = option;
+  const { videoSrc, width, height, theme, poster, setBufferContent, videoType, toastPosition } =
+    option;
   /**
    * @description 关灯对象
    */
@@ -114,7 +115,11 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
     timerToCheckVideoUseful.current = setTimeout(() => {
       // 当视频未初始化时（即不可用时）
       if (videoElem.networkState === 0 || videoElem.networkState === 3) {
-        toast({ message: 'Error：Video source not found', duration: 4000 });
+        toast({
+          message: 'Error：Video source not found',
+          duration: 4000,
+          position: toastPosition,
+        });
       } else {
         clearTimeout(timerToCheckVideoUseful.current!);
       }
