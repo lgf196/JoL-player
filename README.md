@@ -29,6 +29,7 @@ English | [简体中文](./zh.md)
 - 🎨 Themes, components, customization capabilities.
 - :facepunch: Powerful API and callback function
 - :zap: Small size, 80kb
+-  :gem: Support `HLS` format (m3u8) etc.
 
 ## 📦 Install
 
@@ -81,6 +82,11 @@ The following attributes come from the `option` property configuration item
 | language            | Language                                                     | `zh`， `en`               | `zh`          |
 | isShowPauseButton | Whether to show the pause button | `boolean` | true |
 | quality | Selection list of video quality definition | `qualityAttributes[]` | - |
+| videoType | Video playback format, supports h264(`.mp4`,`.webm`,`.ogg`), hls(`.m3u8`) | `h264` `hls` | `h264` |
+| isToast | Whether to show toast | `boolean` | false |
+| toastPosition | The position of the toast, this value only has an effect when `isToast` is true | `leftTop`,`rightTop`,`leftBottom`,`rightBottom`,`center` | `leftTop` |
+| isProgressFloat | Whether to display the progress bar floating layer prompt | `boolean` | false |
+| progressFloatPosition | The position of the floating layer prompt of the progress bar. This value is effective only when `isProgressFloat `is true | `tp`,`bt` | `bt` |
 
 > Tips：`qualityAttributes`：The interface declaration is as follows:point_down:
 >
