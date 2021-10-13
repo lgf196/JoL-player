@@ -53,7 +53,7 @@ const App = () => (
 );
 ```
 
-:point_right:[demo案例](https://codesandbox.io/s/dank-flower-b3119?file=/src/App.tsx)
+:point_right:[demo案例](https://codesandbox.io/s/bold-night-i9vy4?file=/src/App.tsx)
 
 ## :blue_book: ​ 文档
 
@@ -120,7 +120,7 @@ const App = () => (
 
 `提示：`如上方法要借助`ref`才能调用，如：xxx.current.load()
 
-:point_right:[具体请参看，demo案例](https://codesandbox.io/s/dank-flower-b3119?file=/src/App.tsx)
+:point_right:[具体请参看，demo案例](https://codesandbox.io/s/bold-night-i9vy4?file=/src/App.tsx)
 
 #### 回调函数
 
