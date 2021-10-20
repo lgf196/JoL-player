@@ -98,7 +98,7 @@ const AppCompent = () => {
           isProgressFloat: true,
         }}
       />
-      {/* <JoLPlayer
+      <JoLPlayer
         option={{
           videoSrc: 'https://qiniu.qyhever.com/162962488432086ba29652658echrome.mp4',
           width: 750,
@@ -106,7 +106,7 @@ const AppCompent = () => {
           poster: 'https://cdn.gudsen.com/2021/06/28/f81356b08b4842d7a3719499f557c8e4.JPG',
           quality: [],
         }}
-      /> */}
+      />
       <button onClick={() => videoMethod('play')}>play</button>
       <button onClick={() => videoMethod('pause')}>pause</button>
       <button onClick={() => videoMethod('load')}>load</button>
