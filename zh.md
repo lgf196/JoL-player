@@ -35,6 +35,15 @@
 npm install jol-player --save
 ```
 
+#### `<script>` 标签形式引入
+  
+```bash
+https://cdn.jsdelivr.net/npm/jol-player@2.5.0/index.min.js
+
+// jol-player类型声明，typescript环境下引入
+https://cdn.jsdelivr.net/npm/jol-player@2.5.0/index.d.ts
+```
+
 ## 🔨 示例
 
 ```tsx
