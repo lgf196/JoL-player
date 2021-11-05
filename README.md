@@ -32,9 +32,13 @@ English | [简体中文](./zh.md)
 -  :gem: Support `HLS` format (m3u8) etc.
 
 ## 📦 Install
-
+#### npm
 ```bash
 npm install jol-player --save
+```
+#### yarn
+```bash
+yarn add jol-player 
 ```
 #### `<script>` tag introduction
   
