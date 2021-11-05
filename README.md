@@ -36,6 +36,14 @@ English | [简体中文](./zh.md)
 ```bash
 npm install jol-player --save
 ```
+#### `<script>` tag introduction
+  
+```bash
+https://cdn.jsdelivr.net/npm/jol-player@2.5.0/index.min.js
+
+// Introduced in the `typescript` environment
+https://cdn.jsdelivr.net/npm/jol-player@2.5.0/index.d.ts
+```
 
 ## 🔨 Example
 
