@@ -30,11 +30,14 @@
 -  :gem: 支持`HLS`（.m3u8）格式，支持`H264`格式
 
 ## 📦 安装
-
+#### npm
 ```bash
 npm install jol-player --save
 ```
-
+#### yarn
+```bash
+yarn add jol-player 
+```
 #### `<script>` 标签形式引入
   
 ```bash
