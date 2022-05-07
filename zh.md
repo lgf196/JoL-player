@@ -43,10 +43,10 @@ yarn add jol-player
 #### `<script>` 标签形式引入
 
 ```bash
-https://cdn.jsdelivr.net/npm/jol-player@2.5.0/index.min.js
+https://cdn.jsdelivr.net/npm/jol-player@3.0.0/index.min.js
 
 // jol-player类型声明，typescript环境下引入
-https://cdn.jsdelivr.net/npm/jol-player@2.5.0/index.d.ts
+https://cdn.jsdelivr.net/npm/jol-player@3.0.0/index.d.ts
 ```
 
 ## 🔨 示例
