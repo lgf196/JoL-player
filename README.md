@@ -45,10 +45,10 @@ yarn add jol-player
 #### `<script>` tag introduction
 
 ```bash
-https://cdn.jsdelivr.net/npm/jol-player@2.5.0/index.min.js
+https://cdn.jsdelivr.net/npm/jol-player@3.0.0/index.min.js
 
 // Introduced in the `typescript` environment
-https://cdn.jsdelivr.net/npm/jol-player@2.5.0/index.d.ts
+https://cdn.jsdelivr.net/npm/jol-player@3.0.0/index.d.ts
 ```
 
 ## 🔨 Example
