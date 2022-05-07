@@ -13,21 +13,23 @@
     <img src="https://img.shields.io/badge/typescript-4.4.2-brightgreen.svg" alt="license">
   </a>
   <a href="https://github.com/facebook/react">
-    <img src="https://img.shields.io/badge/react-17.0.1-brightgreen.svg" alt="react">
+    <img src="https://img.shields.io/badge/react-18.1.0-brightgreen.svg" alt="react">
   </a>
 </p>
+
 
 简体中文 | [English](./README.md)
 
 ## ✨ 特性
 
-- 📦 开箱即用的高质量 React 组件。
-- 🛡 使用 TypeScript 开发，提供完整的类型定义文件。
-- 🌍 国际化语言支持。
-- 🎨 主题，组件，定制能力。
+- 📦 开箱即用的高质量 React 组件
+- 🛡 使用 TypeScript 开发，提供完整的类型定义文件
+- 🌍 国际化语言支持
+- 🎨 主题，组件，定制能力
 - :facepunch: 强大的 API 和回调函数
 - :zap: 体积小，80kb​
 -  :gem: 支持`HLS`（.m3u8）格式，支持`H264`格式
+-  🛡 支持React`v18+`版本
 
 ## 📦 安装
 #### npm
@@ -39,7 +41,7 @@ npm install jol-player --save
 yarn add jol-player 
 ```
 #### `<script>` 标签形式引入
-  
+
 ```bash
 https://cdn.jsdelivr.net/npm/jol-player@2.5.0/index.min.js
 

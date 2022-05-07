@@ -14,9 +14,10 @@
     <img src="https://img.shields.io/badge/typescript-4.4.2-brightgreen.svg" alt="license">
   </a>
   <a href="https://github.com/facebook/react">
-    <img src="https://img.shields.io/badge/react-17.0.1-brightgreen.svg" alt="react">
+    <img src="https://img.shields.io/badge/react-18.1.0-brightgreen.svg" alt="react">
   </a>
 </p>
+
 
 
 English | [简体中文](./zh.md)
@@ -30,6 +31,7 @@ English | [简体中文](./zh.md)
 - :facepunch: Powerful API and callback function
 - :zap: Small size, 80kb
 -  :gem: Support `HLS` format (m3u8) etc.
+-  🛡 support React`v18+`Version
 
 ## 📦 Install
 #### npm
@@ -41,7 +43,7 @@ npm install jol-player --save
 yarn add jol-player 
 ```
 #### `<script>` tag introduction
-  
+
 ```bash
 https://cdn.jsdelivr.net/npm/jol-player@2.5.0/index.min.js
 

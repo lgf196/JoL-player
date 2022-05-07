@@ -1,7 +1,8 @@
 import { callBackType, JoLPlayerRef, qualityKey } from '@/interface';
 import React, { useRef, useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import JoLPlayer from '../../src/index';
+
 const AppCompent = () => {
   const videoRef = useRef<JoLPlayerRef>(null!);
   const [theme, setTheme] = useState<string>('#ffb821');
@@ -116,4 +117,6 @@ const AppCompent = () => {
     </>
   );
 };
-ReactDOM.render(<AppCompent />, document.getElementById('root'));
+const container = document.getElementById('root')!;
+const root = createRoot(container);
+root.render(<AppCompent />);

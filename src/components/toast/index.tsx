@@ -2,6 +2,7 @@ import React, { FC, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { toastType } from '@/interface';
 import { defaultToastPosition } from '@/core/config';
+import { createRoot } from 'react-dom/client';
 import './toast.scss';
 
 const removeToast = () => {
@@ -36,7 +37,8 @@ const toast = (option: toastType) => {
     const container = document.createElement('div');
     container.id = 'jolPlayerToast';
     document.querySelector('#JoL-player-container')!.appendChild(container);
-    ReactDOM.render(<Toast {...option} />, container);
+    const root = createRoot(container);
+    root.render(<Toast {...option} />);
   }
 };
 export default toast;
