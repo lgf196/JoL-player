@@ -74,7 +74,7 @@ const AppCompent = () => {
           // 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
           width: 750,
           height: 420,
-          theme,
+          theme: 'red',
           poster:
             'https://gs-files.oss-cn-hongkong.aliyuncs.com/okr/prod/file/2021/08/31/1080pp.png',
           language: 'zh',
