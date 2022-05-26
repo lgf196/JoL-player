@@ -1,25 +1,27 @@
 @import 'src/assets/css/mixin.scss';
-.end {
-  @include position(absolute, 0, 0, 0, 0);
-  z-index: 1300;
-  cursor: default;
-  background: rgba($color: #000000, $alpha: 0.4);
-  .replay {
-    @include position(absolute, 50%, 0, 0, 50%);
-    transform: translate(-50%, -50%);
-    @include flexContainer(center);
-    color: #fff;
-    text-align: center;
-    height: 100px;
-    .cicle {
-      @include wh(65px, 65px);
-      background: rgba($color: #000000, $alpha: 0.58);
-      border-radius: 50%;
-      cursor: pointer;
+.JoL-player-container{
+  .end {
+    @include position(absolute, 0, 0, 0, 0);
+    z-index: 1300;
+    cursor: default;
+    background: rgba($color: #000000, $alpha: 0.4);
+    .replay {
+      @include position(absolute, 50%, 0, 0, 50%);
+      transform: translate(-50%, -50%);
       @include flexContainer(center);
-    }
-    p {
-      width: 100%;
+      color: #fff;
+      text-align: center;
+      height: 100px;
+      .cicle {
+        @include wh(65px, 65px);
+        background: rgba($color: #000000, $alpha: 0.58);
+        border-radius: 50%;
+        cursor: pointer;
+        @include flexContainer(center);
+      }
+      p {
+        width: 100%;
+      }
     }
   }
 }

@@ -1,37 +1,39 @@
 @import 'src/assets/css/mixin.scss';
-.screenshot {
-  width: 280px;
-  @include position(absolute, auto, 0, 55px, auto);
-  background: #fff;
-  padding: 3px;
-  overflow: hidden;
-  .img {
-    height: 155px;
+.JoL-player-container{
+  .screenshot {
+    width: 280px;
+    @include position(absolute, auto, 0, 55px, auto);
+    background: #fff;
+    padding: 3px;
     overflow: hidden;
-    position: relative;
-    canvas {
-      @include position(absolute, 50%, auto, auto, 50%);
-      transform: translate(-50%, -50%);
+    .img {
+      height: 155px;
+      overflow: hidden;
+      position: relative;
+      canvas {
+        @include position(absolute, 50%, auto, auto, 50%);
+        transform: translate(-50%, -50%);
+      }
     }
-  }
-  .close {
-    @include position(absolute, -24px, -24px, auto, auto);
-    @include wh(0, 0);
-    z-index: 1;
-    border: 26px solid transparent;
-    border-left-color: #fff;
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-    border-radius: 100%;
-    .icon {
-      @include position(absolute, -8px, 5px, auto, auto);
-      transform: rotate(45deg);
-      cursor: pointer;
+    .close {
+      @include position(absolute, -24px, -24px, auto, auto);
+      @include wh(0, 0);
+      z-index: 1;
+      border: 26px solid transparent;
+      border-left-color: #fff;
+      -webkit-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      border-radius: 100%;
+      .icon {
+        @include position(absolute, -8px, 5px, auto, auto);
+        transform: rotate(45deg);
+        cursor: pointer;
+      }
     }
-  }
-  .save {
-    padding: 10px;
-    text-align: center;
-    font-size: 13px;
+    .save {
+      padding: 10px;
+      text-align: center;
+      font-size: 13px;
+    }
   }
 }

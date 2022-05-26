@@ -26,30 +26,32 @@
   top: $t;
   left: $l;
 }
-@keyframes show {
-  0% {
-    opacity: 0;
+.JoL-player-container{
+  @keyframes show {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
   }
-  50% {
-    opacity: 0.5;
+  @keyframes scaleAnimate {
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes scaleAnimate {
-  50% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-@keyframes rotateAnimate {
-  0% {
-    transform: rotate(270deg);
-  }
-  100% {
-    transform: rotate(360deg);
+  @keyframes rotateAnimate {
+    0% {
+      transform: rotate(270deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 }

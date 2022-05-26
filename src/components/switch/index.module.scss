@@ -1,43 +1,45 @@
 @import 'src/assets/css/mixin.scss';
-body {
-  --JoL-theme: red;
-}
-.container {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-}
-.label {
-  padding-right: 20px;
-  cursor: pointer;
-}
-.switch {
-  position: relative;
-  @include wh(30px, 15px);
-  background-color: #dadada;
-  border-radius: 30px;
-  border: none;
-  outline: none;
-  -webkit-appearance: none;
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
+.JoL-player-container{
+  body {
+    --JoL-theme: red;
+  }
+  .container {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+  }
+  .label {
+    padding-right: 20px;
+    cursor: pointer;
+  }
+  .switch {
+    position: relative;
+    @include wh(30px, 15px);
+    background-color: #dadada;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
 
-// 按钮
-.switch::after {
-  content: '';
-  @include wh(50%, 100%);
-  @include position(absolute, 0, auto, auto, 0);
-  background-color: #fff;
-  border-radius: 50%;
-  transition: all 0.2s ease;
-}
+  // 按钮
+  .switch::after {
+    content: '';
+    @include wh(50%, 100%);
+    @include position(absolute, 0, auto, auto, 0);
+    background-color: #fff;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+  }
 
-// checked状态时，背景颜色改变
-.switch:checked {
-  background-color: var(--JoL-theme);
-}
-// checked状态时，按钮位置改变
-.switch:checked::after {
-  left: 50%;
+  // checked状态时，背景颜色改变
+  .switch:checked {
+    background-color: var(--JoL-theme);
+  }
+  // checked状态时，按钮位置改变
+  .switch:checked::after {
+    left: 50%;
+  }
 }

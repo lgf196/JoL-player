@@ -1,25 +1,27 @@
 @import 'src/assets/css/mixin.scss';
-.leftTop {
-  @include position(absolute, 15px, auto, auto, 15px);
-}
-.rightTop {
-  @include position(absolute, 15px, 15px, auto, auto);
-}
-.leftBottom {
-  @include position(absolute, auto, auto, 60px, 15px);
-}
-.rightBottom {
-  @include position(absolute, auto, 15px, 60px, auto);
-}
-.center {
-  @include position(absolute, 50%, auto, auto, 50%);
-  transform: translate(-50%, -50%);
-}
-.jolPlayerToast {
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 10000;
-  @include style(13px, #fff);
-  padding: 8px 10px;
-  border-radius: 2px;
-  animation: show 0.3s ease;
+.JoL-player-container{
+  .leftTop {
+    @include position(absolute, 15px, auto, auto, 15px);
+  }
+  .rightTop {
+    @include position(absolute, 15px, 15px, auto, auto);
+  }
+  .leftBottom {
+    @include position(absolute, auto, auto, 60px, 15px);
+  }
+  .rightBottom {
+    @include position(absolute, auto, 15px, 60px, auto);
+  }
+  .center {
+    @include position(absolute, 50%, auto, auto, 50%);
+    transform: translate(-50%, -50%);
+  }
+  .jolPlayerToast {
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 10000;
+    @include style(13px, #fff);
+    padding: 8px 10px;
+    border-radius: 2px;
+    animation: show 0.3s ease;
+  }
 }
