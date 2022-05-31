@@ -10,7 +10,7 @@ import Controller from './controller';
 import { videoparameter, JoLPlayerRef } from '@/interface';
 import { FlowContext, useVideoFlow } from '@/core/context';
 import useMandatoryUpdate from '@/utils/useMandatoryUpdate';
-import Broadcast from '@/components/svgIcon';
+import BufferComponent from '@/components/svgIcon';
 import { useVideo } from '@/core/useVideo';
 import useVideoCallback from '@/core/useVideoCallback';
 import { defaultTheme } from '@/core/config';
@@ -69,8 +69,10 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
     setIsBufferring(false);
   };
 
-  const setVideoContainerStyle = (ele: HTMLElement, width: number, height: number) => {
-    ele.style.width = `${width}px`;
+  const setVideoContainerStyle = (ele: HTMLElement, height: number, width?: number) => {
+    if (width) {
+      ele.style.width = `${width}px`;
+    }
     ele.style.height = `${height}px`;
   };
 
@@ -110,7 +112,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
      */
     forceUpdate();
     const videoElem = videoRef.current;
-    setVideoContainerStyle(videoContainerRef.current, width, height);
+    setVideoContainerStyle(videoContainerRef.current, height, width);
     setHls(videoElem);
     timerToCheckVideoUseful.current = setTimeout(() => {
       // 当视频未初始化时（即不可用时）
@@ -186,7 +188,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
         (setBufferContent ? (
           setBufferContent
         ) : (
-          <Broadcast
+          <BufferComponent
             iconClass="loading"
             fill={theme ? theme : defaultTheme}
             className="player-loading"

@@ -58,6 +58,7 @@ const AppCompent = () => {
     <>
       <JoLPlayer
         ref={videoRef}
+        style={{ width: '60%' }}
         onProgressMouseUp={onProgressMouseUp}
         onEndEd={onEndEd}
         onPause={onPause}
@@ -72,7 +73,7 @@ const AppCompent = () => {
           videoSrc:
             'https://gs-files.oss-cn-hongkong.aliyuncs.com/okr/prod/file/2021/08/31/540p.mp4',
           // 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
-          width: 750,
+          // width: 750,
           height: 420,
           theme: 'red',
           poster:

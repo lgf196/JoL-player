@@ -1,5 +1,4 @@
 import React, { FC, useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import { toastType } from '@/interface';
 import { defaultToastPosition } from '@/core/config';
 import { createRoot } from 'react-dom/client';

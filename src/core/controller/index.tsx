@@ -120,6 +120,24 @@ const Index = memo(function Index() {
     }
   }, [propsAttributes!.pausePlacement]);
   /**
+   * @description 自定义暂停键
+   */
+  const pauseButtonComponent = useMemo(() => {
+    if (propsAttributes!.setPauseButtonContent) {
+      return propsAttributes!.setPauseButtonContent;
+    } else {
+      return (
+        <Broadcast
+          iconClass="player"
+          fill="#fff"
+          fontSize="55px"
+          className="play-icon"
+          style={pausePosition}
+        />
+      );
+    }
+  }, [pausePosition, propsAttributes!.setPauseButtonContent]);
+  /**
    * @param status 鼠标状态
    * @description 控制器容器鼠标操作
    */
@@ -141,16 +159,7 @@ const Index = memo(function Index() {
         onClick={handlePlay}
       ></div>
       {filterDefaults(propsAttributes!.isShowPauseButton)
-        ? !isPlay &&
-          !isEndEd && (
-            <Broadcast
-              iconClass="player"
-              fill="#fff"
-              fontSize={'55px'}
-              className="iconfont play-icon"
-              style={pausePosition}
-            />
-          )
+        ? !isPlay && !isEndEd && <>{pauseButtonComponent}</>
         : null}
       <div
         className="JoL-progress-and-controls-wrap"
