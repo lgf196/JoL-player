@@ -247,3 +247,4 @@ interface CompoundedComponent
   extends React.ForwardRefExoticComponent<videoparameter & React.RefAttributes<JoLPlayerRef>> {}
 declare const JolPlayer: CompoundedComponent;
 export default JolPlayer;
+export { JolPlayer };

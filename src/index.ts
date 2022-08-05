@@ -1,3 +1,4 @@
-import JoLPlayer from '@/core/index';
+import JolPlayer from '@/core/index';
 import '@/icons/';
-export default JoLPlayer;
+export default JolPlayer;
+export { JolPlayer };

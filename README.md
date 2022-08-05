@@ -54,11 +54,11 @@ https://cdn.jsdelivr.net/npm/jol-player@3.0.0/index.d.ts
 ## 🔨 Example
 
 ```tsx
-import JoLPlayer from "jol-player";
+import {JolPlayer} from "jol-player";
 
 const App = () => (
   <>
-    <JoLPlayer
+    <JolPlayer
         option={{
           videoSrc:"https://x.com/a.mp4",
           width: 750,

@@ -1,7 +1,7 @@
 import { callBackType, JoLPlayerRef, qualityKey } from '@/interface';
 import React, { useRef, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import JoLPlayer from '../../src/index';
+import { JolPlayer } from '../../src/index';
 
 const AppCompent = () => {
   const videoRef = useRef<JoLPlayerRef>(null!);
@@ -56,7 +56,7 @@ const AppCompent = () => {
   };
   return (
     <>
-      <JoLPlayer
+      <JolPlayer
         ref={videoRef}
         style={{ width: '60%' }}
         onProgressMouseUp={onProgressMouseUp}
@@ -100,7 +100,7 @@ const AppCompent = () => {
           isProgressFloat: true,
         }}
       />
-      <JoLPlayer
+      <JolPlayer
         option={{
           videoSrc: 'https://qiniu.qyhever.com/162962488432086ba29652658echrome.mp4',
           width: 750,
