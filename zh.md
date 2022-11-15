@@ -75,31 +75,35 @@ const App = () => (
 
 如下属性来自`option`属性配置项.
 
-| 参数                  | 说明                                                         | 类型                                                     | 默认值        |
-| --------------------- | ------------------------------------------------------------ | -------------------------------------------------------- | ------------- |
-| height                | 视频容器的 height（**必传**）                                | `number`                                                 | 必传          |
-| videoSrc              | 视频地址（**必传**）                                         | `string`                                                 | 必传          |
-| width                 | 视频容器的 width                                             | `number`                                                 | -             |
-| theme                 | 主题                                                         | `string`                                                 | \#ffb821      |
-| poster                | 视频封面图                                                   | `string`                                                 | -             |
-| setEndPlayContent     | 自定义视频结束时显示的内容                                   | `React.ReactNode`                                        | -             |
-| setBufferContent      | 自定义视频缓冲加载组件                                       | `React.ReactNode`                                        | -             |
-| setPauseButtonContent | 自定义视频暂停键                                             | `React.ReactNode`                                        | -             |
-| pausePlacement        | 暂停键的位置                                                 | `bottomRight`,`center`                                   | `bottomRight` |
-| hideMouseTime         | 多少毫秒，无任何操作，隐藏鼠标和控制器/ms                    | `number`                                                 | 2000          |
-| isShowMultiple        | 是否显示播放倍数功能                                         | `boolean`                                                | true          |
-| isShowSet             | 是否显示设置功能                                             | `boolean`                                                | true          |
-| isShowScreenshot      | 是否显示截图功能                                             | `boolean`                                                | true          |
-| isShowPicture         | 是否显示画中画                                               | `boolean`                                                | true          |
-| isShowWebFullScreen   | 是否显示网页全屏                                             | `boolean`                                                | true          |
-| language              | 语言                                                         | `zh`,`en`                                                | `zh`          |
-| isShowPauseButton     | 是否显示暂停键                                               | `boolean`                                                | true          |
-| quality               | 视频质量清晰度的选择列表                                     | `qualityAttributes[]`                                    | -             |
-| videoType             | 视频播放格式，支持h264(`.mp4`,`.webm`,`.ogg`)，hls(`.m3u8`)  | `h264`,`hls`                                             | `h264`        |
-| isToast               | 是否显示toast                                                | `boolean`                                                | false         |
-| toastPosition         | toast的位置，此值只有`isToast`为true时，才有效果             | `leftTop`,`rightTop`,`leftBottom`,`rightBottom`,`center` | `leftTop`     |
-| isProgressFloat       | 是否显示进度条浮层提示                                       | `boolean`                                                | false         |
-| progressFloatPosition | 进度条浮层提示的位置，此值只有`isProgressFloa`t为true时，才有效果 | `tp`,`bt`                                                | `bt`          |
+| 参数                  | 说明                                                         | 类型                                                         | 默认值        |
+| --------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------- |
+| videoSrc              | 视频地址（**必传**）                                         | `string`                                                     | 必传          |
+| mode                  | 视频缩放模式                                                 | `scaleToFill`(不保持纵横比缩放)<br /><br /> `widthFix`(宽度固定，高度自动变化，保持原视频宽高比不变) <br /><br />`heightFix`(高度固定，宽度自动变化，保持原视频宽高比不变-) | `scaleToFill` |
+| height                | 视频容器的 height                                            | `number`                                                     | -             |
+| width                 | 视频容器的 width                                             | `number`                                                     | -             |
+| autoPlay              | 自动播放                                                     | `boolean`                                                    | false         |
+| theme                 | 主题                                                         | `string`                                                     | \#ffb821      |
+| poster                | 视频封面图                                                   | `string`                                                     | -             |
+| setEndPlayContent     | 自定义视频结束时显示的内容                                   | `React.ReactNode`                                            | -             |
+| setBufferContent      | 自定义视频缓冲加载组件                                       | `React.ReactNode`                                            | -             |
+| setPauseButtonContent | 自定义视频暂停键                                             | `React.ReactNode`                                            | -             |
+| pausePlacement        | 暂停键的位置                                                 | `bottomRight`,`center`                                       | `bottomRight` |
+| hideMouseTime         | 多少毫秒，无任何操作，隐藏鼠标和控制器/ms                    | `number`                                                     | 2000          |
+| isShowMultiple        | 是否显示播放倍数功能                                         | `boolean`                                                    | true          |
+| isShowSet             | 是否显示设置功能                                             | `boolean`                                                    | true          |
+| isShowScreenshot      | 是否显示截图功能                                             | `boolean`                                                    | true          |
+| isShowPicture         | 是否显示画中画                                               | `boolean`                                                    | true          |
+| isShowWebFullScreen   | 是否显示网页全屏                                             | `boolean`                                                    | true          |
+| language              | 语言                                                         | `zh`,`en`                                                    | `zh`          |
+| isShowPauseButton     | 是否显示暂停键                                               | `boolean`                                                    | true          |
+| quality               | 视频质量清晰度的选择列表                                     | `qualityAttributes[]`                                        | -             |
+| videoType             | 视频播放格式，支持h264(`.mp4`,`.webm`,`.ogg`)，hls(`.m3u8`)  | `h264`,`hls`                                                 | `h264`        |
+| isToast               | 是否显示toast                                                | `boolean`                                                    | false         |
+| toastPosition         | toast的位置，此值只有`isToast`为true时，才有效果             | `leftTop`,`rightTop`,`leftBottom`,`rightBottom`,`center`     | `leftTop`     |
+| isProgressFloat       | 是否显示进度条浮层提示                                       | `boolean`                                                    | false         |
+| progressFloatPosition | 进度条浮层提示的位置，此值只有`isProgressFloa`t为true时，才有效果 | `tp`,`bt`                                                    | `bt`          |
+
+
 
 > 温馨提示：`qualityAttributes`接口声明如下：:point_down:
 >

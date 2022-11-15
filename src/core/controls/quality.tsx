@@ -1,11 +1,11 @@
 import React, { memo, FC, useState, useContext, useMemo } from 'react';
 import { defaultTheme, qualityList, qualityListType } from '@/core/config';
 import { FlowContext } from '@/core/context';
-import { qualityKey } from '@/interface';
 import toast from '@/components/toast';
 import { il8n } from '@/language';
 import { defaultLanguage } from '@/core/config';
 import './index.scss';
+import { qualityKey } from 'types';
 
 export type qualityToggleType = (par: string, key: qualityKey) => void;
 

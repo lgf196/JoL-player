@@ -1,6 +1,6 @@
-import { callBackType, JoLPlayerRef, qualityKey } from '@/interface';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { createRoot } from 'react-dom/client';
+import { callBackType, JoLPlayerRef, qualityKey } from 'types';
 import { JolPlayer } from '../../src/index';
 
 const AppCompent = () => {
@@ -71,11 +71,14 @@ const AppCompent = () => {
         option={{
           // videoType: 'hls',
           videoSrc:
-            'https://gs-files.oss-cn-hongkong.aliyuncs.com/okr/prod/file/2021/08/31/540p.mp4',
+            // 'https://gs-files.oss-cn-hongkong.aliyuncs.com/okr/prod/file/2021/08/31/540p.mp4',
+            'https://cdn.gudsen.vip/2022/11/14/422e7528fce64f03bf1b378cff393237.mp4',
           // 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
-          // width: 750,
-          height: 420,
+          height: 900,
+          // width: 500,
+          mode: 'heightFix',
           theme: 'red',
+          autoPlay: true,
           poster:
             'https://gs-files.oss-cn-hongkong.aliyuncs.com/okr/prod/file/2021/08/31/1080pp.png',
           language: 'zh',

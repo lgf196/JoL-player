@@ -1,4 +1,4 @@
-import { qualityName, qualityKey } from '@/interface';
+import { qualityKey, qualityName } from 'types';
 
 export const multipleList = [
   { id: 0.5, name: '0.5x' },

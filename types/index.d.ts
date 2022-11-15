@@ -16,6 +16,11 @@ export type toastPosition = 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom
 export type progressFloatPosition = 'tp' | 'bt';
 
 /**
+ * 视频缩放模式
+ */
+export type scaleMode = 'scaleToFill' | 'widthFix' | 'heightFix';
+
+/**
  * 标清 360P SD
  * 高清 540P HD
  * 超清 720P FHD
@@ -37,7 +42,7 @@ export interface videoOption<T = string, K = boolean, U = number> {
   /**
    * @description 视频容器的height
    */
-  height: U;
+  height?: U;
   /**
    * @description 视频地址
    */
@@ -46,6 +51,14 @@ export interface videoOption<T = string, K = boolean, U = number> {
    * @description 主题
    */
   theme?: T;
+  /**
+   * @description 自动播放
+   */
+  autoPlay?: K;
+  /**
+   *  @description 视频缩放模式
+   */
+  mode?: scaleMode;
   /**
    * @description 视频封面图
    */

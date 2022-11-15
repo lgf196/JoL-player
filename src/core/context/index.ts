@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { videoOption, qualityKey } from '@/interface';
+import { qualityKey, videoOption } from 'types';
 export interface VideoStateType<K = boolean, T = number> {
   /**
    * @description 是否显示控件

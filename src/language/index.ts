@@ -1,4 +1,5 @@
-import { languageType } from '@/interface';
+import { languageType } from 'types';
+
 export interface langType<T = string> {
   multiple: T;
   closeLights: T;

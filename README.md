@@ -79,9 +79,11 @@ The following attributes come from the `option` property configuration item
 
 | Parameter           | Description                                                  | type                      | Default value |
 | ------------------- | ------------------------------------------------------------ | ------------------------- | ------------- |
-| height              | The height of the video container (**required**)             | `number`                  | required      |
 | videoSrc            | Video address (**required**)                                 | `string`                  | required      |
+| mode | Video zoom mode | `scaleToFill`(Does not maintain the aspect ratio to scale the video)，`widthFix`(The width is unchanged, and the height changes automatically, keeping the aspect ratio of the original video unchanged)，`heightFix`(When the height is unchanged, the width changes automatically, keeping the aspect ratio of the original video unchanged) | `scaleToFill` |
+| height              | The height of the video container             | `number`                  | -     |
 | width               | The width of the video container                  | `number`                  | -     |
+| autoPlay | Video autoplay | `boolean` | false |
 | theme               | theme                                                        | `string`                  | \#ffb821      |
 | poster              | Video cover image                                            | `string`                  | -             |
 | setEndPlayContent   | Customize what is displayed at the end of the video          | `React.ReactNode`         | -             |

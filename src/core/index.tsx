@@ -5,9 +5,10 @@ import React, {
   useEffect,
   useMemo,
   useImperativeHandle,
+  useCallback,
 } from 'react';
 import Controller from './controller';
-import { videoparameter, JoLPlayerRef } from '@/interface';
+// import { videoparameter, JoLPlayerRef } from '@/interface';
 import { FlowContext, useVideoFlow } from '@/core/context';
 import useMandatoryUpdate from '@/utils/useMandatoryUpdate';
 import BufferComponent from '@/components/svgIcon';
@@ -18,7 +19,7 @@ import Hls from 'hls.js';
 import toast from '@/components/toast';
 import '@/assets/css/reset.scss';
 import './index.scss';
-
+import { JoLPlayerRef, videoparameter } from 'types';
 const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unknown> | undefined) {
   const {
     option,
@@ -34,8 +35,18 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
     onvolumechange,
     onQualityChange,
   } = props;
-  const { videoSrc, width, height, theme, poster, setBufferContent, videoType, toastPosition } =
-    option;
+  const {
+    videoSrc,
+    width,
+    height,
+    theme,
+    poster,
+    setBufferContent,
+    videoType,
+    toastPosition,
+    autoPlay,
+    mode,
+  } = option;
   /**
    * @description 关灯对象
    */
@@ -47,7 +58,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
   /**
    * @description 视频容器对象
    */
-  const videoContainerRef = useRef<HTMLElement>(null!);
+  const videoContainerRef = useRef<HTMLDivElement>(null!);
   /**
    * @description 定时器检测 3 秒后视频是否可用
    */
@@ -56,6 +67,10 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
    * @description 视频缓存的开关
    */
   const [isBufferring, setIsBufferring] = useState<boolean>(false);
+  /**
+   * @description 用来处理视频自动播放的
+   */
+  const muted = useRef<boolean>(false);
 
   const { videoFlow, dispatch } = useVideoFlow();
 
@@ -69,11 +84,28 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
     setIsBufferring(false);
   };
 
-  const setVideoContainerStyle = (ele: HTMLElement, height: number, width?: number) => {
-    if (width) {
-      ele.style.width = `${width}px`;
+  const setVideoWh = (e: Event) => {
+    const event = e.target as EventTarget & { videoWidth: number; videoHeight: number };
+    const videoWidth = event.videoWidth;
+    const videoHeight = event.videoHeight;
+
+    if (width && height) {
+      videoContainerRef.current.style.width = `${width}px`;
+      videoContainerRef.current.style.height = `${height}px`;
+    } else {
+      if (mode === 'widthFix' && width) {
+        const scaleH = (width * videoHeight) / videoWidth;
+        videoContainerRef.current.style.height = `${scaleH}px`;
+        videoContainerRef.current.style.width = `${width}px`;
+      } else if (mode === 'heightFix' && height) {
+        const scaleW = (videoWidth * height) / videoHeight;
+        videoContainerRef.current.style.width = `${scaleW}px`;
+        videoContainerRef.current.style.height = `${height}px`;
+      } else {
+        videoContainerRef.current.style.width = `${width ? width : videoWidth}px`;
+        videoContainerRef.current.style.height = `${height ? height : videoHeight}px`;
+      }
     }
-    ele.style.height = `${height}px`;
   };
 
   const setHls = (videoElem: HTMLVideoElement) => {
@@ -107,13 +139,14 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
   });
 
   useEffect(() => {
-    /**
-     * @description 强制更新dom层
-     */
     forceUpdate();
     const videoElem = videoRef.current;
-    setVideoContainerStyle(videoContainerRef.current, height, width);
+    // setVideoContainerStyle(videoContainerRef.current, height, width);
     setHls(videoElem);
+    if (option.autoPlay) {
+      muted.current = true;
+      videoRef.current.volume = 0;
+    }
     timerToCheckVideoUseful.current = setTimeout(() => {
       // 当视频未初始化时（即不可用时）
       if (videoElem.networkState === 0 || videoElem.networkState === 3) {
@@ -126,6 +159,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
         clearTimeout(timerToCheckVideoUseful.current!);
       }
     }, 3000);
+    videoElem.addEventListener('canplay', setVideoWh);
     videoElem.addEventListener('waiting', waitingListener);
     videoElem.addEventListener('playing', playingListener);
     return () => {
@@ -133,7 +167,39 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
       videoElem.removeEventListener('waiting', waitingListener);
       videoElem.removeEventListener('playing', playingListener);
     };
-  }, [videoRef.current, option]);
+  }, [option]);
+
+  useEffect(() => {
+    if (autoPlay) {
+      document.addEventListener('mousemove', () => videoAutoPlay(autoPlay));
+    }
+    return () => {
+      autoPlay && document.removeEventListener('mousemove', () => videoAutoPlay);
+    };
+  }, [autoPlay]);
+
+  const videoAutoPlay = useCallback((autoPlay: boolean) => {
+    if (!autoPlay) {
+      return;
+    }
+    if (muted.current && videoRef.current) {
+      var promise = videoRef.current.play();
+      if (promise !== undefined) {
+        promise
+          .catch((error) => {
+            videoRef.current.volume = 0.6;
+            muted.current = false;
+          })
+          .then(() => {
+            videoRef.current.play();
+            videoRef.current.volume = 0.6;
+            muted.current = false;
+          });
+      }
+    } else {
+      return null;
+    }
+  }, []);
 
   useImperativeHandle(ref, () => {
     return {
@@ -168,7 +234,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
   }, [videoRef.current, videoFlow, option]);
 
   return (
-    <figure
+    <div
       className={`JoL-player-container ${className}`}
       ref={videoContainerRef}
       style={style}
@@ -176,6 +242,8 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
     >
       <div className="JoL-light-off-mask" ref={lightOffMaskRef}></div>
       <video
+        autoPlay={autoPlay}
+        muted={muted.current}
         className="JoL-player"
         ref={videoRef}
         src={videoSrc}
@@ -198,7 +266,7 @@ const JoLPlayer = function JoLPlayer(props: videoparameter, ref: React.Ref<unkno
       <FlowContext.Provider value={contextProps}>
         <Controller />
       </FlowContext.Provider>
-    </figure>
+    </div>
   );
 };
 

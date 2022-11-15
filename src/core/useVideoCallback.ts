@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { videoAttributes, videoCallback } from '@/interface';
+import { videoAttributes, videoCallback } from 'types';
 import { VideoStateType } from './context';
 
 const useVideoCallback = (
